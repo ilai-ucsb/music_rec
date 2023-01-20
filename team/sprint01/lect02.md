@@ -1,6 +1,17 @@
-# Lecture 2: Daily Standup (01/17/23)
-## Music Recommendation
+# Project: Music Recommendation
 Mentors: Mateo/Matthew
+
+## Meeting time: Lecture 02
+
+## Type of Meeting: Daily scrum, sprint planning
+
+## Attendance
+[x] Anmol Kapoor
+[x] Mauricio Munoz
+[x] Francisco Leyva
+[x] Ian Lai
+[x] Parsa Hafezi
+[x] Aditya Sharma
 
 ## Agenda
 - Daily standup
@@ -9,6 +20,8 @@ Mentors: Mateo/Matthew
 - Start lab01
 - Initialize README.md
 - Find some time to meet offline during the week
+
+## Stand-up
 
 #### Mauricio
 - Did not do anything previously
