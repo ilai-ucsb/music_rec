@@ -13,6 +13,7 @@ function App() {
           <li>Francisco Justin Leyva</li>
           <li>Anmol Kapoor</li>
           <li>Ian Lai</li>
+          <li>Parsa Hafezi</li>
           {/* TODO: Add your name's into this React App!*/}
         </ul>
       </div>
