@@ -9,6 +9,7 @@ function App() {
         <h3>Here is our team: </h3>
         <ul>
           <li>Aditya Sharma</li>
+          <li>Mauricio Muñoz Valtierra</li>
           {/* TODO: Add your name's into this React App!*/}
         </ul>
       </div>
