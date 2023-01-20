@@ -11,7 +11,6 @@ function App() {
           <li>Aditya Sharma</li>
           <li>Mauricio Muñoz Valtierra</li>
           <li>Francisco Leyva</li>
-          <li>Ian Lai</li>
           <li>Anmol Kapoor</li>
           {/* TODO: Add your name's into this React App!*/}
         </ul>
