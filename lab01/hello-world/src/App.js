@@ -10,6 +10,7 @@ function App() {
         <ul>
           <li>Aditya Sharma</li>
           <li>Mauricio Muñoz Valtierra</li>
+          <li>Francisco Leyva</li>
           {/* TODO: Add your name's into this React App!*/}
         </ul>
       </div>
