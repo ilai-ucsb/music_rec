@@ -2,6 +2,16 @@
 ## Music Recommendation
 Mentors: Mateo/Matthew
 
+Attendance:
+ - [X] Parsa
+ - [X] Anmol
+ - [X] Aditya
+ - [X] Francisco
+ - [X] Ian
+ - [X] Mauricio
+
+All members of the team are present.
+
 ## Agenda
 - Daily Scrum (log a lec02.md document!)
 - Further discussion on technologies
