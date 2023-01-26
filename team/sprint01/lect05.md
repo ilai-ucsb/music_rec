@@ -31,9 +31,9 @@ All members of the team are present.
 - No Blockers
 
 #### Francisco
-- Learned markdown over the weekend through a crash course.
-- Stil need to crash course REACT and plan on working on lab02. Today plan on scribing the meeting for the first time.
-- No blockers
+- Found resources to learn necessary technology
+- Learning the necessary tech 
+- Time management
 
 #### Ian
 - Did not do anything previous
