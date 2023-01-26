@@ -13,7 +13,7 @@ Attendance:
 All members of the team are present.
 
 ## Agenda
-- Daily Scrum (log a lec04.md document!)
+- Daily Scrum (log a lect04.md document!)
 - Sprint Planning
 - Populate the Kanban board
 - Create team/LEADERSHIP.md
