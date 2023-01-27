@@ -44,7 +44,7 @@ All members of the team are present.
 - Yesterday, I attend the team meeting. PR to fix lect04.md file to follow the documentation rules. Created team/LEADERSHIP.md and got PR sent.
 - Today, I want us to add an issue for each user story on Kanban board and assign issues. Want to learn something before tomorrow’s section.
 - Blockers — Approve leadership PR. Need 1 more review!
-- 
+
 #### Parsa
 - Yesterday, I attended the group meeting working on populating our kanban board
 - Today I plan on adding my learning goals to the document and get start on learning about API
@@ -56,4 +56,4 @@ All members of the team are present.
 - Discussed issues with completing lab 2
 - Completed our LEARNING.md
 - added issues to our Kanban board
-- udated our README.md
+- updated our README.md
