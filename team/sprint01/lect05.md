@@ -31,9 +31,9 @@ All members of the team are present.
 - No Blockers
 
 #### Francisco
-- Found resources to learn necessary technology
-- Learning the necessary tech 
-- Time management
+- Found resources to learn necessary technology for free
+- Learning the necessary tech, catching up on tech I don't know about yet.
+- Time management, just added a new course and the load overwhelmed me
 
 #### Ian
 - Did not do anything previous
