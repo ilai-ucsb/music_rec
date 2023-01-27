@@ -21,38 +21,39 @@ All members of the team are present.
 
 
 #### Mauricio
-- Looked into what parameters are needed in building a recommender
-- Continuing to look into mock up of app and finishing labs
+- Yesterday, attended group meeting
+- Today I want to begin a tutorial for React and begin to set up the UI
 - No blockers
 
 #### Anmol
-- Did not work on anything yesterday
-- Today, I plan on discussing with the team and adding tasks to the Kanban board
-- No Blockers
+- After the group meeting, i reviewed some PRs from Aditya
+- Today, I plan on adding my learning goals to the document
+- no blockers (but not feeling the best, so I may be a bit slow on task completion)
 
 #### Francisco
-- Found resources to learn necessary technology for free
+- Found resources to learn necessary technology for free, attended meeting yesterday
 - Learning the necessary tech, catching up on tech I don't know about yet.
 - Time management, just added a new course and the load overwhelmed me
 
 #### Ian
-- Did not do anything previous
-- Today I will be working on the lect03.md notes and discuss with the team about the project.
+- Yesterday, attended group meeting and added experience and learning to the google doc to be added into learning.md
+- Today, we need continue to work on finishing lab02
 - No blockers but we should probably decide how to work on the HelloWorld webapp
 
 #### Aditya
-- Did not do anything for lab02. Just complete HW and brainstormed some ideas on how recommendation could work
-- Today, plan to start lab02 and start completing some individual tasks.
-- No blockers so far
-
+- Yesterday, I attend the team meeting. PR to fix lect04.md file to follow the documentation rules. Created team/LEADERSHIP.md and got PR sent.
+- Today, I want us to add an issue for each user story on Kanban board and assign issues. Want to learn something before tomorrow’s section.
+- Blockers — Approve leadership PR. Need 1 more review!
+- 
 #### Parsa
-- Did not work on anything this weekend
-- Today I plan to work on make plan for our first sprint and kanban board
+- Yesterday, I attended the group meeting working on populating our kanban board
+- Today I plan on adding my learning goals to the document and get start on learning about API
 - No Blockers
 
 ### Discussion
 
-- Discussed tech stack. 
-- Compared fast Api vs Flask vs Django. 
-- Discussed different testing methology : mutation testing and unit testing. 
-- Different machine learning methods, KNN and Neural Network. 
+- Solved issues with PRs
+- Discussed issues with completing lab 2
+- Completed our LEARNING.md
+- added issues to our Kanban board
+- udated our README.md
