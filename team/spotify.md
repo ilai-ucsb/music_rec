@@ -1,12 +1,6 @@
 # Spotify's Web API
 
 
-**client ID** 059936209b6a44c08ee2b55ed2ce6e6a
-
-
-**client secret** d3304a27fd884633a8a6b660afd17f79
-
-
 1. [Introduction](#intro)
 1. [How we can use it](#how-we-can-use-it)
 1. [Sources](#sources)
