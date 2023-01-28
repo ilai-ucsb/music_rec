@@ -1,4 +1,4 @@
-# Sprint Planning: (01/27/23)
+# Sprint Planning: (01/25/23)
 ## Music Recommendation
 Mentors: Mateo/Matthew
 
