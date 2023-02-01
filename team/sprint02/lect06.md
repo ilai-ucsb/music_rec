@@ -1,0 +1,56 @@
+# Lecture 5: Daily Standup (01/26/23)
+## Music Recommendation
+Mentors: Mateo/Matthew
+
+Attendance:
+ - [X] Parsa
+ - [X] Anmol
+ - [X] Aditya
+ - [X] Francisco
+ - [X] Ian
+ - [ ] Mauricio -- Out sick
+
+All members of the team are present.
+
+## Agenda
+- Daily Scrum (log a lect05.md document!)
+- Sprint Planning
+- Practice branches and pull requests (PR)
+- Work towards MVP code freeze and presentations (happening two weeks from now).
+
+
+
+#### Mauricio
+- Yesterday, attended group meeting
+- Today I want to begin a tutorial for React and begin to set up the UI
+- No blockers
+
+#### Anmol
+- started creating a base model for the backend (currently a wrapper around spotify’s GET Recommendations’ API)
+- currently setting up the model as a function call with default values and will put in the PR as soon as I can. I plan on working with you all today to come up with a high-level product workflow / flowchart
+- no blockers currently
+
+#### Francisco
+- link the spotify button
+- planning on finish the spotify linker before Thursday's lecture
+- brought up https://discoverquickly.com/ as a similar product to ours, mentioned that the UI is not the best
+- no blockers
+
+#### Ian
+- used react to build a basic frontend and search bar and navigation bar
+- still needs to create a PR to merge this to main; continue to work on what is needed and also start learning flask
+- no blockers
+
+#### Aditya
+- created a design flow for the engine / backend describing the various parts of the dataset and basic manipulation
+- going to work on finishing #52 - creating a workflow design for the entire product
+- blockers -- needs approval for his PR
+
+#### Parsa
+- already knows how to learn rnns and gated rnns and long short term model
+- work on finalizing a design for the backend model
+- no blockers
+
+### Discussion
+- we could use spotipy api to get the most played songs and use that as the recommendation engine or adding it to the dataset
+- dataset on kaggle might be limited upto a specific year
