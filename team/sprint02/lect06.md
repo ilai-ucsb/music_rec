@@ -54,3 +54,7 @@ All members of the team are present.
 - maybe setting up the link with spotify button is too much work, especially with the oauth
 - without logging in, we may need to just rely on the search bar
 - for our model, we need to consider content filtering as opposed to collaborative filtering
+- defined album vs track vs playlist
+    - album is multiple songs by a single group
+    - track aka song
+    - playlist is multiple songs tied to the user
