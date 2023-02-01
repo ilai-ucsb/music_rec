@@ -8,16 +8,13 @@ Attendance:
  - [X] Aditya
  - [X] Francisco
  - [X] Ian
- - [ ] Mauricio -- Out sick
+ - [ ] Mauricio -- Out sick, but he sent us his standup info
 
 All members of the team are present.
 
 ## Agenda
-- Daily Scrum (log a lect05.md document!)
-- Sprint Planning
-- Practice branches and pull requests (PR)
-- Work towards MVP code freeze and presentations (happening two weeks from now).
-
+- Daily Scrum (log a lect06.md document!)
+- Work towards MVP code freeze and presentations (happening one week from now).
 
 
 #### Mauricio
@@ -54,3 +51,5 @@ All members of the team are present.
 ### Discussion
 - we could use spotipy api to get the most played songs and use that as the recommendation engine or adding it to the dataset
 - dataset on kaggle might be limited upto a specific year
+- maybe setting up the link with spotify button is too much work, especially with the oauth
+- without logging in, we may need to just rely on the search bar
