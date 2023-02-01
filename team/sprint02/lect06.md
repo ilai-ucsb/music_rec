@@ -53,3 +53,4 @@ All members of the team are present.
 - dataset on kaggle might be limited upto a specific year
 - maybe setting up the link with spotify button is too much work, especially with the oauth
 - without logging in, we may need to just rely on the search bar
+- for our model, we need to consider content filtering as opposed to collaborative filtering
