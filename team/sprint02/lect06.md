@@ -1,4 +1,4 @@
-# Lecture 5: Daily Standup (01/26/23)
+# Lecture 6: Daily Standup (01/31/23)
 ## Music Recommendation
 Mentors: Mateo/Matthew
 
