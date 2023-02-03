@@ -29,8 +29,8 @@ useEffect(()=>{
     .then(data => setAccessToken(data.access_token))
   },[])
 
-  async function search() {
-    console.log("Searching for a string : " + SearchBar.searchInput); //Kendrick 
+  async function search(searchInput) {
+    console.log("Searching for a string : " + searchInput);  
    // Get request using search to get the song ID
    var songParameters = {
      method: 'GET',
@@ -48,19 +48,19 @@ useEffect(()=>{
    var songDetails = await fetch('https://api.spotify.com/v1/audio-features/'+ songID, songParameters)
      .then(response => response.json())
      .then(data => {
-       //console.log(data);
+       console.log(data);
        setSongData(data);
      })
    
    }
-   console.log("Our generated song data: " + songData.acousticness);
+   console.log("Our song's acoustic data: " + songData.acousticness + "\ndanceability: " + songData.danceability + "\ninstrumentalness: " + songData.instrumentalness + "\nliveness: " + songData.liveness);
  
 
   return (
     <div className="App">
       <header className="App-header">
         <p>Spotify Music Recommendation</p>
-        <SearchBar/>
+        <SearchBar onSubmit={search}/>
       </header>
     </div>
   );

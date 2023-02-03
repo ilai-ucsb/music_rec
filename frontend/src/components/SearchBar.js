@@ -2,14 +2,20 @@ import React, {useState} from 'react'
 import './SearchBar.css'
 
 
-function SearchBar() {
+function SearchBar(props) {
 
  const [searchInput, setSearchInput] = useState("");
 
  const handleChange = (e) => {
     e.preventDefault();
     setSearchInput(e.target.value);
-    console.log(searchInput)
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      props.onSubmit(searchInput);
+      console.log(searchInput);
+    }
   };
 
 return <div className='wrapper'>
@@ -18,7 +24,9 @@ return <div className='wrapper'>
     className='search'
     type="search"
     placeholder="Enter a song name"
-    value={searchInput} />
+    value={searchInput} 
+    onChange={handleChange}
+    onKeyDown={handleKeyDown}/>
 
     </div>
 
