@@ -8,3 +8,23 @@
 | Ian Lai | - Learn Flask/Django/FastAPI (whichever one seems to better help with our MVP) <br>Learn about the python libraries needed for the project <br>Learn more about ReactJS | - Familiar with python overall as a language but unfamiliar with ML libraries. A little bit of experience with data science libraries such as numpy. <br>- Familiar with ReactJS and testing on it (unit and mutation). <br>- Unfamiliar with Django/Flask/FastAPI <br>- Have a little bit of experience with setting up github actions <br>- Unfamiliar with Spotify API |
 | Parsa Hafezi | - Learn github branch management <br>- Learn about API <br> - Spotify API <br>- Crash course react basics | - Familiar with Python <br>- Familiar with Pytorch, sklearn and numpy <br>- Experience with ML algorithms |
 | Francisco Leyva | Crash course sources on REACT, flask, ML python beginner course, spotify API, multiple tutorials available online for free. | -Familiar with python, data structures and algorithms. |
+
+# Resources and questions we provided in the Slack Channel:
+  Francisco Leyva: 
+- https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
+  
+  
+  Ian Lai:
+- https://react-bootstrap.github.io/components/navbar/
+  
+  
+  Anmool Kapoor
+- https://cli.github.com/manual/gh_help_reference
+
+
+  Aditya Sharma
+- https://mui.com/material-ui/react-card/
+
+
+  Mauricio Munoz Valtierra
+- "does anyone have any resources for setting up jest to test React? i've been having trouble setting it up due to the configuration settings"
