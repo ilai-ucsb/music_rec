@@ -44,7 +44,10 @@ Parsa
 
 Ian
 
-Mur
+Mauricio
+- Asking around for help to set up a testing framework for frontend
+- Going to continue setting up jest or react testing 
+- Blocked on setting up jest with correct configurations
 
 
 
