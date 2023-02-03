@@ -10,6 +10,7 @@
 | Francisco Leyva | Crash course sources on REACT, flask, ML python beginner course, spotify API, multiple tutorials available online for free. | -Familiar with python, data structures and algorithms. |
 
 # Resources and questions we provided in the Slack Channel:
+  
   Francisco Leyva: 
 - https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
   
