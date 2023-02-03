@@ -9,6 +9,7 @@ function SearchBar() {
  const handleChange = (e) => {
     e.preventDefault();
     setSearchInput(e.target.value);
+    console.log(searchInput)
   };
 
 return <div className='wrapper'>
