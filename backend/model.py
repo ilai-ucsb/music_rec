@@ -36,3 +36,8 @@ def base_model(artist_ids=None, genre_ids=None, track_ids=None, limit=10, countr
     )
 
     return results
+
+
+if __name__ == "__main__":
+    # Get all recommendations given artist Grant Gustin
+    print(base_model(artist_ids=["0MXwnhyYMeEfij4dl2YIQ4"]))
