@@ -39,7 +39,7 @@ useEffect(()=>{
        'Authorization' : 'Bearer ' + accessToken
      }
    }
-   var songID = await fetch('https://api.spotify.com/v1/search?q=' + SearchBar.searchInput + '&type=track', songParameters)
+   var songID = await fetch('https://api.spotify.com/v1/search?q=' + searchInput + '&type=track&market=US', songParameters)
    .then(response => response.json())
    .then(data => {return data.tracks.items[0].id })
 
@@ -48,10 +48,14 @@ useEffect(()=>{
    var songDetails = await fetch('https://api.spotify.com/v1/audio-features/'+ songID, songParameters)
      .then(response => response.json())
      .then(data => {
-       console.log(data);
        setSongData(data);
      })
-   
+  // Use song ID to grab artist's name
+   var songArtist = await fetch('https://api.spotify.com/v1/tracks/' + songID, songParameters)
+     .then(response => response.json())
+     .then(data => {
+      console.log(data.artists[0].name);
+     })
    }
    console.log("Our song's acoustic data: " + songData.acousticness + "\ndanceability: " + songData.danceability + "\ninstrumentalness: " + songData.instrumentalness + "\nliveness: " + songData.liveness);
  
