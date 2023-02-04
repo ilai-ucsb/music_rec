@@ -27,8 +27,10 @@ Attendance:
 
 #### Anmol
 
-- reviewed some PRs
-- fix the most naive model (spotify’s recommendation API)
+- Reviewed some PRs
+- Fix the most naive model (spotify’s recommendation API)
+- Created PR for the naive model with in-depth code documentation
+- Sample json response for testing
 - In the process of creating a placeholder for the model using Spotipy API and calling the "recommendation" method.
 
 #### Francisco
@@ -41,6 +43,7 @@ Attendance:
 
 - Learned a bit about connecting flask with the react frontend
 - Next action item is to create a basic hello-world api which can link flask and react
+- https://towardsdatascience.com/deploying-a-spotify-recommendation-model-with-flask-20007b76a20f
 - No blockers
 
 #### Aditya
