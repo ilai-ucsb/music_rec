@@ -43,6 +43,9 @@ Parsa
 -No Blockers
 
 Ian
+- Continued to see how flask will connect to frontend
+- I will continue to learn more about flask and try to connect it to the frontend
+- no blockers
 
 Mauricio
 - Asking around for help to set up a testing framework for frontend
