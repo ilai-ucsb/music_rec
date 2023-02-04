@@ -19,7 +19,7 @@ Ian Lai:
 - https://react-bootstrap.github.io/components/navbar/
 - Message Link in Slack: https://ucsb-148-w23.slack.com/archives/C04LD26GB0B/p1675396711892089
   
-  Anmool Kapoor
+Anmol Kapoor
 - https://cli.github.com/manual/gh_help_reference
 - Message Link in Slack: https://ucsb-148-w23.slack.com/archives/C04LFJVSDHA/p1674781622977929
 
