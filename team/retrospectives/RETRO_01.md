@@ -11,6 +11,7 @@
 
 * a measurement: We should be done with the front end by the end of the week. .
 
+## Optional
 
 Start:
 - Break down user stories into smaller tasks
@@ -36,3 +37,9 @@ Continue:
 - pushing features to feat branch to encourage healthy code reviews
 - giving status updates via Slack
 
+
+## Outcomes
+
+For our goal this week, we greatly improved out time management. After the retrospective, we met the following Sunday to plan out our sprint. During this meeting, we broke down user stories
+into smaller tasks and assigned all these tasks to everyone. We also used the lectures only for planning and worked on our tasks outside of class. This greatly improved team communication
+as we were not only just working on the tasks in person, but also on our own time, increasing usage of the Slack channel. We also altogether put in time each day to work on the project.
