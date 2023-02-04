@@ -1,4 +1,4 @@
-# Lecture 7: Daily Standup (01/31/23)
+# Lecture 7: Daily Standup (02/02/23)
 
 ## Music Recommendation
 
