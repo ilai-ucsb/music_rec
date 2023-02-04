@@ -29,3 +29,4 @@
 
   Mauricio Munoz Valtierra
 - "does anyone have any resources for setting up jest to test React? i've been having trouble setting it up due to the configuration settings"
+- Message Link in Slack: https://ucsb-148-w23.slack.com/archives/C04LD26GB0B/p1675463397509699
