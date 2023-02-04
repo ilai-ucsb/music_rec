@@ -13,7 +13,7 @@
   
   Francisco Leyva: 
 - https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
-  
+- Message Link in Slack: https://ucsb-148-w23.slack.com/archives/C04LFJVSDHA/p1675463300338599
   
   Ian Lai:
 - https://react-bootstrap.github.io/components/navbar/
