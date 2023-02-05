@@ -1,3 +1,4 @@
+// Each song will be displayed in this format 
 const SearchResult = ({ songs }) => {
     return (
         <article>

@@ -3,6 +3,8 @@ import { Text, Linking } from 'react-native';
 import NavBarApp from "../NavBarApp";
 import "./utils/Page.css"
 
+// Basic about page. Not really sure what to put here so feel free to change it.
+
 export default function AboutIndexPage() {
   return (
       <div>

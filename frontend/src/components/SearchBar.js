@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import './SearchBar.css'
 
+// setSearchResult is a prop that is passed through to SearchBar. It does what it says 
+// and sets searchResult from HomeIndexPage.js to a value that you give it here. 
 
 function SearchBar({ setSearchResult }) {
 
@@ -8,10 +10,11 @@ function SearchBar({ setSearchResult }) {
 
   let handleSubmit = async (e) => {
     e.preventDefault();
-    if (searchInput == ""){
+    if (searchInput === ""){
       setSearchResult(undefined)
     } else {
       try{
+        // CORS is only required for server side api calling
         let songParameters = {
           method: 'POST',
           mode: 'cors',
@@ -20,14 +23,16 @@ function SearchBar({ setSearchResult }) {
           },
           body: JSON.stringify(searchInput)
         };
-    
-        let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters)
+        // The url here is for the flask api deployed on a server.
+        // If any changes to the flask api was made please change the url to a localhost url to test locally.
+        await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters)
           .then((response) => response.json())
           .then((data) => setSearchResult(data))
       } catch(error) {
         console.log("error")
       }
     }
+    // clears the input on submit
     setSearchInput("");
   };
 
@@ -39,7 +44,6 @@ function SearchBar({ setSearchResult }) {
   return <div>
     <form onSubmit={handleSubmit}>
       <input
-        className='search'
         type="search"
         placeholder="Enter a song"
         value={searchInput}

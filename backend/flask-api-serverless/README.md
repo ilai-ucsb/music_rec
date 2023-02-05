@@ -1,131 +1,20 @@
-<!--
-title: 'Serverless Framework Python Flask API on AWS'
-description: 'This template demonstrates how to develop and deploy a simple Python Flask API running on AWS Lambda using the traditional Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: Python
-priority: 2
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# Flask API
+### A good place to start reading about Flask: https://flask.palletsprojects.com/en/2.2.x/
+## How is it Deployed?
 
-# Serverless Framework Python Flask API on AWS
+Currently the Flask API is being deployed through serverless. Due to the nature of how it is setup only @Ian Lai
+will be able to deploy it on the web. Please @Ian Lai on slack if you want to deploy an updated version of the Flask API.
 
-This template demonstrates how to develop and deploy a simple Python Flask API service running on AWS Lambda using the traditional Serverless Framework.
+## How will I write new functions for the Flask API?
 
+- Before you do anything please make sure you create a virtual environment for python by entering `python3 -m venv .venv` into the terminal
+- If this is your first time running the Flask API make sure your in this directory and enter `pip install -r requirements.txt` in the terminal
+- `app.py` will be the entry for all our API calls. Therefore please either make a new `.py` file or add any new functions to the `SpotifyAPICaller.py` file. If adding a new `.py` file, make sure to import the functions on the file into `app.py`.
+- Once your done with adding your functions you can either create a new `@app.route` in `app.py` or you can modify an existing one. If your doing a `"GET"` request make sure it returns a `JSON` string by using `jsonify`. If your doing a `"POST"` request make sure you save `request.json` to a variable since that will be how you get information from REACT. Once your done with all the above your ready to test your API call.
 
-## Anatomy of the template
+## How will I test Flask API locally?
 
-This template configures a single function, `api`, which is responsible for handling all incoming requests thanks to configured `httpApi` events. To learn more about `httpApi` event configuration options, please refer to [httpApi event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api/). As the events are configured in a way to accept all incoming requests, `Flask` framework is responsible for routing and handling requests internally. The implementation takes advantage of `serverless-wsgi`, which allows you to wrap WSGI applications such as Flask apps. To learn more about `serverless-wsgi`, please refer to corresponding [GitHub repository](https://github.com/logandk/serverless-wsgi). Additionally, the template relies on `serverless-python-requirements` plugin for packaging dependencies from `requirements.txt` file. For more details about `serverless-python-requirements` configuration, please refer to corresponding [GitHub repository](https://github.com/UnitedIncome/serverless-python-requirements).
-
-## Usage
-
-### Prerequisites
-
-In order to package your dependencies locally with `serverless-python-requirements`, you need to have `Python3.8` installed locally. You can create and activate a dedicated virtual environment with the following command:
-
-```bash
-python3.8 -m venv ./venv
-source ./venv/bin/activate
-```
-
-Alternatively, you can also use `dockerizePip` configuration from `serverless-python-requirements`. For details on that, please refer to corresponding [GitHub repository](https://github.com/UnitedIncome/serverless-python-requirements).
-
-### Deployment
-
-This example is made to work with the Serverless Framework dashboard, which includes advanced features such as CI/CD, monitoring, metrics, etc.
-
-In order to deploy with dashboard, you need to first login with:
-
-```
-serverless login
-```
-
-install dependencies with:
-
-```
-npm install
-```
-
-and
-
-```
-pip install -r requirements.txt
-```
-
-and then perform deployment with:
-
-```
-serverless deploy
-```
-
-After running deploy, you should see output similar to:
-
-```bash
-Deploying aws-python-flask-api-project to stage dev (us-east-1)
-
-✔ Service deployed to stack aws-python-flask-api-project-dev (182s)
-
-endpoint: ANY - https://xxxxxxxx.execute-api.us-east-1.amazonaws.com
-functions:
-  api: aws-python-flask-api-project-dev-api (1.5 MB)
-```
-
-_Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [httpApi event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api/).
-
-### Invocation
-
-After successful deployment, you can call the created application via HTTP:
-
-```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/dev/
-```
-
-Which should result in the following response:
-
-```
-{"message":"Hello from root!"}
-```
-
-Calling the `/hello` path with:
-
-```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/dev/hello
-```
-
-Should result in the following response:
-
-```bash
-{"message":"Hello from path!"}
-```
-
-If you try to invoke a path or method that does not have a configured handler, e.g. with:
-
-```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/dev/nonexistent
-```
-
-You should receive the following response:
-
-```bash
-{"error":"Not Found!"}
-```
-
-### Local development
-
-Thanks to capabilities of `serverless-wsgi`, it is also possible to run your application locally, however, in order to do that, you will need to first install `werkzeug` dependency, as well as all other dependencies listed in `requirements.txt`. It is recommended to use a dedicated virtual environment for that purpose. You can install all needed dependencies with the following commands:
-
-```bash
-pip install werkzeug
-pip install -r requirements.txt
-```
-
-At this point, you can run your application locally with the following command:
-
-```bash
-serverless wsgi serve
-```
-
-For additional local development capabilities of `serverless-wsgi` plugin, please refer to corresponding [GitHub repository](https://github.com/logandk/serverless-wsgi).
+- You can run flask locally by entering `python3 app.py` and it should be deployed to `http://localhost:5000` by default. You can change the default server by changing `app.run(debug=True)` to something like `app.run(port=4000, debug=True)`.
+- Once your flask is running locally, go to the package.json in the folder `frontend` and add `proxy="[enter your localhost url here]"`.
+- By defualt the flask api server is being called from `frontend/src/components/SearchBar.js`. Just change the `fetch('[serverURL]', songParameters)` to `fetch('[localhostURL]', songParameters)`
+- Run the frontend using `npm start` and you should now be able to test whether your api call is working or not. 

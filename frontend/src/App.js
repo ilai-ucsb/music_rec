@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route} from "react-router-dom";
 import AboutIndexPage from './components/pages/AboutIndexPage';
 import HomeIndexPage from './components/pages/HomeIndexPage';
 
+// App.js is only used to route pages
+
 function App() {
   return (
     <div className="App">
