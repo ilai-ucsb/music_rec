@@ -1,35 +1,43 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './SearchBar.css'
 
 
-function SearchBar(props) {
+function SearchBar({ setSearchResult }) {
 
- const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
- const handleChange = (e) => {
+  let handleSubmit = async (e) => {
     e.preventDefault();
-    setSearchInput(e.target.value);
+    let songParameters = {
+      method: 'POST',
+      headers: {
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify(searchInput)
+    };
+
+    await fetch('/result', songParameters)
+      .then(response => response.json())
+      .then(data => setSearchResult(data))
+    setSearchInput("");
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      props.onSubmit(searchInput);
-      console.log(searchInput);
-    }
-  };
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearchInput(e.target.value)
+  }
 
-return <div className='wrapper'>
+  return <div>
+    <form onSubmit={handleSubmit}>
+      <input
+        className='search'
+        type="search"
+        placeholder="Enter a song"
+        value={searchInput}
+        onChange={handleChange} />
+    </form>
 
-    <input
-    className='search'
-    type="search"
-    placeholder="Enter a song name"
-    value={searchInput} 
-    onChange={handleChange}
-    onKeyDown={handleKeyDown}/>
-
-    </div>
-
+  </div>
 
 };
 
