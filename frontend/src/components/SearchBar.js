@@ -6,8 +6,6 @@ function SearchBar({ setSearchResult }) {
 
   const [searchInput, setSearchInput] = useState("");
 
-  console.log(searchInput)
-
   let handleSubmit = async (e) => {
     e.preventDefault();
     if (searchInput == ""){
@@ -26,7 +24,6 @@ function SearchBar({ setSearchResult }) {
         let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters)
           .then((response) => response.json())
           .then((data) => setSearchResult(data))
-        console.log(JSON.stringify(response))
       } catch(error) {
         console.log("error")
       }
