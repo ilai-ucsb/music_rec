@@ -42,8 +42,9 @@ function SearchBar({ setSearchResult }) {
   }
 
   return <div>
-    <form onSubmit={handleSubmit}>
+    <form aria-label = "form" onSubmit={handleSubmit}>
       <input
+        aria-label = "search-bar"
         type="search"
         placeholder="Enter a song"
         value={searchInput}
