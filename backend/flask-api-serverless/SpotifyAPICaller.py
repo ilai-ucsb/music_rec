@@ -12,7 +12,7 @@ def top_tracks(artist):
     raw_data = sp.search(q="artist:" + artist, type='track', limit=1)
     artist_id = raw_data['tracks']['items'][0]['artists'][0]['id']
     track_list = sp.artist_top_tracks(artist_id=artist_id)
-    for i in range(1):
+    for i in range(5):
         track_name.append(track_list['tracks'][i]['name'])
 
     return track_name
