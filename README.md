@@ -16,6 +16,14 @@ experience. API requests connect and transfer data from frontend to backend.
 - Flask (API to connect frontend/backend)
 - Render (web app deployment)
 
+## MVP
+
+**Website UI Interface/Experience**
+![](images/mvp_web.png)
+
+**MVP Product Flowchart**
+![](images/mvp_flowchart.png)
+
 ## User Roles
 
 - This app has one kind of user: user interested in getting song
