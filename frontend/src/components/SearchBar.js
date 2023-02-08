@@ -17,6 +17,7 @@ return <div className='wrapper'>
     className='search'
     type="search"
     placeholder="Enter a song name"
+    data-testid="searchbar"
     value={searchInput} />
 
     </div>
