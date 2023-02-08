@@ -25,6 +25,8 @@ function SearchBar({ setSearchResult }) {
         };
         // The url here is for the flask api deployed on a server.
         // If any changes to the flask api was made please change the url to a localhost url to test locally.
+        // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
+        // add "proxy": "http://localhost:5000" to package.json if testing locally
         await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters)
           .then((response) => response.json())
           .then((data) => setSearchResult(data))
