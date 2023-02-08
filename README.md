@@ -1,6 +1,5 @@
-View the app in [PRODUCTION](https://test-3k13.onrender.com/)
-
-# Music Recommendation
+<h1 align="center"> Music Recommendation </h1>
+<h5 align="center"> View the app in production <a href="https://test-3k13.onrender.com/">here</a>. </h5>
 
 Music recommendation web application allows users to connect with Spotify and
 find top-hit songs using our custom-built AI recommendation engine. The two
