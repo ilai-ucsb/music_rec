@@ -1,4 +1,4 @@
-# Lab03 Meeting Notes (Friday the 3th, 2023)
+# Lab03 Meeting Notes (2/3/23)
 
 Retroactively adding notes for this day's section...
 
@@ -34,9 +34,9 @@ Anmol
 
 
 Aditya 
--Finished data visualization experiments for learning objectives (will push a PR later today). Addressed comments on my dataset PR. Approved other’s PRs
--I plan to push my PR for learning today. 
--Blockers: need 1 more approval for dataset PR. Need feedback on the flowchart diagrams for the MVP.
+- Finished data visualization experiments for learning objectives (will push a PR later today). Addressed comments on my dataset PR. Approved other’s PRs
+- I plan to push my PR for learning today. 
+- Blockers: need 1 more approval for dataset PR. Need feedback on the flowchart diagrams for the MVP.
 
 
 Parsa 
