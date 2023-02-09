@@ -3,10 +3,6 @@ import SearchBar from './components/SearchBar';
 import {useState, useEffect} from 'react'; 
 
 
-const CLIENT_ID ="ea21fe594d6342c4b5d33990b7315a26";
-const CLIENT_SECRET ="0406ab09cc844180a2b79cebe7f328ed";
-
-
 
 
 function App() {
