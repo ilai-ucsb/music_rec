@@ -12,23 +12,25 @@ Attendance:
 
 All members of the team are present.
 
+## Discussion Notes
+
 Discussed Front development to show case recommendation on card format using  material UI.
 Discussed the implementing backend using spotify’s own recommendation api for MVP 
 Reviewed team agreement md. 
 Worked on completing retro write ups for lab 3. 
 Updated Learning md
 
-Status:
+## Status:
 
 Francisco
--Finished a branch that uses Maurcio's searchbar and spotify's API to search their track list and find a song and its audio details
--Will make a pr to merge with main
--no blockers so far
+- Finished a branch that uses Maurcio's searchbar and spotify's API to search their track list and find a song and its audio details
+- Will make a pr to merge with main
+- no blockers so far
 
 Anmol
--I put in another PR yesterday during class with some tests and another one a few minutes ago
--I plan on working on my learning task of creating a Flask app which calls the backend model and work on finishing the tasks in the google doc
--Blockers: PR approvals requested! See: https://github.com/ucsb-cs148-w23/project-t09-musicrecommendation/pulls
+- I put in another PR yesterday during class with some tests and another one a few minutes ago
+- I plan on working on my learning task of creating a Flask app which calls the backend model and work on finishing the tasks in the google doc
+- Blockers: PR approvals requested! See: https://github.com/ucsb-cs148-w23/project-t09-musicrecommendation/pulls
 
 
 Aditya 
@@ -38,9 +40,9 @@ Aditya
 
 
 Parsa 
--No Progress on KNN
--Will work on KNN over the weekend and put the UCSB Color Scheme on our website
--No Blockers
+- No Progress on KNN
+- Will work on KNN over the weekend and put the UCSB Color Scheme on our website
+- No Blockers
 
 Ian
 - Continued to see how flask will connect to frontend
