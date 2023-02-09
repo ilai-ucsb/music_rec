@@ -52,10 +52,9 @@ Attendance:
 - Blockers - none
 #### Parsa
 
--
--
--
-
+- No progress on KNN, I am trying to settup my dev environment on my personal laptop.
+- Will update the theme of website by Thursday
+- Blockers were setting up react
 
 ### Discussion
 
