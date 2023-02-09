@@ -44,9 +44,9 @@ function SearchBar({ setSearchResult }) {
   }
 
   return <div>
-    <form aria-label = "form" onSubmit={handleSubmit}>
+    <form data-testid = "searchBar" onSubmit={handleSubmit}>
       <input
-        aria-label = "search-bar"
+        data-testid = "searchInput"
         type="search"
         placeholder="Enter a song"
         value={searchInput}
