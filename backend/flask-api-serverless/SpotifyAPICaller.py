@@ -44,6 +44,8 @@ def get_recommendation(track):
     track_id = raw_data['tracks']['items'][0]['id']
     recommendation = base_model(track_ids=[track_id])
     for i in range(5):
-        song_list.append(recommendation['tracks'][i]['name'])
+        song_list.append({"songName": recommendation['tracks'][i]['name'],
+                          "artist": recommendation['tracks'][i]['artists'][0]['name'],
+                          "song_id": recommendation['tracks'][i]['id']})
 
-    return song_list
+    return [song_list]

@@ -5,7 +5,8 @@ import SearchResult from "./SearchResult"
 // searchResults is the json string we get back and searchResults.name is the array holding all the songs.
 const ListPage = ({ searchResults }) => {
     if (searchResults !== undefined && searchResults.name !== undefined){
-        let results = searchResults.name.map(songs => <SearchResult key={songs} songs = {songs} />)
+        let results = searchResults.name[0].map((element, key) => 
+            <SearchResult key={key} songName={element.songName} artist={element.artist} song_id={element.song_id}/>)
         return (
             <main>{results}</main>
         )
