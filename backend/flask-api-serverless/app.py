@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
-from SpotifyAPICaller import *
 from flask_cors import CORS
+
+from SpotifyAPICaller import get_recommendation
 
 app = Flask(__name__)
 CORS(app)
@@ -11,11 +12,7 @@ def getSongs():
     result = get_recommendation(response)
     return jsonify({
         "name": result
-    })
-
-@app.route('/')
-def getHello():
-    return jsonify({"name:" "hello"})
+    }), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
