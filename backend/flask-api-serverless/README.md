@@ -10,7 +10,7 @@ will be able to deploy it on the web. Please @Ian Lai on slack if you want to de
 ## How will I write new functions for the Flask API?
 
 - Before you do anything please make sure you create a virtual environment for python by entering `python3 -m venv .venv` into the terminal
-- If this is your first time running the Flask API make sure your in this directory and enter `pip install -r requirements.txt` in the terminal
+- If this is your first time running the Flask API make sure you are in this directory and enter `pip install -r requirements.txt` in the terminal
 - `app.py` will be the entry for all our API calls. Therefore please either make a new `.py` file or add any new functions to the `SpotifyAPICaller.py` file. If adding a new `.py` file, make sure to import the functions on the file into `app.py`.
 - Once your done with adding your functions you can either create a new `@app.route` in `app.py` or you can modify an existing one. If your doing a `"GET"` request make sure it returns a `JSON` string by using `jsonify`. If your doing a `"POST"` request make sure you save `request.json` to a variable since that will be how you get information from REACT. Once your done with all the above your ready to test your API call.
 
