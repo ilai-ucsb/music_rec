@@ -16,7 +16,7 @@ will be able to deploy it on the web. Please @Ian Lai on slack if you want to de
 
 ## How will I test Flask API locally?
 
-- You can run flask locally by entering `python3 app.py` and it should be deployed to `http://localhost:5000` by default. You can change the default server by changing `app.run(debug=True)` to something like `app.run(port=4000, debug=True)`.
+- You can run flask locally by entering `python3 app.py` or `python3 -m flask run` in the terminal and it should be deployed to `http://localhost:5000` by default. You can change the default server by changing `app.run(debug=True)` to something like `app.run(port=4000, debug=True)`. You can also specify various configuration values such as DEBUG mode in the `.flaskenv` file. Refer to [this documentation](https://flask.palletsprojects.com/en/2.2.x/config/) for more details.
 - Once your flask is running locally, go to the package.json in the folder `frontend` and add `proxy="[enter your localhost url here]"`.
 - By defualt the flask api server is being called from `frontend/src/components/SearchBar.js`. Just change the `fetch('[serverURL]', songParameters)` to `fetch('[localhostURL]', songParameters)`
 - Run the frontend using `npm start` and you should now be able to test whether your api call is working or not.
