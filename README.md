@@ -59,6 +59,8 @@ experience. API requests connect and transfer data from frontend to backend.
 - React-Router-Dom (Used to route pages)
 - React Native (Used for linking texts)
 - Spotipy (Spotify API for python)
+- Pytest (Testing framework for python)
+- Jest (Testing framework for JavaScript)
 
 ### Installation Steps
 
