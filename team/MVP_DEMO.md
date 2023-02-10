@@ -1,6 +1,5 @@
 # MVP DEMO (02.09.23)
 
-TODO: Add the video link below
-MVP Video Link: 
+MVP Video Link: https://youtu.be/cPsdvt3aMRI
 
- View the app in production: https://test-3k13.onrender.com/
+View the app in production: https://test-3k13.onrender.com/
