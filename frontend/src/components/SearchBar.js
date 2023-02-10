@@ -24,9 +24,7 @@ return <div className='wrapper'>
     className='search'
     type="search"
     placeholder="Enter a song name"
-    value={searchInput} 
-    onChange={handleChange}
-    onKeyDown={handleKeyDown}/>
+
 
     </div>
 
