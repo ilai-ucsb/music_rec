@@ -1,0 +1,41 @@
+.App-header {
+    background-color: #282c34;
+    color: white;
+    height: 100%;
+    min-height: 100vh;
+    padding-top: 80px;
+    width: 100%;
+    font-size: calc(10px + 2vmin);
+  }
+
+  .about-title {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    width: auto;
+    word-break: break-word;
+  }
+  
+  .general {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    width: auto;
+    word-break: break-word;
+    font-size: 18px;
+    margin-right: 20%;
+    margin-left: 20%;
+  }
+
+  .list {
+    border: 1px solid grey;
+    border-radius: 5px;
+    height: 40px;
+    width: 5%;
+    max-width: 20%;
+    display: block;
+    margin: 20px auto 0;
+    outline: none;
+  }
