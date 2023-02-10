@@ -2,7 +2,7 @@
 
 Retroactively adding notes for this day's section...
 
-Attendance:
+## Attendance:
  - [X] Parsa
  - [X] Anmol
  - [X] Aditya
