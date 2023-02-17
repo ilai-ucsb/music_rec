@@ -9,6 +9,6 @@
 | Thu 01/26 | Francisco | Lecture 5 → scribe                                                        |
 | Fri 01/27 | Aditya    | 1st Retro → lead team in retro discussion                                 |
 | Fri 02/03 | Anmol     | 2nd Retro → lead team in retro discussion                                 |
-| Tue 02/07 | Francisco | Lecture 5 → scribe                                                        |
+| Tue 02/07 | Francisco | Lecture 9 → scribe                                                        |
 
 
