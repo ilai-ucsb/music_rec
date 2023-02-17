@@ -15,19 +15,19 @@ Mentors: Mateo/Matthew
 
 ## Agenda
 
- - Daily Scrum (log a lect10.md document)
+ - Daily Scrum (log a lect11.md document)
  - Work on tasks assigned last night
-
-#### Mauricio
-
- - Met with team last night for next steps, finished creating review repo for team03
- - Will be working on next issue, refreshing recommendations when pressing enter
- - no blockers
 
 #### Anmol
 
  - Worked with the team on adding and assigning issues on the Kanban board; reviewed PRs
  - I am in the process of creating a similarity finder given a set of features
+ - no blockers
+
+#### Mauricio
+
+ - Met with team last night for next steps, finished creating review repo for team03
+ - Will be working on next issue, refreshing recommendations when pressing enter
  - no blockers
 
 #### Francisco
