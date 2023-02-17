@@ -31,6 +31,7 @@ function SearchBar({ setSearchResult }) {
           .then((response) => response.json())
           .then((data) => setSearchResult(data))
       } catch(error) {
+        // need to write a popup telling the user there was an error
         console.log("error")
       }
     }
