@@ -1,7 +1,7 @@
 # Testing Implementation
 ### Testing Library
 - React Testing Library to test React Components
-- React Scripts for test tunner
+- React Scripts for test runner
 
 ### Components Tested
 #### Search Bar
