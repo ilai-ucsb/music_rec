@@ -14,42 +14,45 @@
 ## Optional
 
 Start:
-- Break down user stories into smaller tasks
-- check-in meeting during the weekend so that there is not a lot of gap between Fri-
-- defining the model 
-- start working on project ~30 mins a day (putting in more hours)
-- start planning the issues
-- designing the methodology of how the model will work
-- work more actively work on 3 concrete issues per week (PRs), so we can reach the MVP much faster than we could
-- start a discussion on Slack when a PR has been 
+- Getting things done before our meetings
+- Assigning ourselves to issues on our own. 
+- Have an idea for what you’re going to code
+- We need to be more explicit. 
+- Reserving meetings for bigger issues.
+- Have a scribe assigned before the meetings. 
+- Writing actual high level organized tests for every new feature we make available.
+- Writing tests retroactively for stuff we put out in the MVP.
+- Breaking up larger features into smaller bits
+- Getting one issue finished per week. 
+- Splitting up into smaller groups based on the issues we’re working on, like frontend/backend 
+- Writing more descriptive PRs, ie include a screenshot of what the markdown would look like, or what the new frontend would look like.
+
 
 Stop: 
-- learning w/o coding
-- doing tasks during class which can be outside of class (async)
-- creating large issues which we cannot breakdown
-- working in misc work during class which can be done by anyone outside of the class
-- push tasks to complete/done right before class
+- Sending PRs with small errors like markdown formatting.
+- Sending PRs with HUGE code review requirements, 
+- Pushing code without tests associated with it.
+- Not having an issue assigned every week.
+
 
 Continue:
-- Wednesday check-ins
-- Communicating as a team, organizing tasks so everyone has something they are working on.
-- continue giving the positive feedback to everyone in the team
-- pushing features to feat branch to encourage healthy code reviews
-- giving status updates via Slack
+- Documenting code, working on the read me.
+- Weekly meetings to help coordinate our tasks. 
+- Communicating. 
+- Creating issues as we find them. 
+- Sending PRs without descriptions. 
+- Asking for help when we need it. 
+
 
 
 ## Outcomes
 
-For our goal this week, we want to improve our organization. We 
+For our goal this week, we want to improve our organization and get a huge portion of our database module complete.  
 
 ## Retro Assessment
-* A brief description of what retro outline or process you used.
-* A brief assessment of how it went.
-* What advice would you give to the next person leading a retro
-  based on what you learned today?
+
+We used the Start-Stop-Continue template for this retro. We were already familiar with it, so doing it again was a good idea. I believe we showed improvement when we implemented it in our first retro.
   
-  We used the Start-Stop-Continue template for this retro. We were already familiar with it, so doing it again was a good idea. I believe we showed improvement when we implemented it in our first retro. 
+It went as well as I'd expected. Everyone got to say their piece and we had discussions about what we want to change. It turned out that the group had similar issues, so knowing that others shared those issues was good for the team. We do plan on implementing changes based on our collective feedback. 
   
-  
-  For the next retro I would say come prepared. We were taken by suprise by this retro, or at least I was. If I had known it was coming up I would've prepared more notes for our team.
-  
+For the next retro I would say come prepared with issues that take more than just a conversation to fix. Communication is key but so is candor. We need to know when to bring issues up and when we should save them for a messaging board. We had a lot of issues brought up which was nice, but it came off as issues being held back and finally let go. If we have our major issues saved for the retros, we'd have an easier time doing retros.
