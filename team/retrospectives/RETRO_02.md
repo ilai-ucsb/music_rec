@@ -47,7 +47,7 @@ Continue:
 
 ## Outcomes
 
-For our goal this week, we want to improve our organization and get a huge portion of our database module complete.  
+For our goal this week, we want to improve our organization and get a huge portion of our database module complete. Our team impkemented some of these changes right away. We had our scribe for lecture 12 assigned and ready for the day's task. Some of our members got to work on the database and got a ton of progress done. Their work is sitting in review right now awaiting indepth review. We still need to implement higher level testing and be more clear on what we want for our database. 
 
 ## Retro Assessment
 
