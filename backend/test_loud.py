@@ -2,12 +2,13 @@
 """
 Created on Tue Feb 21 13:28:28 2023
 
-@author: Parssa Hafezi
+@author: Parsa Hafezi
 """
 
 from mock_db import generateRandomRow
 from loud import getLoud
 
+#test get loud song with one song
 def test1():
     data = [
                 {"acousticness": 0.44734290491938256,
@@ -40,6 +41,11 @@ def test1():
         correct = False
     return correct
 
+"""
+Test 3 
+test 10 songs, loud = 0, num = 6
+expected return should bottom 6 loudest songs in increasing order 
+"""
 def test2():
     data = [generateRandomRow(i) for i in range(10)]
     sorted_data = getLoud(data, 0, 6)
@@ -51,7 +57,11 @@ def test2():
             correct = False
     return correct
 
-
+"""
+Test 3 
+test 10 songs, loud = 1, num = 6
+expected return should top 6 loudest songs in decreasing order 
+"""
 def test3():
     data = [generateRandomRow(i) for i in range(10)]
     sorted_data = getLoud(data, 1, 6)
@@ -63,6 +73,11 @@ def test3():
             correct = False
     return correct
 
+"""
+Test 3 
+test 10 songs, loud = .5, num = 6
+expected return should 6 medium loudest songs in increasing order by distance from .5
+"""
 def test4():
     data = [generateRandomRow(i) for i in range(10)]
     sorted_data = getLoud(data, .5, 6)
