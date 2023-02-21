@@ -40,9 +40,9 @@ def test_add_test_document():
     id = add_test_document(config.TEST_DICT)
     res = get_test_document(id)
     assert config.TEST_DICT == res, "The two test documents are not the same"
+    return id
 
-def test_delete_test_document():
-    key = "603"
+def test_delete_test_document(key="abc"):
     delete_test_document(key)
     assert get_test_document(key) == None, "The test document was not deleted"
 
@@ -51,6 +51,6 @@ def test_delete_test_document():
 
 if __name__ == "__main__":
     database._setup_database()
-    # test_add_test_document()
-    test_delete_test_document()
+    id = test_add_test_document()
+    test_delete_test_document(id)
 

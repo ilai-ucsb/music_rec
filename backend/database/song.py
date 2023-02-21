@@ -3,7 +3,7 @@ class Song(object):
     The Song object contains all features for each song.
 
     Arguments:
-        - , (spotify track id)
+        - id, (spotify track id)
         - name (string: track name)
         - popularity (double: track popularity)
         - year (integer: track release year)
