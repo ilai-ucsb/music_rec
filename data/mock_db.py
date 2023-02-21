@@ -58,6 +58,7 @@ def generateRandomRow(uniq: int):
 
     """
     random_date = generateRandomDate()
+    popularity = random.randint(0,100)
     return {
         "id": "song" + str(uniq) + "_" + str(time.time()),
         "valence": random.uniform(0,1),
@@ -75,8 +76,8 @@ def generateRandomRow(uniq: int):
         "loudness": random.uniform(0,1),
         "mode": 1 if random.uniform(0,1) >= 0.5 else 0,
         "name": f"songname-{uniq}",
-        "popularity_raw": random.randint(0,100),
-        "popularity": random.uniform(0,1),
+        "popularity_raw": popularity,
+        "popularity": popularity / 100,
         "release_date": random_date,
         "tempo": random.uniform(0,1015)  # likely we won't get tempo above 1015
     }
