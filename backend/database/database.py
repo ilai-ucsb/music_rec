@@ -46,8 +46,6 @@ def get_spotify_api_data(id):
     _pop = track["popularity"]
     _artists = [track["artists"][i]["name"] for i in range(len(track["artists"]))]
 
-    # print("got some info")
-
     # artist info
     artist_uri = track["artists"][0]["uri"]
     artist_info = sp.artist(artist_uri)
