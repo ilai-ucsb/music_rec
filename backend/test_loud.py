@@ -9,7 +9,7 @@ from mock_db import generateRandomRow
 from loud import getLoud
 
 #test get loud song with one song
-def test1():
+def test_1():
     data = [
                 {"acousticness": 0.44734290491938256,
                  "artists": ["artist_5"],
@@ -46,7 +46,7 @@ Test 3
 test 10 songs, loud = 0, num = 6
 expected return should bottom 6 loudest songs in increasing order 
 """
-def test2():
+def test_2():
     data = [generateRandomRow(i) for i in range(10)]
     sorted_data = getLoud(data, 0, 6)
 
@@ -62,7 +62,7 @@ Test 3
 test 10 songs, loud = 1, num = 6
 expected return should top 6 loudest songs in decreasing order 
 """
-def test3():
+def test_3():
     data = [generateRandomRow(i) for i in range(10)]
     sorted_data = getLoud(data, 1, 6)
     
@@ -78,7 +78,7 @@ Test 3
 test 10 songs, loud = .5, num = 6
 expected return should 6 medium loudest songs in increasing order by distance from .5
 """
-def test4():
+def test_4():
     data = [generateRandomRow(i) for i in range(10)]
     sorted_data = getLoud(data, .5, 6)
 
@@ -91,7 +91,3 @@ def test4():
 
 
 
-print(test1())
-print(test2())
-print(test3())
-print(test4())
