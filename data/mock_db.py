@@ -23,8 +23,9 @@ def generateRandomRow(uniq: int):
     Generate a Random Row of Spotify Music to quickly mock the database
 
     Sample Usage:
-        >>> from mock_db import data
+        >>> from mock_db import get_data
         >>> from pprint import pprint
+        >>> data = get_data()
         >>> len(data)
         170654
         >>> pprint(data[0])
@@ -83,7 +84,16 @@ def generateRandomRow(uniq: int):
     }
 
 
-def get_data(seed=None):
+def get_data(seed: int = None):
+    """
+    Get the mock data
+
+    Args:
+        seed (int): Set the seed for the random pseudo-generator. Default None
+
+    Returns:
+        (dict): the generated mock data
+    """
     if seed != None and type(seed) == int:
         random.seed(seed)
     return [generateRandomRow(i) for i in range(170654)]
