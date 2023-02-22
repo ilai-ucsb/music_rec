@@ -51,8 +51,6 @@ function SearchBar({ ...props }) {
         console.log("error")
       }
     }
-    // clears the input on submit
-    setSearchInput("");
   };
 
   const handleChange = (e) => {
