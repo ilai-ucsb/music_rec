@@ -83,4 +83,7 @@ def generateRandomRow(uniq: int):
     }
 
 
-data = [generateRandomRow(i) for i in range(170654)]
+def get_data(seed=None):
+    if seed != None and type(seed) == int:
+        random.seed(seed)
+    return [generateRandomRow(i) for i in range(170654)]
