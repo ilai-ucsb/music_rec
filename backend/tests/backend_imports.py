@@ -7,7 +7,7 @@ import sys
 
 VERBOSE = os.environ.get("VERBOSE", False)
 
-logging.basicConfig(level=logging.DEBUG if VERBOSE else logging.INFO)
+logger = logging.getLogger(__name__)  # get the logger from the callee
 
 PROJECT_NAME = "project-t09-musicrecommendation"  # folder name of the repository
 
@@ -17,23 +17,26 @@ try:
     sys.path.append(backend_path)
     sys.path.append(backend_path + "/flask-api-serverless")
 except ValueError as ve:
-    logging.error(f"There was an issue retrieving the folder path to the backend. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
-    logging.error(ve)
+    logger.error(f"There was an issue retrieving the folder path to the backend. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
+    logger.error(ve)
     raise  # re-raise the error to stop execution
 except Exception as exc:
-    logging.error(f"An unexpected error occurred.")
-    logging.error(exc)
+    logger.error(f"An unexpected error occurred.")
+    logger.error(exc)
     raise  # re-raise the error to stop execution
+
+
+# all the setup has been done to import modules. Now you can import modules in the try-except block below
 
 try:
     # add your imports here
-    from SimilaritySearch import similarSongs
+    import SimilaritySearch
 
 except ModuleNotFoundError as mnfe:
-    logging.error(f"Error when importing a module. Is the file in either of the following folders: {sys.path}")
-    logging.error(mnfe)
+    logger.error(f"Error when importing a module. Is the file in either of the following folders: {sys.path}")
+    logger.error(mnfe)
     raise  # re-raise to stop execution
 except Exception as exc:
-    logging.error("An unexpected error occurred.")
-    logging.error(exc)
+    logger.error("An unexpected error occurred.")
+    logger.error(exc)
     raise  # re-raise to stop execution
