@@ -84,16 +84,17 @@ def generateRandomRow(uniq: int):
     }
 
 
-def get_data(seed: int = None):
+def get_data(seed: int = None, size: int = 170654):
     """
     Get the mock data
 
     Args:
         seed (int): Set the seed for the random pseudo-generator. Default None
+        size (int): the number of rows in the dataset
 
     Returns:
         (dict): the generated mock data
     """
     if seed != None and type(seed) == int:
         random.seed(seed)
-    return [generateRandomRow(i) for i in range(170654)]
+    return [generateRandomRow(i) for i in range(size)]
