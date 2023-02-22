@@ -68,7 +68,7 @@ For our goal this week, we want to improve our organization and get a huge porti
 ## Retro Assessment
 
 
-We used the Start-Stop-Continue template for this retro. We were already familiar with it, so doing it again was a good idea. I believe we showed improvement when we implemented it in our first retro.
+We used the Start-Stop-Continue template for this retro. We were already familiar with it, so doing it again was a good idea. I believe we showed improvement when we implemented it in our first retro so it's proven to work for our group.
   
 It went as well as I'd expected. Everyone got to say their piece and we had discussions about what we want to change. It turned out that the group had similar issues, so knowing that others shared those issues was good for the team. We plan on implementing changes based on our collective feedback. 
   
