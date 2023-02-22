@@ -34,8 +34,6 @@ function SearchBar({ setSearchResult }) {
         console.log("error")
       }
     }
-    // clears the input on submit
-    setSearchInput("");
   };
 
   const handleChange = (e) => {
