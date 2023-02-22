@@ -14,7 +14,8 @@ if not PRODUCTION:  # if we are not in production, then use the mock database
     PROJECT_NAME = "project-t09-musicrecommendation"
 
     try:
-        data_path = "/".join(__file__.split("/")[:__file__.split("/").index(PROJECT_NAME)+1]) + "/data"
+        split_path = __file__.split("/")
+        data_path = "/".join(split_path[:len(split_path) - split_path[::-1].index(PROJECT_NAME)]) + "/data"
     except ValueError as ve:
         logging.error(f"There was an issue deriving the data path for the mock database. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
         logging.error(ve)
