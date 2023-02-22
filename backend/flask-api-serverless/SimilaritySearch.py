@@ -6,9 +6,12 @@ import pandas as pd
 from pprint import pprint
 import time
 
+
+logger = logging.getLogger(__name__)  # get the logger from the callee
+
 PRODUCTION = os.environ.get("PRODUCTION", False)
 
-if not PRODUCTION:  # if we are not in production, then use the mock database
+if int(PRODUCTION) == 0:  # if we are not in production, then use the mock database
     import sys
 
     PROJECT_NAME = "project-t09-musicrecommendation"
@@ -17,12 +20,12 @@ if not PRODUCTION:  # if we are not in production, then use the mock database
         split_path = __file__.split("/")
         data_path = "/".join(split_path[:len(split_path) - split_path[::-1].index(PROJECT_NAME)]) + "/data"
     except ValueError as ve:
-        logging.error(f"There was an issue deriving the data path for the mock database. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
-        logging.error(ve)
+        logger.error(f"There was an issue deriving the data path for the mock database. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
+        logger.error(ve)
         raise  # re-raise the error to stop execution
     except Exception as exc:
-        logging.error("An unexpected error occurred.")
-        logging.error(exc)
+        logger.error("An unexpected error occurred.")
+        logger.error(exc)
         raise  # re-raise the error to stop execution
 
     sys.path.append(data_path)
@@ -100,17 +103,39 @@ VALIDATION_TABLE = {
         "maximum": 100,
         "expected_type": int
     },
-    "release_date": {
-        "expected_type": str,
-        "_format": "%Y-%m-%d",
-        "year_col": "year"
-    },
     "tempo": {
         "minimum": 0,
         "maximum": 1015,
         "expected_type": int
     },
 }
+
+
+NUMERIC_PREPROCESSING_COLUMNS = [
+    "year",
+    "duration_ms",
+    "key",
+    "loudness",
+    "popularity",
+    "tempo",
+]
+
+
+def preprocessNumeric(column_name: str, column_data: pd.Series):
+    """
+    Generate a scaled column of the same shape as column_data to ensure all data is between 0 and 1, inclusive.
+
+    Args:
+        column_name (str): The name of the column for which a key exists in VALIDATION_TABLE
+        column_data (pd.Series | int | float): The data of the column to preprocess
+
+    Returns:
+        (pd.Series | float): A pandas Series containing the scaled values of column_data
+    """
+    minimum = VALIDATION_TABLE[column_name]["minimum"]
+    maximum = VALIDATION_TABLE[column_name]["maximum"]
+    difference = maximum - minimum
+    return (column_data - minimum) / difference
 
 
 def validateNumeric(value, minimum, maximum, expected_type):
@@ -155,12 +180,12 @@ def validateDate(value: str, _format: str = "%Y-%m-%d", year: int = None, expect
     try:
         date = time.strptime(value, _format)
     except ValueError as ve:
-        logging.debug(f"An error occurred trying to parse the date field with format \"{fmt}\". This implies that the field is not valid.")
-        logging.debug(ve)
+        logger.debug(f"An error occurred trying to parse the date field with format \"{fmt}\". This implies that the field is not valid.")
+        logger.debug(ve)
         return False
     except Exception as exc:
-        logging.error("An unexpected error occurred trying to parse \"{value}\" with format \"{fmt}\". See below for more details.")
-        logging.error(exc)
+        logger.error("An unexpected error occurred trying to parse \"{value}\" with format \"{fmt}\". See below for more details.")
+        logger.error(exc)
         return False
 
     if year and date.tm_year != year:
@@ -196,6 +221,7 @@ def similarSongs(n: int = 5, threshold: float = 0.05, **kwargs):
 
     Note that all arguments will be validated. The following arguments are
     acceptable with this function:
+
     Args:
         n (int): The number of results to return
         kwargs:
@@ -212,45 +238,55 @@ def similarSongs(n: int = 5, threshold: float = 0.05, **kwargs):
             loudness (float): a decimal between -60 dB and 10 dB, inclusive on both ends
             mode (int): either 1 or 0
             popularity (int): an integer between 0 and 100, inclusive on both ends
-            release_date (str): a valid date with the ear being identical to the year value if provided
             tempo (int): an integer between 0 and 1015, inclusive on both ends
 
     Returns:
         (list[dict]): A list of three songs with features provided as a dictionary
     """
-    logging.debug(f"similar_songs: Received Input n=`{n}` and kwargs=`{kwargs}`.")
-    logging.debug("Checking Validity of parameters...")
+    logger.debug(f"similar_songs: Received Input n=`{n}` and kwargs=`{kwargs}`.")
+    logger.debug("Checking Validity of parameters...")
     if not (n >= 1 and type(n) == int):
-        logging.error("Incorrect input value for `n` (Count of results to return)")
-        return None  # return None on error
+        raise ValueError("Incorrect input value for `n` (Count of results to return)")  # raise ValueError on ill-formed args
+    if len(kwargs) == 0:
+        raise RuntimeError("Did not find any arguments. Did you specify any arguments when attempting to find similarSongs?")  # raise RuntimeError when no kwargs are passed
     if not validateArgs(kwargs):
-        logging.error("Incorrect format for one of the keyword arguments.")
-        return None
+        raise ValueError("Incorrect format for one of the keyword arguments.")  # raise ValueError on ill-formed args
 
-    logging.debug("Parameters have passed validity checks")
+    logger.debug("Parameters have passed validity checks")
+    original = pd.DataFrame(data)
+
     dbObj = pd.DataFrame(data)[kwargs.keys()]
+
+    for column_name in kwargs.keys():
+        if column_name in NUMERIC_PREPROCESSING_COLUMNS:
+            dbObj[column_name] = preprocessNumeric(column_name, dbObj[column_name])
+            kwargs[column_name] = preprocessNumeric(column_name, kwargs[column_name])
+
     dbObj["idx"] = dbObj.index
-    logging.debug(dbObj)  # display some rows and columns in the database in debug mode
+    logger.debug(dbObj)  # display some rows and columns in the database in debug mode
 
     for column_name, column_value in kwargs.items():
         tmp = dbObj[[column_name]]
         result = dbObj[abs((tmp - {column_name: column_value}).sum(axis=1)) <= threshold]
         dbObj = dbObj.merge(result, how="inner", indicator=False)
 
-    idxs = dbObj[:5]["idx"]
-    original = pd.DataFrame(data)
+    # sort the database based on the sum over axis 1 (row-based sum)
+    dbObj["total"] = abs((dbObj[kwargs.keys()] - kwargs).sum(axis=1))
+    dbObj.loc[dbObj["total"].sort_values().index]
+
+    # get the first five values and return them in a record format
+    idxs = dbObj[:n]["idx"]
     return original.iloc[idxs].to_dict(orient='records')
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG if VERBOSE else logging.INFO)
-    logging.debug("Running local tests for similarity_songs")
+    logger.setLevel(logging.DEBUG if VERBOSE else logging.INFO)
+    logger.debug("Running local tests for similarity_songs")
     result = validateArgs(
         {
             "valence": 0.5,
-            "year": 2023,
-            "release_date": "2023-10-15"
+            "year": 2023
         }
     )
     print(result)
-    pprint(similarSongs(liveness=0.3, tempo=120, threshold=15))
+    pprint(similarSongs(valence=0.5))
