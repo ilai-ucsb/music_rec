@@ -30,3 +30,14 @@ if __name__ == "__main__":
     song_cluster_pipeline.fit(X)
     song_cluster_labels = song_cluster_pipeline.predict(X)
     data['cluster_label'] = song_cluster_labels
+
+    # Visualizing the Clusters with PCA
+    pca_pipeline = Pipeline([('scaler', StandardScaler()), ('PCA', PCA(n_components=2))])
+    song_embedding = pca_pipeline.fit_transform(X)
+    projection = pd.DataFrame(columns=['x', 'y'], data=song_embedding)
+    projection['title'] = data['name']
+    projection['cluster'] = data['cluster_label']
+
+    fig = px.scatter(
+        projection, x='x', y='y', color='cluster', hover_data=['x', 'y', 'title'])
+    fig.show()
