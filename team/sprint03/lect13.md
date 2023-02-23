@@ -6,12 +6,12 @@ Mentors: Mateo/Matthew
 
 ## Attendance:
 
- - [x] Parsa
- - [x] Anmol
- - [x] Aditya
- - [x] Francisco 
- - [x] Ian
- - [x] Mauricio
+ - [ ] Parsa
+ - [X] Anmol
+ - [X] Aditya
+ - [X] Francisco 
+ - [X] Ian
+ - [X] Mauricio
 
 ## Agenda
 
@@ -26,7 +26,9 @@ Mentors: Mateo/Matthew
 
 #### Mauricio
 
- - 
+ - Reviewed PRs, working on creating tests for issue #106
+ - Going to continue working on #106
+ - Blocked on being able to show that a result is received when entering a value submission
 
 #### Francisco
 
@@ -48,7 +50,7 @@ Mentors: Mateo/Matthew
 
 #### Parsa
 
- - 
+ - absent
 
 ### Discussion
 
