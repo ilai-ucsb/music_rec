@@ -47,10 +47,7 @@ def test_delete_test_document(key="abc"):
     assert get_test_document(key) == None, "The test document was not deleted"
 
 
-
-
 if __name__ == "__main__":
     database._setup_database()
     id = test_add_test_document()
     test_delete_test_document(id)
-

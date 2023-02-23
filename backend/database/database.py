@@ -1,8 +1,8 @@
-import numpy as np
 from tqdm import tqdm
 import pandas as pd
 import song
 import config
+import logging
 
 def _configure_api():
     """
@@ -77,8 +77,7 @@ def _setup_database():
     from firebase_admin import credentials
     import os
 
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../../music-recommendation-97191-firebase-adminsdk-i1bu9-2922dbbca7.json"
-
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = config.DATABASE_CERT
     cred = credentials.Certificate(config.DATABASE_CERT)
     firebase_admin.initialize_app(cred)
 
@@ -115,9 +114,10 @@ def _process(data):
 
     # There are 170653 total songs. 133638 songs with unique names,
     # so we should store songs by id.
-    print("Total No. songs", df.shape[0])
-    print("No. song with unique names", len(pd.unique(df['name'])))
-    print("No. song with unique ids", len(pd.unique(df['id'])))
+    logging.basicConfig(level=logging.INFO)
+    logging.info(f"Total No. of songs {df.shape[0]}")
+    logging.info(f"No. songs with unique names {len(pd.unique(df['name']))}")
+    logging.info(f"No. songs with unique ids {len(pd.unique(df['id']))}")
 
     for i in tqdm(range(df.shape[0])):
         item = df.loc[i]
