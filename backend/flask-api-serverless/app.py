@@ -8,8 +8,12 @@ CORS(app)
 
 @app.route('/result', methods=["POST"], strict_slashes=False)
 def getSongs():
-    response = request.json
-    result = get_recommendation(response)
+    response = request.get_json()
+    # Example use case for whether we should pass explicit filter to a function or not
+    # if (response['explicit'] != "NULL"):
+    #     pass in the explicit filter to the function
+    # else: don't pass explicit filter to the function
+    result = get_recommendation(response['name'])
     return jsonify({
         "name": result
     }), 200
