@@ -38,6 +38,11 @@ function SearchBar({ ...props }) {
           .then((data) => props.setSearchResult(data))
       } catch(error) {
         // need to write a popup telling the user there was an error
+        setShowError(true);
+        console.log(error);
+        setTimeout(() => {
+          setShowError(false);
+        }, 3000);
         console.log("error")
       }
     }
@@ -59,7 +64,11 @@ function SearchBar({ ...props }) {
         value={searchInput}
         onChange={handleChange} />
     </form>
-
+    {showError && (
+        <div className="error-popup">
+          <p>An error occurred while processing your request. Check your entry, we might not recognize that song.</p>
+        </div>
+      )}
   </div>
 
 };
