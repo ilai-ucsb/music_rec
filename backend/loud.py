@@ -8,18 +8,26 @@ Created on Tue Feb 21 13:21:26 2023
 import pandas as pd
 def getLoud(data, loud, num):
     """
-    usage pass in the data in from of list of dictionaries
-    pass in desired number of song and loud 
-    get back song with closest absolute loudness
     
+    returns that songs with the closest loudness level
+   
+    Parameters:
+    data (int): the dataset
+    loud (float): a value ranging from 0 and 1
+    num (int): the number of results to return
+  
+    Returns:
+    list of dict: songs with the closest loudness level
     
     internals:
-    read the data and convert it to a panda Data Frame
+    reads the data and convert it to a panda Data Frame
     add a distances column 
     sort data frame by distances
-    drop the distances columns 
+    drop the distances column 
     return the top num songs in form of list of dict same structure as the mock_db
+  
     """
+
     
     df = pd.DataFrame(data)
     df['distances'] = abs(df["loudness"] - loud)
