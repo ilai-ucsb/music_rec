@@ -74,7 +74,7 @@ def test_3():
     return correct
 
 """
-Test 3 
+Test 4
 test 10 songs, loud = .5, num = 6
 expected return should 6 medium loudest songs in increasing order by distance from .5
 """
