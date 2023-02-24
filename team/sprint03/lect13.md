@@ -6,7 +6,7 @@ Mentors: Mateo/Matthew
 
 ## Attendance:
 
- - [ ] Parsa
+ - [X] Parsa - LATE
  - [X] Anmol
  - [X] Aditya
  - [X] Francisco 
@@ -56,3 +56,4 @@ Mentors: Mateo/Matthew
 
  - Professor went through some design notes on how we should design UI information
  - Professor referenced starting a Design Document
+ - reviewed firebase permissions among the team
