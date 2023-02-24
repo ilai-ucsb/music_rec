@@ -1,5 +1,5 @@
 DATA_DIR = "../../data/raw_data.csv"
-DATABASE_CERT = "../../music-recommendation-97191-firebase-adminsdk-i1bu9-2922dbbca7.json"
+DATABASE_CERT = "../../music-recommendation-firebase-sdk-certificate.json"
 
 TEST_COLLECTION = 'test'
 TEST_DICT = {
