@@ -3,6 +3,9 @@ import os
 from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
 import pandas as pd
+import logging
+
+logging.basicConfig(level=logging.ERROR)
 
 load_dotenv()
 
@@ -63,7 +66,11 @@ def filter_songs(song_list, filters):
 def get_recommendation(track, filters):
     song_list = []
     raw_data = sp.search(q=track, type='track', limit=1)
-    track_id = raw_data['tracks']['items'][0]['id']
+    try:
+        track_id = raw_data['tracks']['items'][0]['id']
+    except LookupError as lerr:  # covers index error and key error
+        logging.error("Could not retrieve the track id for the song passed in.")
+        raise  # bad input track
     recommendation = base_model(track_ids=[track_id], limit=30)
     filtered_recommendations = filter_songs(recommendation["tracks"], filters)
     for song in filtered_recommendations[:5]:

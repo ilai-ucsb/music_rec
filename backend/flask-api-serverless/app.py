@@ -11,10 +11,14 @@ def getSongs():
     response = request.get_json()
     try:
         result = get_recommendation(response['name'], response.get('filters', dict()))
-    except KeyError as kerr:
+    except LookupError as kerr:
         return jsonify({
-            "ERROR": "the name field was not provided"
+            "ERROR": "the name field is invalid"
         }), 403
+    except Exception as exc:
+        return jsonify({
+            "ERROR": f"An unknown error occurred: {exc}"
+        }), 500
     return jsonify({
         "name": result
     }), 200
