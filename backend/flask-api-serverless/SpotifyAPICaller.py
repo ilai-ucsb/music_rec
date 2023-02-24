@@ -2,6 +2,10 @@ import spotipy
 import os
 from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
+import pandas as pd
+import logging
+
+logging.basicConfig(level=logging.ERROR)
 
 load_dotenv()
 
@@ -38,14 +42,41 @@ def base_model(artist_ids=None, genre_ids=None, track_ids=None, limit=10, countr
 
     return results
 
-def get_recommendation(track):
+def filter_songs(song_list, filters):
+    """Process the filters over the song list and return filtered songs
+
+    Args:
+        song_list (list): list of songs to filter
+        filters (dict): filters to apply to the song list
+
+    Returns:
+        (list): filtered songs
+    """
+    if type(filters) == dict and filters.get("explicit", "NULL") == "NULL":  # remove NULL explicit filter
+        filters.pop("explicit", None)
+    if filters == None or len(filters) == 0:
+        return song_list
+    good_songs = []
+    for song in song_list:
+        # here we will apply all the filters passed in, but only explicit filters are allowed
+        if bool(filters["explicit"]) == song["explicit"]:
+            good_songs.append(song)
+    return good_songs
+
+def get_recommendation(track, filters):
     song_list = []
     raw_data = sp.search(q=track, type='track', limit=1)
-    track_id = raw_data['tracks']['items'][0]['id']
-    recommendation = base_model(track_ids=[track_id])
-    for i in range(5):
-        song_list.append({"songName": recommendation['tracks'][i]['name'],
-                          "artist": recommendation['tracks'][i]['artists'][0]['name'],
-                          "song_id": recommendation['tracks'][i]['id']})
+    try:
+        track_id = raw_data['tracks']['items'][0]['id']
+    except LookupError as lerr:  # covers index error and key error
+        logging.error("Could not retrieve the track id for the song passed in.")
+        raise  # bad input track
+    recommendation = base_model(track_ids=[track_id], limit=30)
+    filtered_recommendations = filter_songs(recommendation["tracks"], filters)
+    for song in filtered_recommendations[:5]:
+        song_list.append({"songName": song['name'],
+                          "artist": song['artists'][0]['name'],
+                          "song_id": song['id'],
+                          "explicit": song["explicit"]})
 
     return [song_list]
