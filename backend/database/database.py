@@ -94,7 +94,7 @@ def add_song(key, song_dict):
     from firebase_admin import firestore
 
     db = firestore.client()
-    song_collection = db.collection('Songs')
+    song_collection = db.collection(u'Songs')
     doc = song_collection.document(key)
     if doc.get().to_dict() != None:
         raise ValueError("Adding an existing song to the database. You must update an existing song entry.")
