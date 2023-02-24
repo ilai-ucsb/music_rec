@@ -49,8 +49,8 @@ def filter_songs(song_list, filters):
     Returns:
         (list): filtered songs
     """
-    if type(filters) == dict and filters.get("explicit", "NULL"):
-        filters.pop("explicit", 0)
+    if type(filters) == dict and filters.get("explicit", "NULL") == "NULL":  # remove NULL explicit filter
+        filters.pop("explicit", None)
     if filters == None or len(filters) == 0:
         return song_list
     good_songs = []
@@ -66,9 +66,10 @@ def get_recommendation(track, filters):
     track_id = raw_data['tracks']['items'][0]['id']
     recommendation = base_model(track_ids=[track_id], limit=30)
     filtered_recommendations = filter_songs(recommendation["tracks"], filters)
-    for song in filtered_recommendations:
+    for song in filtered_recommendations[:5]:
         song_list.append({"songName": song['name'],
                           "artist": song['artists'][0]['name'],
-                          "song_id": song[i]['id']})
+                          "song_id": song['id'],
+                          "explicit": song["explicit"]})
 
     return [song_list]
