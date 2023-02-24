@@ -83,8 +83,27 @@ def _setup_database():
 
 def add_song(key, song_dict):
     """
-    Adds a song to 'Song' collection in the Firestore database
-    given the key and song_dict
+    Adds a `new` song to 'Song' collection in the Firestore
+    database given the key and song_dict
+
+    Input:
+        key: Spotify song id (database key)
+        song_dict: python dictionary of song features pushed
+                   as the value of the database document
+    """
+    from firebase_admin import firestore
+
+    db = firestore.client()
+    song_collection = db.collection('Songs')
+    doc = song_collection.document(key)
+    if doc.get().to_dict() != None:
+        raise ValueError("Adding an existing song to the database. You must update an existing song entry.")
+    doc.set(song_dict)
+
+def update_song(key, song_dict):
+    """
+    Updates an existing song to 'Song' collection in the
+    Firestore database given the key and song_dict
 
     Input:
         key: Spotify song id (database key)
