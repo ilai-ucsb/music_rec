@@ -54,4 +54,5 @@ Mentors: Mateo/Matthew
 
 ### Discussion
 
- - 
+ - Professor went through some design notes on how we should design UI information
+ - Professor referenced starting a Design Document
