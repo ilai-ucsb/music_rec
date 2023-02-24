@@ -9,7 +9,12 @@ CORS(app)
 @app.route('/result', methods=["POST"], strict_slashes=False)
 def getSongs():
     response = request.get_json()
-    result = get_recommendation(response['name'], response.get('filters', dict()))
+    try:
+        result = get_recommendation(response['name'], response.get('filters', dict()))
+    except KeyError as kerr:
+        return jsonify({
+            "ERROR": "the name field was not provided"
+        }), 403
     return jsonify({
         "name": result
     }), 200
