@@ -1,116 +1,46 @@
 #!/usr/bin/python3
 
 import logging
-import os
+import os, sys
 import pandas as pd
 from pprint import pprint
 import time
 
+from constants import VALIDATION_TABLE
 
 logger = logging.getLogger(__name__)  # get the logger from the callee
 
 PRODUCTION = os.environ.get("PRODUCTION", False)
 
+PROJECT_NAME = "project-t09-musicrecommendation"
+
+try:
+    split_path = __file__.split("/")
+    data_path = "/".join(split_path[:len(split_path) - split_path[::-1].index(PROJECT_NAME)]) + "/data"
+except ValueError as ve:
+    logger.error(f"There was an issue deriving the data path for the mock database. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
+    logger.error(ve)
+    raise  # re-raise the error to stop execution
+except Exception as exc:
+    logger.error("An unexpected error occurred.")
+    logger.error(exc)
+    raise  # re-raise the error to stop execution
+
+sys.path.append(data_path)
+
 if int(PRODUCTION) == 0:  # if we are not in production, then use the mock database
-    import sys
-
-    PROJECT_NAME = "project-t09-musicrecommendation"
-
-    try:
-        split_path = __file__.split("/")
-        data_path = "/".join(split_path[:len(split_path) - split_path[::-1].index(PROJECT_NAME)]) + "/data"
-    except ValueError as ve:
-        logger.error(f"There was an issue deriving the data path for the mock database. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
-        logger.error(ve)
-        raise  # re-raise the error to stop execution
-    except Exception as exc:
-        logger.error("An unexpected error occurred.")
-        logger.error(exc)
-        raise  # re-raise the error to stop execution
-
-    sys.path.append(data_path)
     from mock_db import get_data
     data = get_data(seed=0)
 else:  # if we are in production mode, then use the firebase database
-    pass
+    from database import _setup_database
+    _setup_database()
+    db = firestore.Client()
+    data = list(map(lambda x: x.to_dict(), list(db.collection(u'Songs').stream())))
 
 VERBOSE = os.environ.get("VERBOSE", False)
 
 
-VALIDATION_TABLE = {
-    "valence": {
-        "minimum": 0,
-        "maximum": 1,
-        "expected_type": float
-    },
-    "year": {
-        "minimum": 1950,
-        "maximum": 2023,
-        "expected_type": int
-    },
-    "acousticness": {
-        "minimum": 0,
-        "maximum": 1,
-        "expected_type": float
-    },
-    "danceability": {
-        "minimum": 0,
-        "maximum": 1,
-        "expected_type": float
-    },
-    "duration_ms": {
-        "minimum": 1316,
-        "maximum": 17040000,
-        "expected_type": int
-    },
-    "energy": {
-        "minimum": 0,
-        "maximum": 1,
-        "expected_type": float
-    },
-    "explicit": {
-        "minimum": 0,
-        "maximum": 1,
-        "expected_type": int
-    },
-    "instrumentalness": {
-        "minimum": 0,
-        "maximum": 1,
-        "expected_type": float
-    },
-    "key": {
-        "minimum": 0,
-        "maximum": 11,
-        "expected_type": int
-    },
-    "liveness": {
-        "minimum": 0,
-        "maximum": 1,
-        "expected_type": float
-    },
-    "loudness": {
-        "minimum": -60,
-        "maximum": 10,
-        "expected_type": float
-    },
-    "mode": {
-        "minimum": 0,
-        "maximum": 1,
-        "expected_type": int
-    },
-    "popularity": {
-        "minimum": 0,
-        "maximum": 100,
-        "expected_type": int
-    },
-    "tempo": {
-        "minimum": 0,
-        "maximum": 1015,
-        "expected_type": int
-    },
-}
-
-
+# the columns to preprocess to between 0 and 1, inclusive on both ends
 NUMERIC_PREPROCESSING_COLUMNS = [
     "year",
     "duration_ms",

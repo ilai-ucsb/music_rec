@@ -65,7 +65,7 @@ def test_similarSongs_with_n_2_acousticness_danceability_duration_ms_energy():
     logging.info(f"Call returned {len(result)} rows.")
     assert len(result) <= inpt["n"], f"Length parameter n ({inpt['n']}) returned {len(result)} responses"
 
-def test_similarSongs_with_n_2_acousticness_danceability_duration_ms_energy():
+def test_similarSongs_with_n_2_explicit_instrumentalness():
     inpt = {
         "n": 2,
         "explicit": 0,
