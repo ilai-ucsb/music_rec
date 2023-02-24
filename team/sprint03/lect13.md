@@ -53,6 +53,7 @@ Mentors: Mateo/Matthew
 - Updated docstring for loud
 - Going to start new task
 - Waiting on PR
+
 ### Discussion
 
  - Professor went through some design notes on how we should design UI information
