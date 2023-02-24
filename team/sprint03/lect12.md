@@ -18,6 +18,12 @@ Mentors: Mateo/Matthew
  - Daily Scrum (log a lect12.md document)
  - Work on lab06
 
+#### Ian
+
+- Read about implementing filters for issue
+- Will be writing the lecture notes for today and continuing to work on the issues assigned to me.
+- no blockers
+
 #### Anmol
 
 - Created a Mock DB, which I will discuss with you all what it is about
@@ -35,12 +41,6 @@ Mentors: Mateo/Matthew
 - Lead team's retrospective last week
 - Will publish retro write up and bug fix
 - No blockers
-
-#### Ian
-
-- Read about implementing filters for issue
-- Will be writing the lecture notes for today and continuing to work on the issues assigned to me.
-- no blockers
 
 #### Aditya
 
