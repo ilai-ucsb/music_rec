@@ -8,8 +8,8 @@ CORS(app)
 
 @app.route('/result', methods=["POST"], strict_slashes=False)
 def getSongs():
-    response = request.json
-    result = get_recommendation(response)
+    response = request.get_json()
+    result = get_recommendation(response['name'], response['filters'])
     return jsonify({
         "name": result
     }), 200
