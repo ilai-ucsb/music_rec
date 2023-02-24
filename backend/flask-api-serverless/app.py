@@ -9,7 +9,7 @@ CORS(app)
 @app.route('/result', methods=["POST"], strict_slashes=False)
 def getSongs():
     response = request.get_json()
-    result = get_recommendation(response['name'], response['filters'])
+    result = get_recommendation(response['name'], response.get('filters', dict()))
     return jsonify({
         "name": result
     }), 200
