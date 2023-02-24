@@ -49,6 +49,7 @@ function SearchBar({ setSearchResult }) {
         placeholder="Enter a song"
         value={searchInput}
         onChange={handleChange} />
+        <input type="submit" value="submit" data-testid="submitButton"/>
     </form>
 
   </div>

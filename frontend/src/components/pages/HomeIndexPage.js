@@ -14,7 +14,7 @@ export default function HomeIndexPage() {
         <NavBarApp/>
         <header className='App-header'>
           <SearchBar setSearchResult={setSearchResult}/>
-          <ListPage searchResults={searchResult}/>
+          <ListPage searchResults={searchResult} data-testid = "resultList"/>
         </header>
       </div>
   )
