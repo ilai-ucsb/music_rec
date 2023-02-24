@@ -23,7 +23,9 @@ function SearchBar({ ...props }) {
           },
           body: JSON.stringify({
             "name": searchInput, 
-            "explicit": props.explicitFilter})
+            "filters": {
+              "explicit": props.explicitFilter,
+            }})
         };
         // The url here is for the flask api deployed on a server.
         // If any changes to the flask api was made please change the url to a localhost url to test locally.
