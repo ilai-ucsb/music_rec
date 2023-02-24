@@ -31,6 +31,7 @@ except Exception as exc:
 try:
     # add your imports here
     import SimilaritySearch
+    import loud
 
 except ModuleNotFoundError as mnfe:
     logger.error(f"Error when importing a module. Is the file in either of the following folders: {sys.path}")
