@@ -21,10 +21,6 @@ export default function HomeIndexPage() {
       <div>
         <NavBarApp/>
         <header className='App-header'>
-<<<<<<< HEAD
-          <SearchBar setSearchResult={setSearchResult}/>
-          <ListPage searchResults={searchResult} data-testid = "resultList"/>
-=======
           <button className="filter-popup" onClick={() => setButtonPopup(true)}>filters</button>
           <FilterPopup trigger = {buttonPopup} setTrigger = {setButtonPopup}>
             explicit:&nbsp;
@@ -36,7 +32,6 @@ export default function HomeIndexPage() {
           </FilterPopup>
           <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter}/>
           <ListPage searchResults={searchResult}/>
->>>>>>> 938772dcda5d05b484b3f670d26d113a13cf346d
         </header>
       </div>
   )
