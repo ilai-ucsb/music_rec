@@ -8,7 +8,7 @@ const ListPage = ({ searchResults }) => {
         let results = searchResults.name[0].map((element, key) => 
             <SearchResult key={key} songName={element.songName} artist={element.artist} song_id={element.song_id}/>)
         return (
-            <main>{results}</main>
+            <main data-testid="songElements">{results}</main>
         )
     }
 
