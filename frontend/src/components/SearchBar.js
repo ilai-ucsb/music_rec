@@ -64,7 +64,11 @@ function SearchBar({ ...props }) {
         value={searchInput}
         onChange={handleChange} />
     </form>
-
+    {showError && (
+        <div className="error-popup">
+          <p>Sorry, we could not find that song</p>
+        </div>
+      )}
   </div>
 
 };
