@@ -39,3 +39,9 @@
     margin: 20px auto 0;
     outline: none;
   }
+
+  .filter-popup {
+    margin: 40px auto;
+    padding: 0 10px;
+    display: block;
+  }
