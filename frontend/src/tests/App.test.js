@@ -17,4 +17,21 @@ describe("App integration test", () => {
         Simulate.submit(screen.getByRole("searchbox"))
         setTimeout(async () => await waitFor(() => expect(screen.queryByTestId("songElements")).toBeInTheDocument()), 5000);
     })
+
+    it("should render another set of songs with same input", async () => {
+        render(<App/>)
+        // Enter initial search input
+        const input = screen.getByTestId("searchInput")
+        fireEvent.change(input, {target: {value: "gangnam style"}})
+
+        // Submit search and expect results
+        Simulate.submit(screen.getByRole("searchbox"))
+        setTimeout(async () => await waitFor(() => expect(screen.queryByTestId("songElements")).toBeInTheDocument()), 5000);
+
+        // Search value should not have changed
+        expect(input.value).toBe("gangnam style")
+
+        // Resubmit same input for different results
+        setTimeout(async () => await waitFor(() => expect(screen.queryByTestId("songElements")).toBeInTheDocument()), 5000);
+    })
 })
