@@ -37,7 +37,12 @@ function SearchBar({ ...props }) {
           .then((response) => response.json())
           .then((data) => props.setSearchResult(data))
       } catch(error) {
-        // need to write a popup telling the user there was an error
+        // On error, setShowError is marked true
+        setShowError(true);
+        console.log(error);
+        setTimeout(() => {
+          setShowError(false);
+        }, 3000);
         console.log("error")
       }
     }
