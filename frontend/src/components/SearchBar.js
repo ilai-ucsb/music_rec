@@ -5,7 +5,7 @@ import './SearchBar.css'
 // and sets searchResult from HomeIndexPage.js to a value that you give it here. 
 
 function SearchBar({ ...props }) {
-
+  const [showError, setShowError] = useState(false);
   const [searchInput, setSearchInput] = useState("");
 
   let handleSubmit = async (e) => {
