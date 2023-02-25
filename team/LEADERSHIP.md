@@ -8,7 +8,8 @@
 | Tue 01/24 | Parsa     | Lecture 4 → scribe                                                        |
 | Thu 01/26 | Francisco | Lecture 5 → scribe                                                        |
 | Fri 01/27 | Aditya    | 1st Retro → lead team in retro discussion                                 |
-| Fri 02/03 | Anmol     | 2nd Retro → lead team in retro discussion                                 |
-| Tue 02/07 | Francisco | Lecture 5 → scribe                                                        |
-
+| Fri 02/03 | Anmol     | 1st Retro → scribed retro discussion                                      |
+| Tue 02/07 | Francisco | Lecture 9 → scribe                                                        |
+| Fri 02/17 | Francisco | 2nd Retro → lead team in retro discussion                                 |
+| Tue 02/21 | Ian       | Lecture 12 → scribe                                                       |
 

@@ -4,14 +4,14 @@ import './SearchBar.css'
 // setSearchResult is a prop that is passed through to SearchBar. It does what it says 
 // and sets searchResult from HomeIndexPage.js to a value that you give it here. 
 
-function SearchBar({ setSearchResult }) {
+function SearchBar({ ...props }) {
 
   const [searchInput, setSearchInput] = useState("");
 
   let handleSubmit = async (e) => {
     e.preventDefault();
     if (searchInput === ""){
-      setSearchResult(undefined)
+      props.setSearchResult(undefined)
     } else {
       try{
         // CORS is only required for server side api calling
@@ -21,15 +21,21 @@ function SearchBar({ setSearchResult }) {
           headers: {
             "Content-Type": 'application/json'
           },
-          body: JSON.stringify(searchInput)
+          body: JSON.stringify({
+            "name": searchInput, 
+            "filters": {
+              "explicit": props.explicitFilter,
+            }})
         };
         // The url here is for the flask api deployed on a server.
         // If any changes to the flask api was made please change the url to a localhost url to test locally.
         // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
         // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
+        // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
+        console.log(songParameters)
         await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters)
           .then((response) => response.json())
-          .then((data) => setSearchResult(data))
+          .then((data) => props.setSearchResult(data))
       } catch(error) {
         // need to write a popup telling the user there was an error
         console.log("error")
