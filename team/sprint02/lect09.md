@@ -15,7 +15,7 @@ Attendance:
 
 ## Agenda
 
-- Daily Scrum (log a lect08.md document)
+- Daily Scrum (log a lect09.md document)
 - Finish MVP video
 - Publish MVP tag/release MVP video
 
