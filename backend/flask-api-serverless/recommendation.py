@@ -11,9 +11,8 @@ from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 from sklearn.metrics import euclidean_distances
 from scipy.spatial.distance import cdist
+from SpotifyAPICaller import find_song
 
-import warnings
-warnings.filterwarnings("ignore")
 
 def k_means_cluster(n_clusters, data):
     """Applies KMeans clustering algorithm to the song data. 
@@ -74,6 +73,23 @@ def cluster_songs():
     data, X = k_means_cluster(n_clusters=20, data=data)
     song_embedding = perform_pca(data, X)
     
+def get_song_data(song, spotify_data):
+    """Gets the song data from the dataset or from the Spotify API.
+
+    Args:
+        song (_type_): _description_
+        spotify_data (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    try:
+        # find song data from dataset
+        song_data = spotify_data[(spotify_data['name'] == song['name'])].iloc[0]
+        return song_data
+    except IndexError:
+        # find song data from spotify API
+        return find_song(song['name'])    
     
 def get_recommendations(song_name):
     """Gets a recommendation for a song based on the song's cluster.

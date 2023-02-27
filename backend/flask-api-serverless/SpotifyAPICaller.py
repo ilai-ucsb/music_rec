@@ -4,6 +4,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
 import pandas as pd
 import logging
+from collections import defaultdict
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -41,6 +42,36 @@ def base_model(artist_ids=None, genre_ids=None, track_ids=None, limit=10, countr
     )
 
     return results
+
+def find_song(name):
+    """Find a song by name
+    
+    Args:
+        name (str): name of the song to find
+        
+    Returns:
+        song_data (pd.DataFrame): dataframe containing the song data
+    """
+    song_data = defaultdict()
+    results = sp.search(q=name, type='track', limit=1)
+    
+    if results['tracks']['items'] == []:
+        return None
+    
+    results = results['tracks']['items'][0]
+    track_id = results['id']
+    audio_features = sp.audio_features(track_id)[0]
+    
+    song_data['id'] = [track_id]
+    song_data['name'] = [name]
+    song_data['year'] = [int(results['album']['release_date'][:4])]
+    song_data['explicit'] = [int(results['explicit'])]
+    song_data['duration_ms'] = [results['duration_ms']]
+    song_data['popularity'] = [results['popularity']]
+    
+    for key, value in audio_features.items():
+        song_data[key] = [value]
+    return pd.DataFrame(song_data)
 
 def filter_songs(song_list, filters):
     """Process the filters over the song list and return filtered songs
