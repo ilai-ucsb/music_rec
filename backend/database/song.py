@@ -20,9 +20,9 @@ class Song(object):
         - speechiness (double)
         - tempo (double)
     """
-    def __init__(self, id, name, popularity, year, artists, artist_pop, genres, 
-                 danceability, acousticness, energy, explicit, instrumentalness,
-                 liveness, loudness, speechiness, tempo):
+    def __init__(self, id, name, popularity, year, artists, danceability, 
+                 acousticness, energy, explicit, instrumentalness, liveness, 
+                 loudness, speechiness, tempo, artist_pop=0, genres=[]):
         self.id = id
         self.name = name
         self.popularity = popularity
@@ -39,6 +39,19 @@ class Song(object):
         self.loudness = loudness
         self.speechiness = speechiness
         self.tempo = tempo
+
+    @staticmethod
+    def from_dict(source):
+        song = Song(source[u'id'], source[u'name'], source[u'popularity'], 
+                    source[u'year'], source[u'artists'], source[u'danceability'], 
+                    source[u'acousticness'], source[u'energy'], source[u'explicit'], 
+                    source[u'instrumentalness'], source[u'liveness'], 
+                    source[u'loudness'], source[u'speechiness'], source[u'tempo'])
+        if u'genres' in source:
+            song.genres = source[u'genres']
+        if u'artist_pop' in source:
+            song.artist_pop = source[u'artist_pop']
+        return song
 
     def to_dict(self):
         dest = {

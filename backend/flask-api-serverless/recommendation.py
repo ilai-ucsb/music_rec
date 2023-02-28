@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 import plotly.express as px
 import matplotlib.pyplot as plt
+import sys
 
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
@@ -14,7 +15,11 @@ from scipy.spatial.distance import cdist
 from SpotifyAPICaller import find_song
 from collections import defaultdict
 
+sys.path.append('..')
+from database.song import Song
+
 song_cluster_pipeline = None
+data = None
 
 def k_means_cluster(n_clusters, data):
     """Applies KMeans clustering algorithm to the song data. 
@@ -30,7 +35,8 @@ def k_means_cluster(n_clusters, data):
               based on the KMeans clustering algorithm.
         X (array): Array containing the numerical data of the song data.
     """
-    k_means = KMeans(n_clusters=n_clusters, verbose=False, n_jobs=4)
+    k_means = KMeans(n_clusters=n_clusters, verbose=False)
+
     song_cluster_pipeline = Pipeline([('scalar', StandardScaler()), 
                                       ('kmeans', k_means)
                                      ], verbose=False)
@@ -72,8 +78,9 @@ def perform_pca(data, X):
     return song_embedding
 
 def cluster_songs():
+    global song_cluster_pipeline, data
     data = pd.read_csv("../../data/raw_data.csv")
-    data, X = k_means_cluster(n_clusters=20, data=data)
+    song_cluster_pipeline, data, X = k_means_cluster(n_clusters=20, data=data)
     song_embedding = perform_pca(data, X)
     
 def get_song_data(song, spotify_data):
@@ -122,20 +129,60 @@ def flatten_dict_list(dict_list):
             
     return flattened_dict
 
-    
+def recommend_songs(song_list, spotify_data, n_songs=10):
+    global song_cluster_pipeline
+    if song_cluster_pipeline is None:
+        cluster_songs()
 
-def get_recommendations(song_name):
+    metadata_cols = ['name', 'year', 'artists']
+    song_dict = flatten_dict_list(song_list)
+    
+    song_center = get_mean_vector(song_list, spotify_data)
+    scalar = song_cluster_pipeline.steps[0][1]
+    scaled_data = scalar.transform(spotify_data[number_cols])
+    scaled_song_center = scalar.transform(song_center.reshape(1, -1))
+    distances = cdist(scaled_song_center, scaled_data, 'cosine')
+    index = list(np.argsort(distances)[:, :n_songs][0])
+    
+    rec_songs = spotify_data.iloc[index]
+    rec_songs = rec_songs[~rec_songs['name'].isin(song_dict['name'])]  
+    
+    return rec_songs.to_dict('records')
+    # return Song.from_dict(rec_songs.to_dict('records'))
+    # return rec_songs[metadata_cols].to_dict('records')
+
+def get_recommendations(song_names):
     """Gets a recommendation for a song based on the song's cluster.
     
     Args:
-        song_name (str): Name of the song to get a recommendation for.
+        song_names (list): List of song names to get a recommendation for.
     
     Returns:
         recommendations (list): List of 5 song that are recommended.
     """
+    global data
+    input_dict_list = []
+    recommendations = []
     
-    return song_name
+    for song in song_names:
+        dict_ = {'name': song}
+        input_dict_list.append(dict_)
+    
+    output_dict = recommend_songs(input_dict_list, data, n_songs=5)
+    print(len(output_dict))
+    
+    for song in output_dict:
+        _song = Song.from_dict(song)
+        recommendations.append(_song)
+    
+    return recommendations
     
 
 if __name__ == "__main__":
     cluster_songs()
+    songs = get_recommendations(['As it was'])
+    for s in songs:
+        print(s)
+    # print(get_recommendations(['As it was']))
+    # q: What are the Top Hit songs of this decade?
+    # a: ['Shape of You', 'Despacito', 'One Dance', 'Closer', 'Rockstar', 'Havana', 'I Like It', 'Dance Monkey', 'Senorita', 'Sunflower']
