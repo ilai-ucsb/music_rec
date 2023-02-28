@@ -55,7 +55,6 @@ function SearchBar({ ...props }) {
         placeholder="Enter a song"
         value={searchInput}
         onChange={handleChange} />
-        <input type="submit" value="submit" data-testid="submitButton"/>
     </form>
 
   </div>
