@@ -12,7 +12,9 @@ from sklearn.decomposition import PCA
 from sklearn.metrics import euclidean_distances
 from scipy.spatial.distance import cdist
 from SpotifyAPICaller import find_song
+from collections import defaultdict
 
+song_cluster_pipeline = None
 
 def k_means_cluster(n_clusters, data):
     """Applies KMeans clustering algorithm to the song data. 
@@ -23,6 +25,7 @@ def k_means_cluster(n_clusters, data):
         data (dataframe): Pandas dataframe containing song data.
 
     Returns:
+        song_cluster_pipeline (Pipeline): Pipeline containing the KMeans clustering algorithm.
         data: Pandas dataframe with a new column storing cluster_label 
               based on the KMeans clustering algorithm.
         X (array): Array containing the numerical data of the song data.
@@ -36,7 +39,7 @@ def k_means_cluster(n_clusters, data):
     song_cluster_pipeline.fit(X)
     song_cluster_labels = song_cluster_pipeline.predict(X)
     data['cluster_label'] = song_cluster_labels
-    return data, X
+    return song_cluster_pipeline, data, X
 
 def visualize_cluster(data, song_embedding):
     """Visualizes the clusters of the song data.
@@ -89,8 +92,38 @@ def get_song_data(song, spotify_data):
         return song_data
     except IndexError:
         # find song data from spotify API
-        return find_song(song['name'])    
+        return find_song(song['name'])   
+
+number_cols = ['valence', 'year', 'acousticness', 'danceability', 'duration_ms', 'energy', 'explicit',
+ 'instrumentalness', 'key', 'liveness', 'loudness', 'mode', 'popularity', 'speechiness', 'tempo']
+ 
+def get_mean_vector(song_list, spotify_data):
+    song_vectors = []
     
+    for song in song_list:
+        song_data = get_song_data(song, spotify_data)
+        if song_data is None:
+            print('Error: {} does not exist in Spotify or in database'.format(song['name']))
+            continue
+        song_vector = song_data[number_cols].values
+        song_vectors.append(song_vector)
+    
+    song_matrix = np.array(list(song_vectors))
+    return np.mean(song_matrix, axis=0)
+
+def flatten_dict_list(dict_list):
+    flattened_dict = defaultdict()
+    for key in dict_list[0].keys():
+        flattened_dict[key] = []
+    
+    for dict_ in dict_list:
+        for key, value in dict_.items():
+            flattened_dict[key].append(value)
+            
+    return flattened_dict
+
+    
+
 def get_recommendations(song_name):
     """Gets a recommendation for a song based on the song's cluster.
     
