@@ -13,12 +13,12 @@ Mentors: Mateo/Matthew
  - [X] Ian
  - [X] Mauricio
 
- ## Agenda
+## Agenda
 
  - Daily Scrum (log a lect14.md document)
  - Team discussion for next action items and discuss blockers
 
- #### Anmol
+#### Anmol
 - On Friday finished off merging all the PRs, reviewed Francisco’s PR
 - Plan to work on the next couple tasks in #103 and review PRs
 - No blockers
