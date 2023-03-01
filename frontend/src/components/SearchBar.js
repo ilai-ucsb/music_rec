@@ -33,16 +33,21 @@ function SearchBar({ ...props }) {
         // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
         // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
         console.log(songParameters)
-        await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters)
-          .then((response) => response.json())
-          .then((data) => props.setSearchResult(data))
+        let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
+        let resJson = await response.json();
+        // throw error if backend gives an error response
+        if (!response.ok) {
+          throw Error(resJson.message);
+        } else {
+          props.setSearchResult(resJson);
+        }
       } catch(error) {
         // On error, setShowError is marked true
         setShowError(true);
         console.log(error);
         setTimeout(() => {
           setShowError(false);
-        }, 3000);
+        }, 5000);
         console.log("error")
       }
     }
