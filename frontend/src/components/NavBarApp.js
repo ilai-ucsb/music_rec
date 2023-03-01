@@ -8,13 +8,14 @@ function NavBarApp() {
   return (
     <Navbar variant="dark" bg="dark" expand="lg">
         <Container>
-            <Navbar.Brand>Music Recommendation App</Navbar.Brand>
+            <Navbar.Brand href='/'>Music Recommendation App</Navbar.Brand>
         </Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className='justify-content-end'>
                 <Nav.Link href='/'>Home</Nav.Link>
                 <Nav.Link href='/about'>About</Nav.Link>
+                <Nav.Link href='/login'>Login</Nav.Link>
             </Nav>
         </Navbar.Collapse>
     </Navbar>
