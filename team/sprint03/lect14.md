@@ -56,3 +56,9 @@ Mentors: Mateo/Matthew
   - Start designing before coding (e.g. cards create a design before actually coding) 
 - Serialize python class to pass into JavaScript (https://stackoverflow.com/questions/62939572/how-to-serialize-a-python-class-to-pass-onto-javascript)
 - Discussed Filters options: (dropdowns, sliders, search+tags)
+- There are 1K+ unique genres in spotify api based on artist (some songs don't have genres)
+- Distributed the following tasks out:
+    - Spotify User Authentication (frontend)
+    - Creating new filters sliders and dropdowns (frontend)
+    - Creating filter logic (backend)
+    - Firestore Database batched operations (backend)
