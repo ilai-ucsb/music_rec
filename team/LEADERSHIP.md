@@ -17,7 +17,7 @@
 | Tue 02/21 | Ian       | Lecture 12 → scribe                                                       |
 | Thu 02/23 | Anmol     | Lecture 13 → scribe                                                       |
 | Tue 02/28 | Aditya    | Lecture 14 → scribe                                                       |
-
+| Fri 03/03 | Mauricio  | Lab07 -> scribe                                                           |
 
 
 # Future Roles
