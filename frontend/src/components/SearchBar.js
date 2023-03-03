@@ -25,6 +25,7 @@ function SearchBar({ ...props }) {
             "name": searchInput, 
             "filters": {
               "explicit": props.explicitFilter,
+              "loud": props.loudFilter,
             }})
         };
         // The url here is for the flask api deployed on a server.
