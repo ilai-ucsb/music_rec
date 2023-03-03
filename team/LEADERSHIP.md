@@ -27,4 +27,4 @@
 * Design Document Coordinator - Anmol
 * Deployment Document Coordinator - Ian
 * User Manual Coordinator - Mauricio 
-* Final presentation leader (week9/10) - Mauricio
+* Final presentation leader (week 9/10) - Mauricio
