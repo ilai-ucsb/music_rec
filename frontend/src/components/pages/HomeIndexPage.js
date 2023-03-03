@@ -4,6 +4,7 @@ import "./utils/Page.css"
 import NavBarApp from "../NavBarApp";
 import ListPage from "./utils/ListPage";
 import FilterPopup from "../FilterPopup";
+import Slider from "../Slider";
 
 // HomeIndexPage.js essentially acts as our App.js since our App.js is now routing pages.
 
@@ -29,6 +30,10 @@ export default function HomeIndexPage() {
               <option value={0}>No</option>
               <option value={1}>Yes</option>
             </select>
+            <div className="slider-parent">
+              Year:&nbsp; 
+              <Slider/>
+            </div>
           </FilterPopup>
           <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter}/>
           <ListPage searchResults={searchResult}/>
