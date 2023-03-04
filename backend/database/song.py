@@ -8,10 +8,10 @@ class Song(object):
     SPOTIFY_API_GOLDEN_COLUMNS = ('id', 'name', 'year',
                                   'explicit', 'duration_ms',
                                   'popularity', 'danceability',
-                                  'energy', 'key','loudness',
+                                  'instrumentalness', 'energy',
                                   'mode', 'speechiness',
                                   'acousticness', 'tempo',
-                                  'instrumentalness', 'valence',
+                                  'key', 'loudness', 'valence',
                                   'liveness', 'time_signature')
     """
     The Song object contains all features for each song.
