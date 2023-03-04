@@ -18,7 +18,7 @@ Mentors: Mateo/Matthew
  - Daily Scrum (log a lab07.md document)
  - Team discussion for next action items and discuss blockers
 
- #### Mauricio
+#### Mauricio
 - Worked on creating tests for Spotify Login
 - Going to work on finishing tests and picking up new issue
 - No blockers
@@ -29,7 +29,9 @@ Mentors: Mateo/Matthew
 - No blockers
 
 #### Aditya
-- Wrote tests for SpotifyAPI caller for find_song. Discussed firestore limitations
+- Wrote tests for SpotifyAPI caller for find_song. Discussed firestore limitations.
+- Finish lab07 due tonight + discuss what database is going to be used for
+- No blockers
 
 #### Ian
 - Working on adding filter by year in frontend
