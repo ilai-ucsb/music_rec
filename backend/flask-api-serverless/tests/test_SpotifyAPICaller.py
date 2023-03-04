@@ -39,6 +39,7 @@ def test_find_song_gangnam_style():
     assert isinstance(song_df['explicit'][0], np.integer), f"Song explicit is not a valid int: {song_df['explicit'][0]}"
     assert isinstance(song_df['duration_ms'][0], np.integer), f"Song duration_ms is not a valid int: {song_df['duration_ms'][0]}"
     assert isinstance(song_df['popularity'][0], np.integer), f"Song popularity is not a valid int: {song_df['popularity'][0]}"
+    assert isinstance(song_df['album_cover'][0], str), f"Song album_cover is not a valid string: {song_df['album_cover'][0]}"
     
 def test_find_song_despacito():
     song_df = find_song(Song.DESPACITO)
@@ -50,7 +51,8 @@ def test_find_song_despacito():
     assert isinstance(song_df['explicit'][0], np.integer), f"Song explicit is not a valid int: {song_df['explicit'][0]}"
     assert isinstance(song_df['duration_ms'][0], np.integer), f"Song duration_ms is not a valid int: {song_df['duration_ms'][0]}"
     assert isinstance(song_df['popularity'][0], np.integer), f"Song popularity is not a valid int: {song_df['popularity'][0]}"
-    
+    assert isinstance(song_df['album_cover'][0], str), f"Song album_cover is not a valid string: {song_df['album_cover'][0]}"
+  
 def test_find_song_invalid():
     song_df = find_song(Song.INVALID_SONG)
     assert song_df == None, f"Unknown error occurred for song: {Song.INVALID_SONG}"

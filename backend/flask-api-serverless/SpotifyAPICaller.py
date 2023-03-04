@@ -81,6 +81,7 @@ def find_song(name):
     song_data['explicit'] = [int(results['explicit'])]
     song_data['duration_ms'] = [results['duration_ms']]
     song_data['popularity'] = [results['popularity']]
+    song_data['album_cover'] = [results['album']['images'][0]['url']]
     
     for key, value in audio_features.items():
         song_data[key] = [value]
