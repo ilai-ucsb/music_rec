@@ -10,10 +10,9 @@ class Song(object):
                                   'popularity', 'danceability',
                                   'energy', 'key','loudness',
                                   'mode', 'speechiness',
-                                  'acousticness',
-                                  'instrumentalness', 'liveness',
-                                  'valence', 'tempo',
-                                  'time_signature')
+                                  'acousticness', 'tempo',
+                                  'instrumentalness', 'valence',
+                                  'liveness', 'time_signature')
     """
     The Song object contains all features for each song.
 
