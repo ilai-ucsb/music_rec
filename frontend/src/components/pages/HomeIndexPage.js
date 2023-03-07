@@ -11,7 +11,7 @@ export default function HomeIndexPage() {
     const [searchResult, setSearchResult] = useState([]);
     const [buttonPopup, setButtonPopup] = useState(false);
     const [explicitFilter, setExplicitFilter] = useState("NULL");
-    const [loudFilter, setloudFilter] = useState(0.50);
+    const [loudFilter, setloudFilter] = useState("NULL");
 
     const handleChangeExplicit = (e) => {
       setExplicitFilter(e.target.value);
@@ -29,19 +29,20 @@ export default function HomeIndexPage() {
           <button className="filter-popup" onClick={() => setButtonPopup(true)}>filters</button>
           <FilterPopup trigger = {buttonPopup} setTrigger = {setButtonPopup}>
             explicit:&nbsp;
-            <select data-testid="select" value = {explicitFilter} onChange={handleChangeExplicit} style={{marginRight: "0.5rem"}}>
+            <select data-testid="explicit_select" value = {explicitFilter} onChange={handleChangeExplicit} style={{marginRight: "0.5rem"}}>
               <option value={"NULL"}>Both</option>
               <option value={0}>No</option>
               <option value={1}>Yes</option>
             </select>
 
             loud:&nbsp;
-            <select data-testid="select" value = {loudFilter} onChange={handleChangeLoud} style={{marginRight: "0.5rem"}}>
-              <option value={0.00}>faint</option>
-              <option value={0.25}>quiet</option>
-              <option value={0.50}>medium</option>
-              <option value={0.75}>loud</option>
-              <option value={1.00}>blasting</option>
+            <select data-testid="loud_select" value = {loudFilter} onChange={handleChangeLoud} style={{marginRight: "0.5rem"}}>
+              <option value={"NULL"}>Any</option>
+              <option value={0.00}>Faint</option>
+              <option value={0.25}>Quiet</option>
+              <option value={0.50}>Medium</option>
+              <option value={0.75}>Loud</option>
+              <option value={1.00}>Blasting</option>
             </select>
 
             
