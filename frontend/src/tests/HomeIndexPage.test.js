@@ -16,17 +16,27 @@ describe("HomeIndexPage tests", () => {
         expect(filterBtn).toBeInTheDocument();
         fireEvent.click(filterBtn);
         const closeBtn = screen.getByRole("button", {name: "close"});
-        const filterText = screen.getByText("explicit:")
+        const filterText = screen.getByText("explicit: loud:")
+        
         expect(closeBtn).toBeInTheDocument();
         expect(filterText).toBeInTheDocument();
     })
-    it("should change values when a different option is selected", () => {
+    it("should change explicit filter values when a different option is selected", () => {
         render(<HomeIndexPage/>)
         const filterBtn = screen.getByRole("button", {name: "filters"});
         fireEvent.click(filterBtn);
-        userEvent.selectOptions(screen.getByTestId('select'), "1")
-        expect(screen.getByTestId("select").value).toBe("1")
+        userEvent.selectOptions(screen.getByTestId('explicit_select'), "1")
+        expect(screen.getByTestId("explicit_select").value).toBe("1")
     })
+
+    it("should change loud values when a different option is selected", () => {
+        render(<HomeIndexPage/>)
+        const filterBtn = screen.getByRole("button", {name: "filters"});
+        fireEvent.click(filterBtn);
+        userEvent.selectOptions(screen.getByTestId('loud_select'), ".5")
+        expect(screen.getByTestId("loud_select").value).toBe(".5")
+    })
+
     it("should not display the filter popup when the close button is clicked", () => {
         render(<HomeIndexPage/>)
         fireEvent.click(screen.getByRole("button", {name: "filters"}));
