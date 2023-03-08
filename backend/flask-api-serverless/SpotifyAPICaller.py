@@ -76,6 +76,8 @@ def find_song(name):
         logging.error(e)
         return None
     
+    print(results)
+    
     song_data['id'] = [track_id]
     song_data['name'] = [results['name']]
     song_data['year'] = [int(results['album']['release_date'][:4])]
@@ -127,3 +129,6 @@ def get_recommendation(track, filters):
                           "explicit": song["explicit"]})
 
     return [song_list]
+
+if __name__ == "__main__":
+    print(find_song("Gangnam Style"))
