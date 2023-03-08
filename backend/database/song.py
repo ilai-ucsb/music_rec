@@ -1,10 +1,5 @@
 class Song(object):
-    # Popular Songs for testing
-    GANGNAM_STYLE = "Gangnam Style"
-    DESPACITO = "Despacito"
-    INVALID_SONG = "nbdjs183hdjhkzxiuoq2uqejhsjhks"
-
-    # SPOTIFY_API_GOLDEN_COLUMNS: set columns used for testing
+    # SPOTIFY_API_GOLDEN_COLUMNS: set columns
     SPOTIFY_API_GOLDEN_COLUMNS = ('id', 'name', 'year',
                                   'explicit', 'duration_ms',
                                   'popularity', 'danceability',
