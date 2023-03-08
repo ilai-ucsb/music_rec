@@ -1,5 +1,5 @@
 import SearchBar from "../SearchBar";
-import {useState} from 'react'; 
+import { useState, useEffect } from 'react'; 
 import "./utils/Page.css"
 import NavBarApp from "../NavBarApp";
 import ListPage from "./utils/ListPage";
@@ -8,9 +8,24 @@ import FilterPopup from "../FilterPopup";
 // HomeIndexPage.js essentially acts as our App.js since our App.js is now routing pages.
 
 export default function HomeIndexPage() {
-    const [searchResult, setSearchResult] = useState([]);
+    const [searchResult, setSearchResult] = useState(undefined);
     const [buttonPopup, setButtonPopup] = useState(false);
     const [explicitFilter, setExplicitFilter] = useState("NULL");
+    const [accessToken, setAccessToken] = useState("");
+    const [hide, setHide] = useState(false);
+
+    useEffect(()=>{
+      var authParameters={
+        method: 'POST',
+        headers: {
+          'Content-Type' : 'application/x-www-form-urlencoded'
+        },
+        body: 'grant_type=client_credentials&client_id=' + process.env.REACT_APP_CLIENT_ID + '&client_secret=' + process.env.REACT_APP_CLIENT_SECRET
+      }
+      fetch('https://accounts.spotify.com/api/token', authParameters)
+        .then(result => result.json())
+        .then(data => setAccessToken(data.access_token))
+      },[])
 
     const handleChange = (e) => {
       setExplicitFilter(e.target.value);
@@ -30,8 +45,8 @@ export default function HomeIndexPage() {
               <option value={1}>Yes</option>
             </select>
           </FilterPopup>
-          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter}/>
-          <ListPage searchResults={searchResult}/>
+          <SearchBar hide={hide} setHide={setHide} setSearchResult={setSearchResult} explicitFilter={explicitFilter} accessToken={accessToken}/>
+          <ListPage searchResults={searchResult} hide={hide}/>
         </header>
       </div>
   )

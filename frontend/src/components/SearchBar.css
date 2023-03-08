@@ -41,3 +41,38 @@
       from {opacity: 1;}
       to {opacity: 0;}
     }
+
+    .dropdown {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid gray;
+      border-bottom: none;
+      margin: 10px auto 0;
+      width: 60%;
+      outline: none;
+      box-sizing: border-box;
+    }
+    
+    .dropdown:empty {
+      border: none;
+    }
+    
+    .dropdown-row {
+      cursor: pointer;
+      text-align: left;
+      padding: 0;
+      height: 60px;
+      width: 100%;
+      border-bottom: 1px solid gray;
+      box-sizing: border-box;
+    }
+    
+    .options {
+      height: 100%;
+      width: 100%;
+    }
+    
+    .options:hover {
+      background-color: white;
+      color: black;
+    }

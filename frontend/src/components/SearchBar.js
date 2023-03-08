@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import ListPage from './pages/utils/ListPage';
 import './SearchBar.css'
 
 // setSearchResult is a prop that is passed through to SearchBar. It does what it says 
@@ -7,9 +8,31 @@ import './SearchBar.css'
 function SearchBar({ ...props }) {
   const [showError, setShowError] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [timer, setTimer] = useState(null);
+  const [submit, setSubmit] = useState(false);
+
+  let fetchSuggestions = async (input) => {
+    let songParameters = {
+      method: 'GET',
+      headers: {
+        'Content-Type' : 'application/json',
+        'Authorization' : 'Bearer ' + props.accessToken
+      }
+    }
+    if (input !== undefined && input !== ""){
+      await fetch('https://api.spotify.com/v1/search?q=' + input + '&type=track&limit=5', songParameters)
+      .then(response => response.json())
+      .then(data => setSuggestions(data.tracks.items))
+    } else {
+      setSuggestions([]);
+    }
+  }
 
   let handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmit(true);
+    props.setHide(false);
     if (searchInput === ""){
       props.setSearchResult(undefined)
     } else {
@@ -55,7 +78,21 @@ function SearchBar({ ...props }) {
 
   const handleChange = (e) => {
     e.preventDefault();
+    setSubmit(false);
+    if (e.target.value === "") {
+      props.setHide(true);
+    }
     setSearchInput(e.target.value)
+
+    clearTimeout(timer);
+
+    const newTimer = setTimeout(() => {
+      fetchSuggestions(e.target.value);
+    }, 700)
+
+    setSuggestions([]);
+
+    setTimer(newTimer);
   }
 
   return <div>
@@ -66,6 +103,25 @@ function SearchBar({ ...props }) {
         placeholder="Enter a song"
         value={searchInput}
         onChange={handleChange} />
+      <div className='dropdown'>
+        {suggestions.filter(() => {
+          return searchInput !== "" && searchInput !== null && submit === false
+        })
+        .map((item, key) => (<div key={key} className='dropdown-row'>
+          <div className='options'>
+            <img src={item.album.images[0].url} alt="logo" style={{ height: "50px", margin:"4px", marginTop: "5px" }} />
+            <p style={{ display: "inline"}}>
+              {item.name.length < 40
+                      ? `${item.name}`
+                      : `${item.name.slice(0, 15)}...`} -
+            </p>
+            <p style={{ display: "inline", marginLeft: "10px" }}>
+              {item.artists[0].name}
+              </p>
+          </div>
+          
+        </div>))}
+      </div>
     </form>
     {showError && (
         <div className="error-popup">
