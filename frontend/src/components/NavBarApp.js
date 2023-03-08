@@ -9,7 +9,7 @@ function NavBarApp() {
     <Navbar variant="dark" bg="dark" expand="lg">
         <Container>
             <Navbar.Brand href='/'>
-              <img src="./rekofyLogoLight.png" alt="Rekofy" height={50} />
+              <img src="./rekofyLogoLight.png" alt="Rekofy" height={30} />
             </Navbar.Brand>
         </Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
