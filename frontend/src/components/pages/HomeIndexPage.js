@@ -1,11 +1,12 @@
 import SearchBar from "../SearchBar";
-import {useEffect, useState} from 'react'; 
+import {useEffect, useState, Text} from 'react'; 
 import "./utils/Page.css"
 import NavBarApp from "../NavBarApp";
 import ListPage from "./utils/ListPage";
 import FilterPopup from "../FilterPopup";
 import { getTokenFromUrl } from "./utils/spotifyUtils";
 import SpotifyWebApi from 'spotify-web-api-js';
+import Container from "react-bootstrap/esm/Container";
 
 // HomeIndexPage.js essentially acts as our App.js since our App.js is now routing pages.
 
@@ -14,6 +15,7 @@ export default function HomeIndexPage() {
     const [buttonPopup, setButtonPopup] = useState(false);
     const [explicitFilter, setExplicitFilter] = useState("NULL");
     const [spotifyToken, setSpotifyToken ] = useState("");
+    const [spotifyUser, setSpotifyUser] = useState("");
 
     const spotify = new SpotifyWebApi()
 
@@ -32,6 +34,7 @@ export default function HomeIndexPage() {
 
         spotify.getMe().then((user) => {
           console.log("User Info: ", user)
+          setSpotifyUser(user.display_name)
         })
       }
     })
@@ -45,6 +48,11 @@ export default function HomeIndexPage() {
       <div>
         <NavBarApp/>
         <header className='App-header'>
+          <div id="userWelcome">
+            {spotifyUser == "" ? 
+            "": `Welcome, ${spotifyUser}!`
+            }
+          </div>
           <button className="filter-popup" onClick={() => setButtonPopup(true)}>filters</button>
           <FilterPopup trigger = {buttonPopup} setTrigger = {setButtonPopup}>
             explicit:&nbsp;
