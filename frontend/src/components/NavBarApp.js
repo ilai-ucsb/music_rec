@@ -8,7 +8,9 @@ function NavBarApp() {
   return (
     <Navbar variant="dark" bg="dark" expand="lg">
         <Container>
-            <Navbar.Brand>Music Recommendation App</Navbar.Brand>
+            <Navbar.Brand href='/'>
+              <img src="./rekofyLogoLight.png" alt="Rekofy" height={50} />
+            </Navbar.Brand>
         </Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
