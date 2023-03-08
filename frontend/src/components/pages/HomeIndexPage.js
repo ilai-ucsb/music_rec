@@ -29,14 +29,14 @@ export default function HomeIndexPage() {
           <button className="filter-popup" onClick={() => setButtonPopup(true)}>filters</button>
           <FilterPopup trigger = {buttonPopup} setTrigger = {setButtonPopup}>
             explicit:&nbsp;
-            <select data-testid="explicit_select" value = {explicitFilter} onChange={handleChangeExplicit} style={{marginRight: "0.5rem"}}>
+            <select data-testid="explicit-select" value = {explicitFilter} onChange={handleChangeExplicit} style={{marginRight: "0.5rem"}}>
               <option value={"NULL"}>Both</option>
               <option value={0}>No</option>
               <option value={1}>Yes</option>
             </select>
 
             loud:&nbsp;
-            <select data-testid="loud_select" value = {loudFilter} onChange={handleChangeLoud} style={{marginRight: "0.5rem"}}>
+            <select data-testid="loud-select" value = {loudFilter} onChange={handleChangeLoud} style={{marginRight: "0.5rem"}}>
               <option value={"NULL"}>Any</option>
               <option value={0.00}>Faint</option>
               <option value={0.25}>Quiet</option>
