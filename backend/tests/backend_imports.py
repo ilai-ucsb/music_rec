@@ -13,7 +13,9 @@ PROJECT_NAME = "project-t09-musicrecommendation"  # folder name of the repositor
 
 try:
     split_path = __file__.split("/")
-    root_path = "/".join(split_path[:len(split_path) - split_path[::-1].index(PROJECT_NAME)])
+    root_path = "/".join(
+        split_path[: len(split_path) - split_path[::-1].index(PROJECT_NAME)]
+    )
     backend_path = root_path + "/backend"
     data_path = root_path + "/data"
     sys.path.append(backend_path)
@@ -21,7 +23,9 @@ try:
     sys.path.append(backend_path + "/database")
     sys.path.append(data_path)
 except ValueError as ve:
-    logger.error(f"There was an issue retrieving the folder path to the backend. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
+    logger.error(
+        f"There was an issue retrieving the folder path to the backend. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem."
+    )
     logger.error(ve)
     raise  # re-raise the error to stop execution
 except Exception as exc:
@@ -42,7 +46,9 @@ try:
     import SimilaritySearch
 
 except ModuleNotFoundError as mnfe:
-    logger.error(f"Error when importing a module. Is the file in either of the following folders: {sys.path}")
+    logger.error(
+        f"Error when importing a module. Is the file in either of the following folders: {sys.path}"
+    )
     logger.error(mnfe)
     raise  # re-raise to stop execution
 except Exception as exc:

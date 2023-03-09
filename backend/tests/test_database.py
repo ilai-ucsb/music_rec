@@ -4,12 +4,13 @@ from random import randrange
 from backend_imports import database
 from backend_imports import dbutils
 
-TEST_COLLECTION = 'test'
+TEST_COLLECTION = "test"
 TEST_DICT = {
-    'test': "test_entry",
+    "test": "test_entry",
 }
 
 database._setup_database()
+
 
 def add_test_document(d: dict):
     """
@@ -25,6 +26,7 @@ def add_test_document(d: dict):
     dbutils.add_document(TEST_COLLECTION, key, d)
     return key
 
+
 def get_test_document(key):
     """
     Helper for getting a test document
@@ -37,6 +39,7 @@ def get_test_document(key):
     """
     return dbutils.get_document(TEST_COLLECTION, key)
 
+
 def delete_test_document(key):
     """
     Helper for deleting the test document
@@ -45,6 +48,7 @@ def delete_test_document(key):
         key (str): the key for the test document
     """
     dbutils.delete_document(TEST_COLLECTION, key)
+
 
 def test_add_test_document():
     """
