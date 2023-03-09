@@ -4,8 +4,8 @@ Created on Tue Feb 21 13:28:28 2023
 @author: Parsa Hafezi
 """
 
-from mock_db import generateRandomRow
-from backend_imports.loud import getLoud
+from backend_imports import mock_db
+from backend_imports import loud
 
 """test get loud song with one song"""
 
@@ -32,14 +32,10 @@ def test_1():
                  "valence": 0.5158085156007629,
                  "year": 1983}
             ]
-    sorted_data = getLoud(data, 0, 1)
-    
-    print(sorted_data[0]["id"])
-    if(sorted_data[0]["id"] =="song0_1676966597.8889136" ):
-        correct = True
-    else :
-        correct = False
-    return correct
+    sorted_data = loud.getLoud(data, 0, 1)
+
+    assert sorted_data[0]["id"] =="song0_1676966597.8889136", f"Something went wrong. When comparing {sorted_data[0]['id']} (received) and 'song0_1676966597.8889136' (expected)"
+
 
 """
 Test 3 
@@ -47,15 +43,12 @@ test 10 songs, loud = 0, num = 6
 expected return should bottom 6 loudest songs in increasing order 
 """
 def test_2():
-    data = [generateRandomRow(i) for i in range(10)]
-    sorted_data = getLoud(data, 0, 6)
+    data = [mock_db.generateRandomRow(i) for i in range(10)]
+    sorted_data = loud.getLoud(data, 0, 6)
 
     for i in range(5):    
-        if(sorted_data[i]["loudness"] <= sorted_data[i+1]["loudness"] ):
-            correct = True
-        else :
-            correct = False
-    return correct
+        assert sorted_data[i]["loudness"] <= sorted_data[i+1]["loudness"], f"Loudness not sorted right {sorted_data[i]['loudness']} (current) not <= {sorted_data[i+1]['loudness']} (next)"
+
 
 """
 Test 3 
@@ -63,15 +56,12 @@ test 10 songs, loud = 1, num = 6
 expected return should top 6 loudest songs in decreasing order 
 """
 def test_3():
-    data = [generateRandomRow(i) for i in range(10)]
-    sorted_data = getLoud(data, 1, 6)
-    
-    for i in range(5):    
-        if(sorted_data[i]["loudness"] >= sorted_data[i+1]["loudness"] ):
-            correct = True
-        else :
-            correct = False
-    return correct
+    data = [mock_db.generateRandomRow(i) for i in range(10)]
+    sorted_data = loud.getLoud(data, 1, 6)
+
+    for i in range(5):
+        assert sorted_data[i]["loudness"] >= sorted_data[i+1]["loudness"], f"Loudness not sorted right {sorted_data[i]['loudness']} (current) not >= {sorted_data[i+1]['loudness']} (next)"
+
 
 """
 Test 4
@@ -79,12 +69,8 @@ test 10 songs, loud = .5, num = 6
 expected return should 6 medium loudest songs in increasing order by distance from .5
 """
 def test_4():
-    data = [generateRandomRow(i) for i in range(10)]
-    sorted_data = getLoud(data, .5, 6)
+    data = [mock_db.generateRandomRow(i) for i in range(10)]
+    sorted_data = loud.getLoud(data, .5, 6)
 
-    for i in range(5):    
-        if(abs(sorted_data[i]["loudness"] - .5) <= abs(sorted_data[i+1]["loudness"] - .5) ):
-            correct = True
-        else :
-            correct = False
-    return correct
+    for i in range(5):
+        assert abs(sorted_data[i]["loudness"] - .5) <= abs(sorted_data[i+1]["loudness"] - .5), f"Distance from current ({sorted_data[i]['loudness']}) is further from next ({sorted_data[i+1]['loudness']})"

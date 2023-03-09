@@ -1,9 +1,7 @@
-import sys
-sys.path.append('..')
-
 import pandas as pd
 
-from app import app
+from backend_imports import app
+
 
 def test_get_recommendations_no_filters():
     response = app.test_client().post("/result", json={"name": "gangnam style"})

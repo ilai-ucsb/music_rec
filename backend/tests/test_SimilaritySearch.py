@@ -55,7 +55,7 @@ def test_similarSongs_with_n_5_year():
 def test_similarSongs_with_n_2_acousticness_danceability_duration_ms_energy():
     inpt = {
         "n": 2,
-        "accousticness": 0.5,
+        "acousticness": 0.5,
         "danceability": 0.5,
         "duration_ms": 10000,
         "energy": 0.5
