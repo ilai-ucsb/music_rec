@@ -1,19 +1,21 @@
 import numpy as np
 import pandas as pd
-import seaborn as sns
+import pickle as pkl
+# import seaborn as sns
 import plotly.express as px
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import sys
 
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import Pipeline
-from sklearn.manifold import TSNE
-from sklearn.decomposition import PCA
-from sklearn.metrics import euclidean_distances
-from scipy.spatial.distance import cdist
-from SpotifyAPICaller import find_song
 from collections import defaultdict
+from scipy.spatial.distance import cdist
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from SpotifyAPICaller import find_song
+# from sklearn.manifold import TSNE
+# from sklearn.metrics import euclidean_distances
+# import joblib
 
 sys.path.append('..')
 from database.song import Song
@@ -45,6 +47,11 @@ def k_means_cluster(n_clusters, data):
     song_cluster_pipeline.fit(X)
     song_cluster_labels = song_cluster_pipeline.predict(X)
     data['cluster_label'] = song_cluster_labels
+    
+    # joblib.dump(song_cluster_pipeline, 'song.pkl', compress = 1)
+    with open('song.pkl', 'wb') as f:
+        pkl.dump(song_cluster_pipeline, f) # serialize the list
+    
     return song_cluster_pipeline, data, X
 
 def visualize_cluster(data, song_embedding):
@@ -131,8 +138,16 @@ def flatten_dict_list(dict_list):
 
 def recommend_songs(song_list, spotify_data, n_songs=10):
     global song_cluster_pipeline
-    if song_cluster_pipeline is None:
-        cluster_songs()
+    # if song_cluster_pipeline is None:
+    #     cluster_songs()
+    # spotify_data = pd.read_csv("../../data/raw_data.csv")
+
+    print("loading file")
+    with open('song.pkl', 'rb') as f:
+        song_cluster_pipeline = pkl.load(f)
+        # pkl.dump(song, f) # serialize the list
+    
+    print("done loading model")
 
     metadata_cols = ['name', 'year', 'artists']
     song_dict = flatten_dict_list(song_list)
@@ -163,6 +178,8 @@ def get_recommendations(song_names):
     global data
     input_dict_list = []
     recommendations = []
+    data = pd.read_csv("../../data/raw_data.csv")
+
     
     for song in song_names:
         dict_ = {'name': song}
@@ -179,7 +196,7 @@ def get_recommendations(song_names):
     
 
 if __name__ == "__main__":
-    cluster_songs()
+    # cluster_songs()
     songs = get_recommendations(['As it was'])
     for s in songs:
         print(s)
