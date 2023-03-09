@@ -29,11 +29,18 @@ function SliderComp() {
     }
   };
 
+  // const handleMinValue = (newValue) => {
+  //   setValue([newValue, value[1]]);
+  //   newValue = value[0];
+  // }
+
   return (
     <Box sx={{ width: 300 }}>
-      <input type="text" readOnly={true} style={{width: "30%", maxHeight: "30px"}} value={value[0]} onChange={(e) => e.target.value = value[0]}/> - &nbsp;
+      <input data-testid="minYear" type="text" readOnly={true} style={{width: "30%", maxHeight: "30px"}} value={value[0]} onChange={(e) => e.target.value = value[0]}/>
+      - &nbsp;
       <input type="text" readOnly={true} style={{width: "30%", maxHeight: "30px"}} value={value[1]} onChange={(e) => e.target.value = value[1]}/>
       <Slider
+        data-testid="changeYear"
         getAriaLabel={() => 'Minimum distance shift'}
         value={value}
         onChange={handleChange}
