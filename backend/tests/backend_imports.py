@@ -18,6 +18,7 @@ try:
     data_path = root_path + "/data"
     sys.path.append(backend_path)
     sys.path.append(backend_path + "/flask-api-serverless")
+    sys.path.append(backend_path + "/database")
     sys.path.append(data_path)
 except ValueError as ve:
     logger.error(f"There was an issue retrieving the folder path to the backend. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
@@ -33,10 +34,12 @@ except Exception as exc:
 
 try:
     # add your imports here
+    from app import app
+    import database
+    import dbutils
+    import loud
     import mock_db
     import SimilaritySearch
-    import loud
-    from app import app
 
 except ModuleNotFoundError as mnfe:
     logger.error(f"Error when importing a module. Is the file in either of the following folders: {sys.path}")
