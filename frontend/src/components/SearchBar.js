@@ -23,6 +23,7 @@ function SearchBar({ ...props }) {
           },
           body: JSON.stringify({
             "name": searchInput, 
+            "id": props.spotifyUser,
             "filters": {
               "explicit": props.explicitFilter,
             }})

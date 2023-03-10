@@ -6,7 +6,6 @@ import ListPage from "./utils/ListPage";
 import FilterPopup from "../FilterPopup";
 import { getTokenFromUrl } from "./utils/spotifyUtils";
 import SpotifyWebApi from 'spotify-web-api-js';
-import Container from "react-bootstrap/esm/Container";
 
 // HomeIndexPage.js essentially acts as our App.js since our App.js is now routing pages.
 
@@ -62,7 +61,7 @@ export default function HomeIndexPage() {
               <option value={1}>Yes</option>
             </select>
           </FilterPopup>
-          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter}/>
+          <SearchBar spotifyUser={spotifyUser} setSearchResult={setSearchResult} explicitFilter={explicitFilter}/>
           <ListPage searchResults={searchResult}/>
         </header>
       </div>
