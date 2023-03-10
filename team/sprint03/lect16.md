@@ -1,4 +1,4 @@
-# Lecture 16: Daily Standup (3/2/23)
+# Lecture 16: Daily Standup (3/7/23)
 
 ## Music Recommendation
 
