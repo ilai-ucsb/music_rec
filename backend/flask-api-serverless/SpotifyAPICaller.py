@@ -128,6 +128,3 @@ def get_recommendation(track, filters):
                           "explicit": song["explicit"]})
 
     return [song_list]
-
-if __name__ == "__main__":
-    print(find_song("Gangnam Style"))
