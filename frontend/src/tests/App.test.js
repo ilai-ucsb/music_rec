@@ -12,6 +12,9 @@ describe("App integration test", () => {
         const filterBtn = screen.getByRole("button", {name: "filters"})
         fireEvent.click(filterBtn)
         userEvent.selectOptions(screen.getByTestId("select"), "1")
+        expect(screen.getByTestId('minValue')).toBeInTheDocument();
+        expect(screen.getByTestId('maxValue')).toBeInTheDocument();
+        console.log(screen.getByTestId('minValue'))
         fireEvent.click(screen.getByRole("button", {name: "close"}))
         fireEvent.change(input, {target: {value: "gangnam style"}})
         Simulate.submit(screen.getByRole("searchbox"))

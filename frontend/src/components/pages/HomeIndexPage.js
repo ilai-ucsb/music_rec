@@ -12,6 +12,7 @@ export default function HomeIndexPage() {
     const [searchResult, setSearchResult] = useState([]);
     const [buttonPopup, setButtonPopup] = useState(false);
     const [explicitFilter, setExplicitFilter] = useState("NULL");
+    const [yearFilter, setYearFilter] = useState([1950, 2022]);
 
     const handleChange = (e) => {
       setExplicitFilter(e.target.value);
@@ -32,10 +33,10 @@ export default function HomeIndexPage() {
             </select>
             <div className="slider-parent">
               Year:&nbsp; 
-              <Slider/>
+              <Slider value={yearFilter} setValue={setYearFilter}/>
             </div>
           </FilterPopup>
-          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter}/>
+          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} yearFilter={yearFilter}/>
           <ListPage searchResults={searchResult}/>
         </header>
       </div>
