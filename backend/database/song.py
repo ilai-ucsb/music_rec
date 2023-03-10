@@ -1,4 +1,5 @@
 class Song(object):
+<<<<<<< HEAD
     # SPOTIFY_API_GOLDEN_COLUMNS: set columns
     SPOTIFY_API_GOLDEN_COLUMNS = ('id', 'name', 'year',
                                   'explicit', 'duration_ms',
@@ -8,6 +9,18 @@ class Song(object):
                                   'acousticness', 'tempo',
                                   'key', 'loudness', 'valence',
                                   'liveness', 'time_signature')
+=======
+    # popular songs
+    GANGNAM_STYLE = "Gangnam Style"
+    DESPACITO = "Despacito"
+    INVALID_SONG = "nbdjs183hdjhkzxiuoq2uqejhsjhks"
+    
+    # SPOTIFY_API_GOLDEN_COLUMNS: set of strings used for testing
+    SPOTIFY_API_GOLDEN_COLUMNS = ('id', 'name', 'year', 'explicit', 'duration_ms', 'popularity', 'danceability', 
+                      'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness', 
+                      'instrumentalness', 'liveness', 'valence', 'tempo', 'time_signature')
+    
+>>>>>>> 2720237 (as - adding tests for spotifyapi caller)
     """
     The Song object contains all features for each song.
 
