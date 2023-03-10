@@ -59,7 +59,7 @@ function SearchBar({ ...props }) {
     setSearchInput(e.target.value)
   }
 
-  return <div style={{"display": "block", "text-align": "center"}}>
+  return <div style={{"display": "block", "textAlign": "center"}}>
     <form data-testid = "searchBar" onSubmit={handleSubmit}>
         <TextField
           id="filled-basic"
