@@ -14,7 +14,7 @@ def getSongs():
     except LookupError as kerr:
         return jsonify({
             "ERROR": "the name field is invalid"
-        }), 403
+        }), 404
     except Exception as exc:
         return jsonify({
             "ERROR": f"An unknown error occurred: {exc}"
