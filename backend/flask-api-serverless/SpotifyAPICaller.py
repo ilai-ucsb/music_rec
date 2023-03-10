@@ -7,7 +7,6 @@ import spotipy
 from collections import defaultdict
 from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyClientCredentials
-from collections import defaultdict
 
 logging.basicConfig(level=logging.ERROR)
 
