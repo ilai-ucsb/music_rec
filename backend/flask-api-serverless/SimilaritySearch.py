@@ -37,11 +37,6 @@ else:  # if we are in production mode, then use the firebase database
         csvReader = csv.DictReader(f)
         data = [row for row in csvReader]
 
-    from database import _setup_database
-    _setup_database()
-    db = firestore.Client()
-    data = list(map(lambda x: x.to_dict(), list(db.collection(u'Songs').stream())))
-
 VERBOSE = os.environ.get("VERBOSE", False)
 
 
