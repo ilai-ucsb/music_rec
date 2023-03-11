@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, cleanup } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import SearchBar from "../components/SearchBar";
 import '@testing-library/jest-dom/extend-expect'
 // import HomeIndexPage from "../components/pages/HomeIndexPage";
