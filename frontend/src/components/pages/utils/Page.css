@@ -45,19 +45,3 @@
     padding: 0 10px;
     display: block;
   }
-
-  .slider-parent {
-    position: relative;
-  }
-
-  .buble {
-    position: absolute;
-  }
-
-  .slider-left {
-    z-index: 3;
-  }
-  
-  .slider-right{
-    z-index: 4;
-  }

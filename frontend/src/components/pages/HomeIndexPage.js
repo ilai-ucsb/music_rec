@@ -17,11 +17,9 @@ export default function HomeIndexPage() {
 
     const handleChangeExplicit = (e) => {
       setExplicitFilter(e.target.value);
-      console.log(explicitFilter);
     }
     const handleChangeLoud = (e) => {
       setloudFilter(e.target.value);
-      console.log(loudFilter);
     }
     
   return (
@@ -45,7 +43,7 @@ export default function HomeIndexPage() {
               <option value={0.75}>Loud</option>
               <option value={1.00}>Blasting</option>
             </select>
-            <div className="slider-parent">
+            <div>
               Year:&nbsp; 
               <Slider value={yearFilter} setValue={setYearFilter}/>
             </div>

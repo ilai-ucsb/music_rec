@@ -12,10 +12,9 @@ describe("App integration test", () => {
         const filterBtn = screen.getByRole("button", {name: "filters"})
         
         fireEvent.click(filterBtn)
-        userEvent.selectOptions(screen.getByTestId("select"), "1")
+        userEvent.selectOptions(screen.getByTestId("explicit-select"), "1")
         expect(screen.getByTestId('minValue')).toBeInTheDocument();
         expect(screen.getByTestId('maxValue')).toBeInTheDocument();
-        console.log(screen.getByTestId('minValue'))
 
         userEvent.selectOptions(screen.getByTestId("explicit-select"), "1")
         userEvent.selectOptions(screen.getByTestId("loud-select"), "0.5")
