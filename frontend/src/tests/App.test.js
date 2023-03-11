@@ -10,12 +10,21 @@ describe("App integration test", () => {
         render(<App />)
         const input = screen.getByTestId("searchInput")
         const filterBtn = screen.getByRole("button", {name: "filters"})
+        
         fireEvent.click(filterBtn)
+<<<<<<< HEAD
         userEvent.selectOptions(screen.getByTestId("select"), "1")
         expect(screen.getByTestId('minValue')).toBeInTheDocument();
         expect(screen.getByTestId('maxValue')).toBeInTheDocument();
         console.log(screen.getByTestId('minValue'))
+=======
+
+        userEvent.selectOptions(screen.getByTestId("explicit-select"), "1")
+        userEvent.selectOptions(screen.getByTestId("loud-select"), "0.5")
+    
+>>>>>>> main
         fireEvent.click(screen.getByRole("button", {name: "close"}))
+        
         fireEvent.change(input, {target: {value: "gangnam style"}})
         Simulate.submit(screen.getByRole("searchbox"))
         setTimeout(async () => await waitFor(() => expect(screen.queryByTestId("songElements")).toBeInTheDocument()), 5000);

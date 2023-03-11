@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
 import './SearchBar.css'
 
 // setSearchResult is a prop that is passed through to SearchBar. It does what it says 
@@ -25,6 +26,7 @@ function SearchBar({ ...props }) {
             "name": searchInput, 
             "filters": {
               "explicit": props.explicitFilter,
+              "loud": props.loudFilter,
             }})
         };
         // The url here is for the flask api deployed on a server.
@@ -58,14 +60,18 @@ function SearchBar({ ...props }) {
     setSearchInput(e.target.value)
   }
 
-  return <div>
+  return <div style={{"display": "block", "textAlign": "center"}}>
     <form data-testid = "searchBar" onSubmit={handleSubmit}>
-      <input
-        data-testid = "searchInput"
-        type="search"
-        placeholder="Enter a song"
-        value={searchInput}
-        onChange={handleChange} />
+        <TextField
+          id="filled-basic"
+          className='TextField'
+          type="search"
+          variant="filled"
+          label="Enter a song"
+          value={searchInput}
+          onChange={handleChange}
+          inputProps={{ "data-testid": "searchInput" }}
+          />
     </form>
     {showError && (
         <div className="error-popup">

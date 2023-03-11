@@ -1,0 +1,2 @@
+# Rekofy User Manual
+You can find the user manual at the following link: [Rekofy Music Recommendation User Manual](https://docs.google.com/document/d/1n68mUlnPb0suuJTo6VxlRUypXIO8ABmcs5GhZRv3lKU/edit?usp=sharing)
