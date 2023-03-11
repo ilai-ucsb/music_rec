@@ -25,8 +25,6 @@ function SearchBar({ ...props }) {
             "name": searchInput, 
             "filters": {
               "explicit": props.explicitFilter,
-              "minYear": props.yearFilter[0],
-              "maxYear": props.yearFilter[1]
             }})
         };
         // The url here is for the flask api deployed on a server.
