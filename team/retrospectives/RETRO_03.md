@@ -28,7 +28,7 @@ Stop:
 - Single member specialization 
 
 Continue:
-- Giving detailed feedback in PR 
+- Giving detailed feedback in PRs 
 - Checkins
 - Documentation 
 
