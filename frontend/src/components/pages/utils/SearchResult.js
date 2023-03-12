@@ -35,7 +35,7 @@ const SearchResult = ({ songName, artist, song_id }) => {
     <article>
       <Box sx={{ display: "inline-flex", alignSelf: "flex-end" }}>
         <Card sx={{ display: "flex" }}>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Box sx={{ display: "flex", flexDirection: "column", width: "400px" }}>
             <CardContent sx={{ flex: "1 0 auto" }}>
               <Typography component="div" variant="h6">
                 {songName}
