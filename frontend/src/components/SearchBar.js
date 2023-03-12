@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import ListPage from './pages/utils/ListPage';
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
 import './SearchBar.css'
 
 // setSearchResult is a prop that is passed through to SearchBar. It does what it says 
@@ -48,6 +48,7 @@ function SearchBar({ ...props }) {
             "name": searchInput, 
             "filters": {
               "explicit": props.explicitFilter,
+              "loud": props.loudFilter,
             }})
         };
         // The url here is for the flask api deployed on a server.
@@ -55,7 +56,6 @@ function SearchBar({ ...props }) {
         // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
         // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
         // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
-        console.log(songParameters)
         let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
         let resJson = await response.json();
         // throw error if backend gives an error response
@@ -95,33 +95,18 @@ function SearchBar({ ...props }) {
     setTimer(newTimer);
   }
 
-  return <div>
+  return <div style={{"display": "block", "textAlign": "center"}}>
     <form data-testid = "searchBar" onSubmit={handleSubmit}>
-      <input
-        data-testid = "searchInput"
-        type="search"
-        placeholder="Enter a song"
-        value={searchInput}
-        onChange={handleChange} />
-      <div className='dropdown'>
-        {suggestions.filter(() => {
-          return searchInput !== "" && searchInput !== null && submit === false
-        })
-        .map((item, key) => (<div key={key} className='dropdown-row'>
-          <div className='options'>
-            <img src={item.album.images[0].url} alt="logo" style={{ height: "50px", margin:"4px", marginTop: "5px" }} />
-            <p style={{ display: "inline"}}>
-              {item.name.length < 40
-                      ? `${item.name}`
-                      : `${item.name.slice(0, 15)}...`} -
-            </p>
-            <p style={{ display: "inline", marginLeft: "10px" }}>
-              {item.artists[0].name}
-              </p>
-          </div>
-          
-        </div>))}
-      </div>
+        <TextField
+          id="filled-basic"
+          className='TextField'
+          type="search"
+          variant="filled"
+          label="Enter a song"
+          value={searchInput}
+          onChange={handleChange}
+          inputProps={{ "data-testid": "searchInput" }}
+          />
     </form>
     {showError && (
         <div className="error-popup">

@@ -4,6 +4,7 @@ import "./utils/Page.css"
 import NavBarApp from "../NavBarApp";
 import ListPage from "./utils/ListPage";
 import FilterPopup from "../FilterPopup";
+import Slider from "../Slider";
 
 // HomeIndexPage.js essentially acts as our App.js since our App.js is now routing pages.
 
@@ -11,6 +12,8 @@ export default function HomeIndexPage() {
     const [searchResult, setSearchResult] = useState(undefined);
     const [buttonPopup, setButtonPopup] = useState(false);
     const [explicitFilter, setExplicitFilter] = useState("NULL");
+    const [yearFilter, setYearFilter] = useState([1950, 2022]);
+    const [loudFilter, setloudFilter] = useState("NULL");
     const [accessToken, setAccessToken] = useState("");
     const [hide, setHide] = useState(false);
 
@@ -27,9 +30,11 @@ export default function HomeIndexPage() {
         .then(data => setAccessToken(data.access_token))
       },[])
 
-    const handleChange = (e) => {
+    const handleChangeExplicit = (e) => {
       setExplicitFilter(e.target.value);
-      console.log(explicitFilter);
+    }
+    const handleChangeLoud = (e) => {
+      setloudFilter(e.target.value);
     }
     
   return (
@@ -39,14 +44,29 @@ export default function HomeIndexPage() {
           <button className="filter-popup" onClick={() => setButtonPopup(true)}>filters</button>
           <FilterPopup trigger = {buttonPopup} setTrigger = {setButtonPopup}>
             explicit:&nbsp;
-            <select data-testid="select" value = {explicitFilter} onChange={handleChange} style={{marginRight: "0.5rem"}}>
+            <select data-testid="explicit-select" value = {explicitFilter} onChange={handleChangeExplicit} style={{marginRight: "0.5rem"}}>
               <option value={"NULL"}>Both</option>
               <option value={0}>No</option>
               <option value={1}>Yes</option>
             </select>
+            loud:&nbsp;
+            <select data-testid="loud-select" value = {loudFilter} onChange={handleChangeLoud} style={{marginRight: "0.5rem"}}>
+              <option value={"NULL"}>Any</option>
+              <option value={0.00}>Faint</option>
+              <option value={0.25}>Quiet</option>
+              <option value={0.50}>Medium</option>
+              <option value={0.75}>Loud</option>
+              <option value={1.00}>Blasting</option>
+            </select>
+            <div>
+              Year:&nbsp; 
+              <Slider value={yearFilter} setValue={setYearFilter}/>
+            </div>
+
+            
           </FilterPopup>
-          <SearchBar hide={hide} setHide={setHide} setSearchResult={setSearchResult} explicitFilter={explicitFilter} accessToken={accessToken}/>
-          <ListPage searchResults={searchResult} hide={hide}/>
+          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} loudFilter={loudFilter} yearFilter={yearFilter}/>
+          <ListPage searchResults={searchResult}/>
         </header>
       </div>
   )

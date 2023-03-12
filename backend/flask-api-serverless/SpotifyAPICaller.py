@@ -1,9 +1,11 @@
-import spotipy
-import os
-from spotipy.oauth2 import SpotifyClientCredentials
-from dotenv import load_dotenv
-import pandas as pd
 import logging
+import os
+import pandas as pd
+import spotipy
+
+from collections import defaultdict
+from dotenv import load_dotenv
+from spotipy.oauth2 import SpotifyClientCredentials
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -42,6 +44,52 @@ def base_model(artist_ids=None, genre_ids=None, track_ids=None, limit=10, countr
 
     return results
 
+def find_song(name):
+    """Find a song given the name using Spotify API
+    
+    Args:
+        name (str): name of the song to find
+        
+    Returns:
+        song_data (pd.DataFrame): DataFrame containing the song data or None if not found
+    """
+    song_data = defaultdict()
+    
+    # use Spotify API '/search' endpoint to find by track name
+    try:
+        results = sp.search(q=name, type='track', limit=1)
+    except spotipy.SpotifyException as e:
+        logging.error(e)
+        return None
+    
+    if results['tracks']['items'] == []:
+        return None
+    
+    results = results['tracks']['items'][0]
+    track_id = results['id']
+    
+    
+    try:
+        audio_features = sp.audio_features(track_id)[0]
+    except spotipy.SpotifyException as e:
+        logging.error(e)
+        return None
+    
+    print(results)
+    
+    song_data['id'] = [track_id]
+    song_data['name'] = [results['name']]
+    song_data['year'] = [int(results['album']['release_date'][:4])]
+    song_data['explicit'] = [int(results['explicit'])]
+    song_data['duration_ms'] = [results['duration_ms']]
+    song_data['popularity'] = [results['popularity']]
+    song_data['album_cover'] = [results['album']['images'][0]['url']]
+    
+    for key, value in audio_features.items():
+        song_data[key] = [value]
+        
+    return pd.DataFrame(song_data)
+
 def filter_songs(song_list, filters):
     """Process the filters over the song list and return filtered songs
 
@@ -59,7 +107,9 @@ def filter_songs(song_list, filters):
     good_songs = []
     for song in song_list:
         # here we will apply all the filters passed in, but only explicit filters are allowed
-        if bool(filters["explicit"]) == song["explicit"]:
+        if filters.get("explicit", None) and bool(filters["explicit"]) == song["explicit"]:
+            good_songs.append(song)
+        elif filters.get("explicit", None) == None:
             good_songs.append(song)
     return good_songs
 

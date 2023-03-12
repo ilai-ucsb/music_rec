@@ -11,6 +11,6 @@ describe("test NavBar", () => {
         expect(aboutRoute).toBeInTheDocument();
         expect(homeRoute).toHaveAttribute("href", "/");
         expect(aboutRoute).toHaveAttribute("href", "/about");
-        expect(screen.getByText("Music Recommendation App")).toBeInTheDocument();
+        expect(screen.getByAltText("Rekofy")).toBeInTheDocument();
     })
 })
