@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
 import './SearchBar.css'
 
 // setSearchResult is a prop that is passed through to SearchBar. It does what it says 
 // and sets searchResult from HomeIndexPage.js to a value that you give it here. 
 
 function SearchBar({ ...props }) {
-
+  const [showError, setShowError] = useState(false);
   const [searchInput, setSearchInput] = useState("");
 
   let handleSubmit = async (e) => {
@@ -26,6 +27,7 @@ function SearchBar({ ...props }) {
             "id": props.spotifyUser,
             "filters": {
               "explicit": props.explicitFilter,
+              "loud": props.loudFilter,
             }})
         };
         // The url here is for the flask api deployed on a server.
@@ -33,16 +35,24 @@ function SearchBar({ ...props }) {
         // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
         // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
         // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
-        console.log(songParameters)
-        await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters)
-          .then((response) => response.json())
-          .then((data) => props.setSearchResult(data))
+        let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
+        let resJson = await response.json();
+        // throw error if backend gives an error response
+        if (!response.ok) {
+          throw Error(resJson.message);
+        } else {
+          props.setSearchResult(resJson);
+        }
       } catch(error) {
+        // On error, setShowError is marked true
+        setShowError(true);
+        console.log(error);
+        setTimeout(() => {
+          setShowError(false);
+        }, 5000);
         console.log("error")
       }
     }
-    // clears the input on submit
-    setSearchInput("");
   };
 
   const handleChange = (e) => {
@@ -50,16 +60,24 @@ function SearchBar({ ...props }) {
     setSearchInput(e.target.value)
   }
 
-  return <div>
+  return <div style={{"display": "block", "textAlign": "center"}}>
     <form data-testid = "searchBar" onSubmit={handleSubmit}>
-      <input
-        data-testid = "searchInput"
-        type="search"
-        placeholder="Enter a song"
-        value={searchInput}
-        onChange={handleChange} />
+        <TextField
+          id="filled-basic"
+          className='TextField'
+          type="search"
+          variant="filled"
+          label="Enter a song"
+          value={searchInput}
+          onChange={handleChange}
+          inputProps={{ "data-testid": "searchInput" }}
+          />
     </form>
-
+    {showError && (
+        <div className="error-popup">
+          <p>Sorry, we could not find that song</p>
+        </div>
+      )}
   </div>
 
 };

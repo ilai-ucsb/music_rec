@@ -13,8 +13,6 @@ describe("test NavBar", () => {
         expect(loginRoute).toBeInTheDocument();
         expect(homeRoute).toHaveAttribute("href", "/");
         expect(aboutRoute).toHaveAttribute("href", "/about");
-        expect(loginRoute).toHaveAttribute("href", "/login");
-        expect(screen.getByText("Music Recommendation App")).toBeInTheDocument();
-        expect(screen.getByText("Music Recommendation App")).toHaveAttribute("href", "/");
+        expect(screen.getByAltText("Rekofy")).toBeInTheDocument();
     })
 })
