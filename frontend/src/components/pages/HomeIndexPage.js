@@ -65,7 +65,7 @@ export default function HomeIndexPage() {
 
             
           </FilterPopup>
-          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} loudFilter={loudFilter} yearFilter={yearFilter}/>
+          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} loudFilter={loudFilter} yearFilter={yearFilter} accessToken={accessToken}/>
           <ListPage searchResults={searchResult}/>
         </header>
       </div>

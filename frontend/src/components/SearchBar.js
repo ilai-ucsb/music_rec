@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import TextField from '@mui/material/TextField';
+import { Text } from 'react-native';
 import './SearchBar.css'
+import { IconButton } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear'
+import { useContainerDimensions } from './pages/utils/useContainerDimensions';
 
 // setSearchResult is a prop that is passed through to SearchBar. It does what it says 
 // and sets searchResult from HomeIndexPage.js to a value that you give it here. 
@@ -10,7 +14,6 @@ function SearchBar({ ...props }) {
   const [searchInput, setSearchInput] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [timer, setTimer] = useState(null);
-  const [submit, setSubmit] = useState(false);
 
   let fetchSuggestions = async (input) => {
     let songParameters = {
@@ -31,57 +34,49 @@ function SearchBar({ ...props }) {
 
   let handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmit(true);
-    props.setHide(false);
-    if (searchInput === ""){
-      props.setSearchResult(undefined)
-    } else {
-      try{
-        // CORS is only required for server side api calling
-        let songParameters = {
-          method: 'POST',
-          mode: 'cors',
-          headers: {
-            "Content-Type": 'application/json'
-          },
-          body: JSON.stringify({
-            "name": searchInput, 
-            "filters": {
-              "explicit": props.explicitFilter,
-              "loud": props.loudFilter,
-            }})
-        };
-        // The url here is for the flask api deployed on a server.
-        // If any changes to the flask api was made please change the url to a localhost url to test locally.
-        // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
-        // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
-        // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
-        let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
-        let resJson = await response.json();
-        // throw error if backend gives an error response
-        if (!response.ok) {
-          throw Error(resJson.message);
-        } else {
-          props.setSearchResult(resJson);
-        }
-      } catch(error) {
-        // On error, setShowError is marked true
-        setShowError(true);
-        console.log(error);
-        setTimeout(() => {
-          setShowError(false);
-        }, 5000);
-        console.log("error")
+    try {
+      // CORS is only required for server side api calling
+      let songParameters = {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          "Content-Type": 'application/json'
+        },
+        body: JSON.stringify({
+          "name": searchInput,
+          "filters": {
+            "explicit": props.explicitFilter,
+            "loud": props.loudFilter,
+          }
+        })
+      };
+      // The url here is for the flask api deployed on a server.
+      // If any changes to the flask api was made please change the url to a localhost url to test locally.
+      // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
+      // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
+      // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
+      let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
+      let resJson = await response.json();
+      // throw error if backend gives an error response
+      if (!response.ok) {
+        throw Error(resJson.message);
+      } else {
+        props.setSearchResult(resJson);
       }
+    } catch (error) {
+      // On error, setShowError is marked true
+      setShowError(true);
+      console.log(error);
+      setTimeout(() => {
+        setShowError(false);
+      }, 5000);
+      console.log("error")
     }
-  };
+  }
+
 
   const handleChange = (e) => {
     e.preventDefault();
-    setSubmit(false);
-    if (e.target.value === "") {
-      props.setHide(true);
-    }
     setSearchInput(e.target.value)
 
     clearTimeout(timer);
@@ -90,23 +85,54 @@ function SearchBar({ ...props }) {
       fetchSuggestions(e.target.value);
     }, 700)
 
-    setSuggestions([]);
-
     setTimer(newTimer);
+  }
+
+  let handleClick = (suggestedInput) => {
+    setSearchInput(suggestedInput);
+    setSuggestions([]);
+    // console.log(e);
   }
 
   return <div style={{"display": "block", "textAlign": "center"}}>
     <form data-testid = "searchBar" onSubmit={handleSubmit}>
-        <TextField
-          id="filled-basic"
-          className='TextField'
-          type="search"
-          variant="filled"
-          label="Enter a song"
-          value={searchInput}
-          onChange={handleChange}
-          inputProps={{ "data-testid": "searchInput" }}
-          />
+      <TextField
+        id="filled-basic"
+        className='TextField'
+        variant="filled"
+        label="Enter a song"
+        type="search"
+        value={searchInput}
+        onChange={handleChange}
+        inputProps={{ "data-testid": "searchInput" }}
+        InputProps={{
+          endAdornment: (<IconButton onClick={() => { setSearchInput("") }} sx={{ visibility: searchInput ? "visible" : "hidden" }}><ClearIcon /></IconButton>)
+        }}
+        sx={{ '& .Mui-focused .MuiIconButton-root': { color: "primary.main" } }}
+      />
+      <div className='dropdown'>
+          {suggestions.filter(() => {
+            return searchInput !== "" && searchInput !== null
+          })
+            .map((item, key) => (
+              <div key={key} onClick={() => handleClick(item.name)} className='dropdown-row'>
+                <div className='options'>
+                  <img src={item.album.images[0].url} alt="logo" style={{ height: "50px", margin: "4px", marginTop: "5px" }} />
+                  <p style={{ display: "inline" }}>
+                    {item.name.length < 40
+                      ? `${item.name}`
+                      : `${item.name.slice(0, 15)}...`}
+                  </p>
+                  &nbsp; by &nbsp;
+                  <div className='text' >
+                    {item.artists[0].name.length < 50
+                      ? item.artists[0].name 
+                      : item.artists[0].name.slice(0, 5)}
+                  </div>
+                </div>
+
+              </div>))}
+        </div>
     </form>
     {showError && (
         <div className="error-popup">
