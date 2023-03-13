@@ -28,7 +28,7 @@ const SearchResult = ({ songName, artist, song_id }) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  
+
   return (
     <article>
       <Box sx={{ display: "inline-flex", alignSelf: "flex-end" }}>
@@ -57,7 +57,7 @@ const SearchResult = ({ songName, artist, song_id }) => {
                 justifyContent: "center",
                 pl: 1,
                 pb: 1,
-                width: "100%"
+                width: "100%",
               }}
             >
               <Button sx={{ width: "50%" }}>
@@ -70,8 +70,6 @@ const SearchResult = ({ songName, artist, song_id }) => {
                 target="_blank"
                 sx={{ width: "50%" }}
                 style={{ backgroundColor: "#1DB954" }}
-                
-
               >
                 <Spotify />
               </Button>
