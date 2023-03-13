@@ -1,6 +1,4 @@
 // Each song will be displayed in this format
-
-//MUI boxes, put the buttons in their own boxes, throw em on other sides of the boxes.
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 
@@ -8,7 +6,6 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
 import { Spotify } from "react-bootstrap-icons";
@@ -31,11 +28,14 @@ const SearchResult = ({ songName, artist, song_id }) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  
   return (
     <article>
       <Box sx={{ display: "inline-flex", alignSelf: "flex-end" }}>
         <Card sx={{ display: "flex" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", width: "400px" }}>
+          <Box
+            sx={{ display: "flex", flexDirection: "column", width: "400px" }}
+          >
             <CardContent sx={{ flex: "1 0 auto" }}>
               <Typography component="div" variant="h6">
                 {songName}
@@ -54,19 +54,24 @@ const SearchResult = ({ songName, artist, song_id }) => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                justifyContent: "center",
                 pl: 1,
                 pb: 1,
+                width: "100%"
               }}
             >
-              <Button>
+              <Button sx={{ width: "50%" }}>
                 <PlayFill></PlayFill>
               </Button>
 
               <Button
                 href={"https://open.spotify.com/track/" + song_id}
-                size="sm"
-                variant="success"
                 ms="auto"
+                target="_blank"
+                sx={{ width: "50%" }}
+                style={{ backgroundColor: "#1DB954" }}
+                
+
               >
                 <Spotify />
               </Button>
@@ -89,9 +94,7 @@ const SearchResult = ({ songName, artist, song_id }) => {
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <Typography paragraph>Stats:</Typography>
-              <Typography paragraph>
-                The stats go here
-              </Typography>
+              <Typography paragraph>The stats go here</Typography>
             </CardContent>
           </Collapse>
         </Card>
