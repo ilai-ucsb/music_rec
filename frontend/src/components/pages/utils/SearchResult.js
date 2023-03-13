@@ -1,6 +1,10 @@
 // Each song will be displayed in this format
+
+// Centered the material ui boxes. used the colorthief package to update the background of the cards based on the image
+//   img.src = imageUrl [imageUrl]); image={imageUrl}
 import * as React from "react";
 import { styled } from "@mui/material/styles";
+import ColorThief from "colorthief";
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -11,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import { Spotify } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 import { PlayFill } from "react-bootstrap-icons";
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <PlayFill {...other} />;
@@ -24,6 +29,19 @@ const ExpandMore = styled((props) => {
 
 const SearchResult = ({ songName, artist, song_id }) => {
   const [expanded, setExpanded] = React.useState(false);
+  const [bgColor, setBgColor] = React.useState("#ffffff");
+
+  React.useEffect(() => {
+    const colorThief = new ColorThief();
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.addEventListener("load", () => {
+      const color = colorThief.getColor(img);
+      setBgColor(`rgb(${color.join(", ")})`);
+    });
+    img.src =
+      "https://i.scdn.co/image/ab67616d0000b2736cfc57e5358c5e39e79bccbd";
+  }, ["https://i.scdn.co/image/ab67616d0000b2736cfc57e5358c5e39e79bccbd"]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -32,7 +50,7 @@ const SearchResult = ({ songName, artist, song_id }) => {
   return (
     <article>
       <Box sx={{ display: "inline-flex", alignSelf: "flex-end" }}>
-        <Card sx={{ display: "flex" }}>
+        <Card sx={{ display: "flex", backgroundColor: bgColor }}>
           <Box
             sx={{ display: "flex", flexDirection: "column", width: "400px" }}
           >
