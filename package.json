@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "colorthief": "^2.4.0",
+    "react-spotify-web-playback": "^0.13.2"
+  }
+}
