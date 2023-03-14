@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 
-os.environ["PRODUCTION"] = True
+os.environ["PRODUCTION"] = "1"
 
 from SpotifyAPICaller import get_recommendation
 from SimilaritySearch import similarSongs
@@ -12,8 +12,8 @@ CORS(app)
 
 @app.route('/result', methods=["POST"], strict_slashes=False)
 def getSongs():
-    response = request.get_json()
     try:
+        response = request.get_json()
         result = get_recommendation(response['name'], response.get('filters', dict()))
     except LookupError as kerr:
         return jsonify({
@@ -31,8 +31,8 @@ def getSongs():
 
 @app.route('/similar', methods=["POST"], strict_slashes=False)
 def getSimilar():
-    response = request.get_json()
     try:
+        response = request.get_json()
         songs = similarSongs(**response)
     except Exception as exc:  # return error message with copy of input response
         return jsonify({
