@@ -95,7 +95,7 @@ const SearchResult = ({ songName, artist, song_id }) => {
           </Box>
           <CardMedia
             component="img"
-            sx={{ width: 151 }}
+            sx={{ width: 125, height: 125 }}
             image="https://i.scdn.co/image/ab67616d0000b2736cfc57e5358c5e39e79bccbd"
           />
 
