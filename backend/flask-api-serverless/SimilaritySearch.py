@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 
+import csv
 import logging
 import os, sys
 import pandas as pd
 from pprint import pprint
 import time
 
-from constants import VALIDATION_TABLE
+from limits import VALIDATION_TABLE
 
 logger = logging.getLogger(__name__)  # get the logger from the callee
 
@@ -32,10 +33,9 @@ if int(PRODUCTION) == 0:  # if we are not in production, then use the mock datab
     from mock_db import get_data
     data = get_data(seed=0)
 else:  # if we are in production mode, then use the firebase database
-    from database import _setup_database
-    _setup_database()
-    db = firestore.Client()
-    data = list(map(lambda x: x.to_dict(), list(db.collection(u'Songs').stream())))
+    with open(data_path + "/raw_data.csv", encoding="utf-8") as f:
+        csvReader = csv.DictReader(f)
+        data = [row for row in csvReader]
 
 VERBOSE = os.environ.get("VERBOSE", False)
 

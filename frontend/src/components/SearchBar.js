@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
 import './SearchBar.css'
 
 // setSearchResult is a prop that is passed through to SearchBar. It does what it says 
@@ -25,6 +26,7 @@ function SearchBar({ ...props }) {
             "name": searchInput, 
             "filters": {
               "explicit": props.explicitFilter,
+              "loud": props.loudFilter,
             }})
         };
         // The url here is for the flask api deployed on a server.
@@ -32,7 +34,6 @@ function SearchBar({ ...props }) {
         // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
         // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
         // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
-        console.log(songParameters)
         let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
         let resJson = await response.json();
         // throw error if backend gives an error response
@@ -58,14 +59,18 @@ function SearchBar({ ...props }) {
     setSearchInput(e.target.value)
   }
 
-  return <div>
+  return <div style={{"display": "block", "textAlign": "center"}}>
     <form data-testid = "searchBar" onSubmit={handleSubmit}>
-      <input
-        data-testid = "searchInput"
-        type="search"
-        placeholder="Enter a song"
-        value={searchInput}
-        onChange={handleChange} />
+        <TextField
+          id="filled-basic"
+          className='TextField'
+          type="search"
+          variant="filled"
+          label="Enter a song"
+          value={searchInput}
+          onChange={handleChange}
+          inputProps={{ "data-testid": "searchInput" }}
+          />
     </form>
     {showError && (
         <div className="error-popup">

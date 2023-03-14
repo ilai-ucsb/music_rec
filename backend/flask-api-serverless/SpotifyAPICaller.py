@@ -107,7 +107,9 @@ def filter_songs(song_list, filters):
     good_songs = []
     for song in song_list:
         # here we will apply all the filters passed in, but only explicit filters are allowed
-        if bool(filters["explicit"]) == song["explicit"]:
+        if filters.get("explicit", None) and bool(filters["explicit"]) == song["explicit"]:
+            good_songs.append(song)
+        elif filters.get("explicit", None) == None:
             good_songs.append(song)
     return good_songs
 
@@ -128,6 +130,3 @@ def get_recommendation(track, filters):
                           "explicit": song["explicit"]})
 
     return [song_list]
-
-if __name__ == "__main__":
-    print(find_song("Gangnam Style"))

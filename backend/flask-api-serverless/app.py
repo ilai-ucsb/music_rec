@@ -17,7 +17,8 @@ def getSongs():
         result = get_recommendation(response['name'], response.get('filters', dict()))
     except LookupError as kerr:
         return jsonify({
-            "ERROR": "the name field is invalid"
+            "ERROR": f"the name field is invalid: {kerr}",
+            "INPUT": response
         }), 403
     except Exception as exc:  # return error message with copy of input response
         return jsonify({

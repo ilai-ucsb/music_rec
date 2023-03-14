@@ -1,7 +1,7 @@
 from tqdm import tqdm
 import pandas as pd
 import song
-import config
+import dbconfig
 import logging
 
 def _configure_api():
@@ -77,8 +77,8 @@ def _setup_database():
     from firebase_admin import credentials
     import os
 
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = config.DATABASE_CERT
-    cred = credentials.Certificate(config.DATABASE_CERT)
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = dbconfig.DATABASE_CERT
+    cred = credentials.Certificate(dbconfig.DATABASE_CERT)
     firebase_admin.initialize_app(cred)
 
 def add_song(key, song_dict):
@@ -160,4 +160,4 @@ def _process(data):
 
 if __name__ == "__main__":
     _setup_database()
-    _process(config.DATA_DIR)
+    _process(dbconfig.DATA_DIR)
