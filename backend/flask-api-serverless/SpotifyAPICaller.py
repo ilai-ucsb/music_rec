@@ -90,6 +90,7 @@ def find_song(name):
     song_data['duration_ms'] = [results['duration_ms']]
     song_data['popularity'] = [results['popularity']]
     song_data['album_cover'] = [results['album']['images'][0]['url']]
+    song_data['preview_url'] = [results['preview_url']]
     
     for key, value in audio_features.items():
         song_data[key] = [value]
@@ -158,7 +159,8 @@ def get_recommendation(track, filters):
             "loudness": str(s.loudness)[0:5],
             "speechiness": str(s.speechiness),
             "tempo": str(s.tempo),
-            "album_cover": s.album_cover
+            "album_cover": s.album_cover,
+            "preview_url": s.preview_url
         })
     return song_list
     

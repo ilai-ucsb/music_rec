@@ -191,7 +191,10 @@ def get_recommendations(song_names, num_songs=5):
     for song in output_dict:
         _song = Song.from_dict(song)
         # print(find_song(_song.name)['album_cover'][0])
-        _song.album_cover = find_song(_song.name)['album_cover'][0]
+        song_df = find_song(_song.name)
+        _song.album_cover = song_df['album_cover'][0]
+        _song.preview_url = song_df['preview_url'][0]
+        
         recommendations.append(_song)
     
     return recommendations
