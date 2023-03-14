@@ -81,7 +81,7 @@ def find_song(name):
         logging.error(e)
         return None
     
-    print(results)
+    # print(results)
     
     song_data['id'] = [track_id]
     song_data['name'] = [results['name']]
