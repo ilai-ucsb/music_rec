@@ -4,9 +4,9 @@ import "./utils/Page.css";
 import NavBarApp from "../NavBarApp";
 import ListPage from "./utils/ListPage";
 import FilterPopup from "../FilterPopup";
+import Slider from "../Slider";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Slider from "../Slider";
 
 // HomeIndexPage.js essentially acts as our App.js since our App.js is now routing pages.
 
