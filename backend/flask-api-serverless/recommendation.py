@@ -190,6 +190,8 @@ def get_recommendations(song_names, num_songs=5):
     
     for song in output_dict:
         _song = Song.from_dict(song)
+        # print(find_song(_song.name)['album_cover'][0])
+        _song.album_cover = find_song(_song.name)['album_cover'][0]
         recommendations.append(_song)
     
     return recommendations
@@ -197,9 +199,10 @@ def get_recommendations(song_names, num_songs=5):
 
 if __name__ == "__main__":
     # cluster_songs()
-    songs = get_recommendations(['Shape of You', 'Despacito'], 50)
-    # for s in songs:
-        # print(s)
+    # songs = get_recommendations(['Shape of You', 'Despacito'], 50)
+    songs = get_recommendations(['Gangnam Style'], 5)
+    for s in songs:
+        print(s)
     # print(get_recommendations(['As it was']))
     # q: What are the Top Hit songs of this decade?
     # a: ['Shape of You', 'Despacito', 'One Dance', 'Closer', 'Rockstar', 'Havana', 'I Like It', 'Dance Monkey', 'Senorita', 'Sunflower']

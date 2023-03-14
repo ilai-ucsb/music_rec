@@ -158,6 +158,7 @@ def get_recommendation(track, filters):
             "loudness": str(s.loudness)[0:5],
             "speechiness": str(s.speechiness),
             "tempo": str(s.tempo),
+            "album_cover": s.album_cover
         })
     return song_list
     

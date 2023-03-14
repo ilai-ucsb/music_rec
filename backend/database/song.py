@@ -31,7 +31,7 @@ class Song(object):
     """
     def __init__(self, id, name, popularity, year, artists, danceability, 
                  acousticness, energy, explicit, instrumentalness, liveness, 
-                 loudness, speechiness, tempo, artist_pop=0, genres=[]):
+                 loudness, speechiness, tempo, album_cover="", artist_pop=0, genres=[]):
         self.id = id
         self.name = name
         self.popularity = popularity
@@ -48,6 +48,7 @@ class Song(object):
         self.loudness = loudness
         self.speechiness = speechiness
         self.tempo = tempo
+        self.album_cover = album_cover
 
     @staticmethod
     def from_dict(source):
@@ -77,7 +78,8 @@ class Song(object):
             u'liveness': self.liveness,
             u'loudness': self.loudness,
             u'speechiness': self.speechiness,
-            u'tempo': self.tempo
+            u'tempo': self.tempo,
+            u'album_cover': self.album_cover
         }
         
         if self.year:
@@ -105,5 +107,6 @@ class Song(object):
             f'liveness={self.liveness}, ' +
             f'loudness={self.loudness}, ' +
             f'speechiness={self.speechiness}, ' +
-            f'tempo={self.tempo})'
+            f'tempo={self.tempo}, ' + 
+            f'album_cover={self.album_cover})'
         )
