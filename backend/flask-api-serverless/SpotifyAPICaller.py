@@ -147,7 +147,17 @@ def get_recommendation(track, filters):
             "songName": s.name,
             "artist": s.artists.split("'")[1],
             "song_id": s.id,
-            "explicit": s.explicit
+            "explicit": s.explicit,
+            "popularity": s.popularity,
+            "year": s.year,
+            "danceability": str(s.danceability)[0:5],
+            "acousticness": str(s.acousticness)[0:5],
+            "energy": str(s.energy),
+            "instrumentalness": str(s.instrumentalness)[0:5],
+            "liveness": str(s.liveness),
+            "loudness": str(s.loudness)[0:5],
+            "speechiness": str(s.speechiness),
+            "tempo": str(s.tempo),
         })
     return song_list
     
