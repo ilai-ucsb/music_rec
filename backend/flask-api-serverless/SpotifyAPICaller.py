@@ -45,6 +45,11 @@ def base_model(artist_ids=None, genre_ids=None, track_ids=None, limit=10, countr
 
     return results
 
+def rekofy_model(name, limit):
+    from recommendation import get_recommendations
+    songs = get_recommendations(name, limit)
+    return songs
+
 def find_song(name):
     """Find a song given the name using Spotify API
     
@@ -115,22 +120,55 @@ def filter_songs(song_list, filters):
     return good_songs
 
 def get_recommendation(track, filters):
-    song_list = []
-    raw_data = sp.search(q=track, type='track', limit=1)
-    try:
-        track_id = raw_data['tracks']['items'][0]['id']
-    except LookupError as lerr:  # covers index error and key error
-        logging.error("Could not retrieve the track id for the song passed in.")
-        raise  # bad input track
-    recommendation = base_model(track_ids=[track_id], limit=30)
-    filtered_recommendations = filter_songs(recommendation["tracks"], filters)
-    for song in filtered_recommendations[:5]:
-        song_list.append({"songName": song['name'],
-                          "artist": song['artists'][0]['name'],
-                          "song_id": song['id'],
-                          "explicit": song["explicit"]})
+    """
 
-    return [song_list]
+    Args:
+        track (str): Name of the song.
+        filters (): 
+
+    Returns:
+        _type_: _description_
+    """
+    song_list = []
+    # raw_data = sp.search(q=track, type='track', limit=1)
+    # try:
+        # track_id = raw_data['tracks']['items'][0]['id']
+    # except LookupError as lerr:  # covers index error and key error
+        # logging.error("Could not retrieve the track id for the song passed in.")
+        # raise  # bad input track
+    
+    # base model
+    # recommendation = base_model(track_ids=[track_id], limit=30)
+
+    # rekofy model
+    song_recommendations = rekofy_model(name=track, limit=5)
+    for s in song_recommendations:
+        song_list.append({
+            "songName": s.name,
+            "artist": s.artists.split("'")[1],
+            "song_id": s.id,
+            "explicit": s.explicit
+        })
+    return song_list
+    
+    
+    # FIX THIS PART OF THE CODE LATER :(
+    # filtered_recommendations = filter_songs(recommendation["tracks"], filters)
+    # for song in filtered_recommendations[:5]:
+    #     song_list.append({"songName": song['name'],
+    #                       "artist": song['artists'][0]['name'],
+    #                       "song_id": song['id'],
+    #                       "explicit": song["explicit"]})
+
+    # return [song_list]
 
 if __name__ == "__main__":
-    print(find_song("Gangnam Style"))
+    songs = rekofy_model("Gangnam Style", 30)
+    for s in songs:
+        print(s.name)        
+        # print(s.artists)
+        # arr = s.artists.split("'")
+        # print(arr[0])
+        print(s.artists.split("'")[1])
+        print(s.id)
+        print(s.explicit)

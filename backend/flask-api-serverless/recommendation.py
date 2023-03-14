@@ -166,7 +166,7 @@ def recommend_songs(song_list, spotify_data, n_songs=10):
     # return Song.from_dict(rec_songs.to_dict('records'))
     # return rec_songs[metadata_cols].to_dict('records')
 
-def get_recommendations(song_names):
+def get_recommendations(song_names, num_songs=5):
     """Gets a recommendation for a song based on the song's cluster.
     
     Args:
@@ -185,7 +185,7 @@ def get_recommendations(song_names):
         dict_ = {'name': song}
         input_dict_list.append(dict_)
     
-    output_dict = recommend_songs(input_dict_list, data, n_songs=5)
+    output_dict = recommend_songs(input_dict_list, data, n_songs=num_songs)
     print(len(output_dict))
     
     for song in output_dict:
@@ -197,9 +197,9 @@ def get_recommendations(song_names):
 
 if __name__ == "__main__":
     # cluster_songs()
-    songs = get_recommendations(['As it was'])
-    for s in songs:
-        print(s)
+    songs = get_recommendations(['Shape of You', 'Despacito'], 50)
+    # for s in songs:
+        # print(s)
     # print(get_recommendations(['As it was']))
     # q: What are the Top Hit songs of this decade?
     # a: ['Shape of You', 'Despacito', 'One Dance', 'Closer', 'Rockstar', 'Havana', 'I Like It', 'Dance Monkey', 'Senorita', 'Sunflower']
