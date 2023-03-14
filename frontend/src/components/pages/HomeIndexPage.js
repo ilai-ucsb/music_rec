@@ -6,6 +6,7 @@ import ListPage from "./utils/ListPage";
 import FilterPopup from "../FilterPopup";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Slider from "../Slider";
 
 // HomeIndexPage.js essentially acts as our App.js since our App.js is now routing pages.
 
@@ -13,6 +14,7 @@ export default function HomeIndexPage() {
   const [searchResult, setSearchResult] = useState([]);
   const [buttonPopup, setButtonPopup] = useState(false);
   const [explicitFilter, setExplicitFilter] = useState("NULL");
+  const [yearFilter, setYearFilter] = useState([1950, 2022]);
   const [loudFilter, setloudFilter] = useState("NULL");
 
   const handleChangeExplicit = (e) => {
@@ -24,6 +26,9 @@ export default function HomeIndexPage() {
     console.log(loudFilter);
   };
 
+
+
+  
   return (
     <div>
       <NavBarApp />
@@ -57,11 +62,16 @@ export default function HomeIndexPage() {
             <option value={0.75}>Loud</option>
             <option value={1.0}>Blasting</option>
           </select>
+          <div>
+              Year:&nbsp; 
+              <Slider value={yearFilter} setValue={setYearFilter}/>
+            </div>
         </FilterPopup>
         <SearchBar
           setSearchResult={setSearchResult}
           explicitFilter={explicitFilter}
           loudFilter={loudFilter}
+          yearFilter={yearFilter}
         />
         <article>
           <Box
