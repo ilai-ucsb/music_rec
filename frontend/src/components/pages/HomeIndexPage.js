@@ -19,11 +19,9 @@ export default function HomeIndexPage() {
 
   const handleChangeExplicit = (e) => {
     setExplicitFilter(e.target.value);
-    console.log(explicitFilter);
   };
   const handleChangeLoud = (e) => {
     setloudFilter(e.target.value);
-    console.log(loudFilter);
   };
 
 
