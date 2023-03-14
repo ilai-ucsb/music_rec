@@ -1,10 +1,8 @@
 import React, { useState, useRef } from 'react';
 import TextField from '@mui/material/TextField';
-import { Text } from 'react-native';
 import './SearchBar.css'
-import { IconButton } from '@mui/material';
+import { autocompleteClasses, Box, IconButton } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear'
-import { useContainerDimensions } from './pages/utils/useContainerDimensions';
 
 // setSearchResult is a prop that is passed through to SearchBar. It does what it says 
 // and sets searchResult from HomeIndexPage.js to a value that you give it here. 
@@ -55,7 +53,7 @@ function SearchBar({ ...props }) {
       // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
       // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
       // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
-      let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
+      let response = await fetch('/result', songParameters);
       let resJson = await response.json();
       // throw error if backend gives an error response
       if (!response.ok) {
@@ -84,6 +82,8 @@ function SearchBar({ ...props }) {
     const newTimer = setTimeout(() => {
       fetchSuggestions(e.target.value);
     }, 700)
+
+    setSuggestions([]);
 
     setTimer(newTimer);
   }
@@ -117,18 +117,10 @@ function SearchBar({ ...props }) {
             .map((item, key) => (
               <div key={key} onClick={() => handleClick(item.name)} className='dropdown-row'>
                 <div className='options'>
-                  <img src={item.album.images[0].url} alt="logo" style={{ height: "50px", margin: "4px", marginTop: "5px" }} />
-                  <p style={{ display: "inline" }}>
-                    {item.name.length < 40
-                      ? `${item.name}`
-                      : `${item.name.slice(0, 15)}...`}
-                  </p>
-                  &nbsp; by &nbsp;
-                  <div className='text' >
-                    {item.artists[0].name.length < 50
-                      ? item.artists[0].name 
-                      : item.artists[0].name.slice(0, 5)}
-                  </div>
+                  <Box sx={{display: 'inline-block', maxHeight: '100%', overflow: 'hidden', textOverflow: 'ellipsis'}}>
+                    <img src={item.album.images[0].url} alt="logo" style={{ height: "50px", margin: "4px", marginTop: "5px" }} />
+                    {`${item.name} by ${item.artists[0].name}`}
+                  </Box>
                 </div>
 
               </div>))}
