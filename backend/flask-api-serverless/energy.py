@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Feb 21 13:21:26 2023
-@author: Parsa Hafezi
-"""
-
 import pandas as pd
 def getEnergy(data, energy_level, num_results):
     """
