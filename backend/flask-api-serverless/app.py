@@ -22,7 +22,7 @@ def getSongs():
         }), 403
     except Exception as exc:  # return error message with copy of input response
         return jsonify({
-            "ERROR": f"An unknown error occurred: {exc}",
+            "ERROR": f"An unknown error occurred: `{type(kerr).__name__}: {exc}`",
             "INPUT": response
         }), 500
     return jsonify({
@@ -36,7 +36,7 @@ def getSimilar():
         songs = similarSongs(**response)
     except Exception as exc:  # return error message with copy of input response
         return jsonify({
-            "ERROR": f"An unknown error occurred: {exc}",
+            "ERROR": f"An unknown error occurred: `{type(exc).__name__}: {exc}`",
             "INPUT": response
         }), 500
     return jsonify({
