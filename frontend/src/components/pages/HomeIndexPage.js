@@ -14,6 +14,7 @@ export default function HomeIndexPage() {
     const [explicitFilter, setExplicitFilter] = useState("NULL");
     const [yearFilter, setYearFilter] = useState([1950, 2022]);
     const [loudFilter, setloudFilter] = useState("NULL");
+    const [danceabilityFilter, setDanceabilityFilter] = useState("NULL");
 
     const handleChangeExplicit = (e) => {
       setExplicitFilter(e.target.value);
@@ -21,7 +22,10 @@ export default function HomeIndexPage() {
     const handleChangeLoud = (e) => {
       setloudFilter(e.target.value);
     }
-    
+    const handleChangeDanceability = (e) => {
+      setDanceabilityFilter(e.target.value);
+    }
+    danceability
   return (
       <div>
         <NavBarApp/>
@@ -43,6 +47,15 @@ export default function HomeIndexPage() {
               <option value={0.75}>Loud</option>
               <option value={1.00}>Blasting</option>
             </select>
+            danceability:&nbsp;
+            <select data-testid="danceability-select" value = {danceabilityFilter} onChange={handleChangeDanceability} style={{marginRight: "0.5rem"}}>
+              <option value={"NULL"}>Any</option>
+              <option value={0.00}>Min</option>
+              <option value={0.25}>Low</option>
+              <option value={0.50}>Medium</option>
+              <option value={0.75}>High</option>
+              <option value={1.00}>Max</option>
+            </select>
             <div>
               Year:&nbsp; 
               <Slider value={yearFilter} setValue={setYearFilter}/>
@@ -50,7 +63,7 @@ export default function HomeIndexPage() {
 
             
           </FilterPopup>
-          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} loudFilter={loudFilter} yearFilter={yearFilter}/>
+          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} loudFilter={loudFilter} danceabilityFilter={danceabilityFilter} yearFilter={yearFilter}/>
           <ListPage searchResults={searchResult}/>
         </header>
       </div>
