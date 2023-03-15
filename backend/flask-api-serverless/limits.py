@@ -9,7 +9,7 @@ VALIDATION_TABLE = {
         "expected_type": float
     },
     "year": {
-        "minimum": 1950,
+        "minimum": 1920,
         "maximum": 2023,
         "expected_type": int
     },
