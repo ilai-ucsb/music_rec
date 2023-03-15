@@ -5,7 +5,7 @@ Created on Tue Feb 21 13:21:26 2023
 """
 
 import pandas as pd
-def getPopularity(data, energy_level, num_results):
+def getEnergy(data, energy_level, num_results):
     """
     
     returns that songs with the closest energy level
