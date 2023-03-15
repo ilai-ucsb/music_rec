@@ -106,7 +106,7 @@ def get_song_data(song, spotify_data):
         return song_data
     except IndexError:
         # find song data from spotify API
-        return find_song(song['name'])   
+        return findx_song(song['name'])   
 
 number_cols = ['valence', 'year', 'acousticness', 'danceability', 'duration_ms', 'energy', 'explicit',
  'instrumentalness', 'key', 'liveness', 'loudness', 'mode', 'popularity', 'speechiness', 'tempo']
@@ -166,7 +166,7 @@ def recommend_songs(song_list, spotify_data, n_songs=10):
     # return Song.from_dict(rec_songs.to_dict('records'))
     # return rec_songs[metadata_cols].to_dict('records')
 
-def get_recommendations(song_names, num_songs=5):
+def rekofy_get_recommendations(song_names, num_songs=5):
     """Gets a recommendation for a song based on the song's cluster.
     
     Args:
@@ -179,8 +179,7 @@ def get_recommendations(song_names, num_songs=5):
     input_dict_list = []
     recommendations = []
     data = pd.read_csv("../../data/raw_data.csv")
-
-    
+        
     for song in song_names:
         dict_ = {'name': song}
         input_dict_list.append(dict_)
@@ -194,6 +193,7 @@ def get_recommendations(song_names, num_songs=5):
         song_df = find_song(_song.name)
         _song.album_cover = song_df['album_cover'][0]
         _song.preview_url = song_df['preview_url'][0]
+        _song.explicit = song_df['explicit'][0]
         
         recommendations.append(_song)
     
@@ -203,9 +203,10 @@ def get_recommendations(song_names, num_songs=5):
 if __name__ == "__main__":
     # cluster_songs()
     # songs = get_recommendations(['Shape of You', 'Despacito'], 50)
-    songs = get_recommendations(['Gangnam Style'], 5)
+    songs = rekofy_get_recommendations(['Gangnam Style'], 100)
     for s in songs:
-        print(s)
+        if s.explicit == 1:
+            print(s.name)
     # print(get_recommendations(['As it was']))
     # q: What are the Top Hit songs of this decade?
     # a: ['Shape of You', 'Despacito', 'One Dance', 'Closer', 'Rockstar', 'Havana', 'I Like It', 'Dance Monkey', 'Senorita', 'Sunflower']

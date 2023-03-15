@@ -3,10 +3,12 @@ from collections import defaultdict
 import os
 import pandas as pd
 import spotipy
+import random
 
 from collections import defaultdict
 from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyClientCredentials
+from random import sample
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -46,8 +48,8 @@ def base_model(artist_ids=None, genre_ids=None, track_ids=None, limit=10, countr
     return results
 
 def rekofy_model(name, limit):
-    from recommendation import get_recommendations
-    songs = get_recommendations(name, limit)
+    from recommendation import rekofy_get_recommendations
+    songs = rekofy_get_recommendations(name, limit)
     return songs
 
 def find_song(name):
@@ -112,12 +114,17 @@ def filter_songs(song_list, filters):
     if filters == None or len(filters) == 0:
         return song_list
     good_songs = []
+    print("IN FILTER SONGS:")
+    print(song_list)
     for song in song_list:
         # here we will apply all the filters passed in, but only explicit filters are allowed
-        if filters.get("explicit", None) and bool(filters["explicit"]) == song["explicit"]:
+        # if filters.get("explicit", None) and bool(filters["explicit"]) == song["explicit"]:
+        print(song.explicit)
+        if filters.get("explicit", None) and int(filters["explicit"]) == song.explicit:
             good_songs.append(song)
         elif filters.get("explicit", None) == None:
             good_songs.append(song)
+    print(good_songs)
     return good_songs
 
 def get_recommendation(track, filters):
@@ -142,8 +149,27 @@ def get_recommendation(track, filters):
     # recommendation = base_model(track_ids=[track_id], limit=30)
 
     # rekofy model
-    song_recommendations = rekofy_model(name=track, limit=5)
+    song_recommendations = rekofy_model(name=track, limit=30)
+    # song_recommendations = sample(song_recommendations, 5)
+    # print(song_recommendations)
+    
     for s in song_recommendations:
+        print(s.to_dict())
+    
+    # song_recommendations = random.shuffle(song_recommendations)
+    # filtered_recommendations = song_recommendations
+    # filter_songs(song_recommendations, filters)
+    # for song in filtered_recommendations[:5]:
+    #     song_list.append({"songName": song['name'],
+    #                       "artist": song['artists'][0]['name'],
+    #                       "song_id": song['id'],
+    #                       "explicit": song["explicit"]})
+
+    filtered_recommendations = filter_songs(song_recommendations, filters)
+    print(filtered_recommendations)
+    filtered_recommendations = sample(filtered_recommendations, 5)
+    print(filtered_recommendations)
+    for s in filtered_recommendations:
         song_list.append({
             "songName": s.name,
             "artist": s.artists.split("'")[1],
@@ -162,7 +188,7 @@ def get_recommendation(track, filters):
             "album_cover": s.album_cover,
             "preview_url": s.preview_url
         })
-    return song_list
+    return [song_list]
     
     
     # FIX THIS PART OF THE CODE LATER :(
@@ -176,12 +202,13 @@ def get_recommendation(track, filters):
     # return [song_list]
 
 if __name__ == "__main__":
-    songs = rekofy_model("Gangnam Style", 30)
+    songs = rekofy_model("Gangnam Style", 100)
     for s in songs:
-        print(s.name)        
+        if s.explicit == 0:
+            print(s.name)      
         # print(s.artists)
         # arr = s.artists.split("'")
         # print(arr[0])
-        print(s.artists.split("'")[1])
-        print(s.id)
-        print(s.explicit)
+        # print(s.artists.split("'")[1])
+        # print(s.id)
+        # print(s.explicit)

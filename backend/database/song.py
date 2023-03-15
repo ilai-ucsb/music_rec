@@ -74,7 +74,7 @@ class Song(object):
             u'danceability': self.danceability,
             u'acousticness': self.acousticness,
             u'energy': self.energy,
-            u'explicit': self.explicit.item(),
+            u'explicit': self.explicit,
             u'instrumentalness': self.instrumentalness,
             u'liveness': self.liveness,
             u'loudness': self.loudness,
@@ -85,7 +85,9 @@ class Song(object):
         }
         
         if self.year:
-            dest[u'year'] = self.year.item()
+            # dest[u'year'] = self.year.item()
+            dest[u'year'] = self.year
+
 
         if self.genres:
             dest[u'genres'] = self.genres

@@ -9,6 +9,7 @@ CORS(app)
 @app.route('/result', methods=["POST"], strict_slashes=False)
 def getSongs():
     response = request.get_json()
+    print(response)
     try:
         result = get_recommendation(response['name'], response.get('filters', dict()))
     except LookupError as kerr:
@@ -16,6 +17,7 @@ def getSongs():
             "ERROR": "the name field is invalid"
         }), 404
     except Exception as exc:
+        print(exc)
         return jsonify({
             "ERROR": f"An unknown error occurred: {exc}"
         }), 500
