@@ -26,6 +26,7 @@ function SearchBar({ ...props }) {
             "name": searchInput, 
             "filters": {
               "explicit": props.explicitFilter,
+              "liveness": props.liveness,
               "loud": props.loudFilter,
             }})
         };

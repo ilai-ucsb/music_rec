@@ -42,6 +42,7 @@ try:
     import database
     import dbutils
     import loud
+    import liveness
     import mock_db
     import SimilaritySearch
     import SpotifyAPICaller

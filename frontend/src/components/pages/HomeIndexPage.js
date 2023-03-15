@@ -14,13 +14,18 @@ export default function HomeIndexPage() {
     const [explicitFilter, setExplicitFilter] = useState("NULL");
     const [yearFilter, setYearFilter] = useState([1950, 2022]);
     const [loudFilter, setloudFilter] = useState("NULL");
+    const [livenessFilter, setLivenessFilter] = useState("NULL");
 
     const handleChangeExplicit = (e) => {
       setExplicitFilter(e.target.value);
     }
+    const handleChangeLiveness = (e) => {
+      setLivenessFilter(e.target.value);
+    }
     const handleChangeLoud = (e) => {
       setloudFilter(e.target.value);
     }
+    
     
   return (
       <div>
@@ -30,6 +35,12 @@ export default function HomeIndexPage() {
           <FilterPopup trigger = {buttonPopup} setTrigger = {setButtonPopup}>
             explicit:&nbsp;
             <select data-testid="explicit-select" value = {explicitFilter} onChange={handleChangeExplicit} style={{marginRight: "0.5rem"}}>
+              <option value={"NULL"}>Both</option>
+              <option value={0}>No</option>
+              <option value={1}>Yes</option>
+            </select>
+            liveness:&nbsp;
+            <select data-testid="liveness-select" value = {livenessFilter} onChange={handleChangeLiveness} style={{marginRight: "0.5rem"}}>
               <option value={"NULL"}>Both</option>
               <option value={0}>No</option>
               <option value={1}>Yes</option>
@@ -50,7 +61,7 @@ export default function HomeIndexPage() {
 
             
           </FilterPopup>
-          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} loudFilter={loudFilter} yearFilter={yearFilter}/>
+          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} livenessFilter={livenessFilter} loudFilter={loudFilter} yearFilter={yearFilter}/>
           <ListPage searchResults={searchResult}/>
         </header>
       </div>
