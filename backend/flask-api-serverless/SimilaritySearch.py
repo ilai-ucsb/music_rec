@@ -159,6 +159,11 @@ def similarSongs(n: int = 5, threshold: float = 0.05, **kwargs):
     """
     logger.debug(f"similar_songs: Received Input n=`{n}` and kwargs=`{kwargs}`.")
     logger.debug("Checking Validity of parameters...")
+    # remove the bad keys
+    bad_keys = kwargs.keys() - VALIDATION_TABLE.keys()
+    for key in bad_keys:
+        logger.error(f"Removing bad key: {key}")
+        kwargs.pop(key)
     if not (n >= 1 and type(n) == int):
         raise ValueError("Incorrect input value for `n` (Count of results to return)")  # raise ValueError on ill-formed args
     if len(kwargs) == 0:
