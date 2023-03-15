@@ -15,7 +15,6 @@ export default function HomeIndexPage() {
     const [yearFilter, setYearFilter] = useState([1950, 2022]);
     const [loudFilter, setloudFilter] = useState("NULL");
     const [accessToken, setAccessToken] = useState("");
-    const [hide, setHide] = useState(false);
 
     useEffect(()=>{
       var authParameters={
