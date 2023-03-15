@@ -14,12 +14,16 @@ export default function HomeIndexPage() {
     const [explicitFilter, setExplicitFilter] = useState("NULL");
     const [yearFilter, setYearFilter] = useState([1950, 2022]);
     const [loudFilter, setloudFilter] = useState("NULL");
+    const [popularityFilter, setPopularityFilter] = useState("NULL");
 
     const handleChangeExplicit = (e) => {
       setExplicitFilter(e.target.value);
     }
     const handleChangeLoud = (e) => {
       setloudFilter(e.target.value);
+    }
+    const handleChangePopularity = (e) => {
+      setPopularityFilter(e.target.value);
     }
     
   return (
@@ -43,6 +47,15 @@ export default function HomeIndexPage() {
               <option value={0.75}>Loud</option>
               <option value={1.00}>Blasting</option>
             </select>
+            Popularity:&nbsp;
+            <select data-testid="popularity-select" value = {popularityFilter} onChange={handleChangePopularity} style={{marginRight: "0.5rem"}}>
+              <option value={"NULL"}>Any</option>
+              <option value={0.00}>Unknown</option>
+              <option value={0.25}>Hidden</option>
+              <option value={0.50}>Known</option>
+              <option value={0.75}>Popular</option>
+              <option value={1.00}>Famous</option>
+            </select>
             <div>
               Year:&nbsp; 
               <Slider value={yearFilter} setValue={setYearFilter}/>
@@ -50,7 +63,7 @@ export default function HomeIndexPage() {
 
             
           </FilterPopup>
-          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} loudFilter={loudFilter} yearFilter={yearFilter}/>
+          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} loudFilter={loudFilter} popularityFilter={popularityFilter} yearFilter={yearFilter}/>
           <ListPage searchResults={searchResult}/>
         </header>
       </div>
