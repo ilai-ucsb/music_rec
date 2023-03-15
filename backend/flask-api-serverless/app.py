@@ -19,7 +19,7 @@ def getSongs():
         return jsonify({
             "ERROR": f"the name field is invalid: {kerr}",
             "INPUT": response
-        }), 403
+        }), 404
     except Exception as exc:  # return error message with copy of input response
         return jsonify({
             "ERROR": f"An unknown error occurred: `{type(kerr).__name__}: {exc}`",
