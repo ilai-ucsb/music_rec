@@ -46,6 +46,7 @@ try:
     import SimilaritySearch
     import SpotifyAPICaller
     import song
+    import limits
 
 except ModuleNotFoundError as mnfe:
     logger.error(

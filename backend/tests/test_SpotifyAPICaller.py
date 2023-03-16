@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from backend_imports import app, SpotifyAPICaller as caller, song
+from backend_imports import app, SpotifyAPICaller as caller, song, limits
 
 # Popular Songs for testing
 GANGNAM_STYLE = "Gangnam Style"
@@ -127,5 +127,44 @@ def test_find_song_null():
     song_df = caller.find_song(None)
     assert song_df == None, f"Unknown error occurred for song: {song_df}"
 
+def test_similar_failing():
+    response = app.test_client().post("/similar", json="")
+    assert response.status_code == 500, "Expected a failing status code here, not 500"
+
+def test_similar_bad_arg():
+    params = {
+        "n": 5,
+        "loudness": 0.5,
+        "min_year": 2016,  # this fails because min year is not a valid filter name
+    }
+    response = app.test_client().post("/similar", json=params)
+
+    assert response.status_code == 500, f"Expected failing because min_year is not expected to be passing"
+
+def test_similar_passing():
+    params = {
+        "n": 5,
+        "loudness": 0.5,
+        "year": 2016
+    }
+    response = app.test_client().post("/similar", json=params)
+
+    assert response.status_code == 200, f"Expected passing status code, not {response.status_code}"
+
+    data = response.get_json()["similar_songs"]
+
+    assert len(data) <= params["n"], f"Expected less than or equal to {params['n']} songs returned"
+    
+    params.pop("n", None)
+    params.pop("threshold", None)
+
+    yr_minimum = limits.VALIDATION_TABLE["year"]["minimum"]
+    yr_maximum = limits.VALIDATION_TABLE["year"]["maximum"]
+
+    for fltr, val in params.items():
+        factor = limits.VALIDATION_TABLE[fltr]["maximum"] - limits.VALIDATION_TABLE[fltr]["minimum"]
+        for row in data:
+            assert abs(row[fltr] - val) <= 0.05 * factor, f"Filter {fltr} was not within threshold"  # 0.05 is the default threshold
+
 if __name__ == "__main__":
-    test_get_recommendations_0_explicit()
+    test_similar_bad_arg()
