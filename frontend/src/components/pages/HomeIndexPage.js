@@ -27,15 +27,12 @@ export default function HomeIndexPage() {
       const _spotifyToken = getTokenFromUrl().access_token;
       window.location.hash = "";
 
-      console.log("this is our spotify token ", _spotifyToken)
-
       if(_spotifyToken) {
         setSpotifyToken(_spotifyToken)
 
         spotify.setAccessToken(_spotifyToken)
 
         spotify.getMe().then((user) => {
-          console.log("User Info: ", user)
           setSpotifyUser(user.display_name)
         })
       }
