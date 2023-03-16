@@ -30,6 +30,9 @@ def test_get_recommendations_0_explicit():
         "/result", json={"name": "gangnam style", "filters": {"explicit": 0}}
     )
     df = pd.DataFrame(response.get_json()["name"][0])
+
+    assert response.status_code == 200, f"Bad response code {response.status_code}"
+
     assert (
         response.get_json() != None and len(response.get_json()["name"][0]) <= 5
     ), f"Unknown error occurred for response: {response}"
@@ -123,3 +126,6 @@ def test_find_song_invalid():
 def test_find_song_null():
     song_df = caller.find_song(None)
     assert song_df == None, f"Unknown error occurred for song: {song_df}"
+
+if __name__ == "__main__":
+    test_get_recommendations_0_explicit()

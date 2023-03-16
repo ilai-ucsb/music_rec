@@ -60,9 +60,10 @@ def test_similarSongs_with_n_5_year():
     assert (
         len(result) == inpt["n"]
     ), f"Length parameter n ({inpt['n']}) returned {len(result)} responses"
-    assert (
-        result["year"].tolist() != result["year"].sort_values(ascending=False).tolist()
-    ), f"Year was not returned in descending order from {inpt['year']}"
+    for original, sortd in zip(result["year"].tolist(), result["year"].sort_values(ascending=False).tolist()):
+        assert (
+            original == sortd
+        ), f"Year was not returned in descending order from {inpt['year']}"
 
 
 def test_similarSongs_with_n_2_acousticness_danceability_duration_ms_energy():
