@@ -74,9 +74,7 @@ def find_song(name):
     except spotipy.SpotifyException as e:
         logging.error(e)
         return None
-    
-    print(results)
-    
+        
     song_data['id'] = [track_id]
     song_data['name'] = [results['name']]
     song_data['year'] = [int(results['album']['release_date'][:4])]
@@ -107,7 +105,7 @@ def filter_songs(song_list, filters):
     good_songs = []
     for song in song_list:
         # here we will apply all the filters passed in, but only explicit filters are allowed
-        if filters.get("explicit", None) and bool(filters["explicit"]) == song["explicit"]:
+        if filters.get("explicit", None) != None and bool(filters["explicit"]) == song["explicit"]:
             good_songs.append(song)
         elif filters.get("explicit", None) == None:
             good_songs.append(song)
