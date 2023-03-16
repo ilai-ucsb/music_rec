@@ -27,6 +27,6 @@ def getDanceability(data, danceability_level, num_results):
     df.sort_values("distances", ascending=True,  inplace=True)
     idx = df.columns.get_loc("danceability")
     df.drop(df.columns[idx], axis=1, inplace=True)
-    df = df.head(num)
+    df = df.head(num_results)
     
     return df.to_dict('records')
