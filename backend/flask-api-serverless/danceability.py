@@ -2,7 +2,7 @@ import pandas as pd
 def getDanceability(data, danceability_level, num_results):
     """
     
-    returns that songs with the closest energy level
+    returns that songs with the closest danceability level
    
     Parameters:
     data (int): the dataset
