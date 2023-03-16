@@ -28,7 +28,7 @@ def test_1():
             "year": 1983,
         }
     ]
-    sorted_data = loud.getPopularity(data, 0, 1)
+    sorted_data = popularity.getPopularity(data, 0, 1)
 
     assert (
         sorted_data[0]["id"] == "song0_1676966597.8889136"
