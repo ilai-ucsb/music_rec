@@ -62,6 +62,10 @@ class Song(object):
             song.genres = source[u'genres']
         if u'artist_pop' in source:
             song.artist_pop = source[u'artist_pop']
+        if u'album_cover' in source:
+            song.album_cover = source[u'album_cover']
+        if u'preview_url' in source:
+            song.preview_url = source[u'preview_url']
         return song
 
     def to_dict(self):

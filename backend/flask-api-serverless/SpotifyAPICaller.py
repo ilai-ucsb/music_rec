@@ -149,7 +149,7 @@ def get_recommendation(track, filters):
     # recommendation = base_model(track_ids=[track_id], limit=30)
 
     # rekofy model
-    song_recommendations = rekofy_model(name=track, limit=30)
+    song_recommendations = rekofy_model(name=track, limit=100)
     # song_recommendations = sample(song_recommendations, 5)
     # print(song_recommendations)
     
@@ -167,14 +167,15 @@ def get_recommendation(track, filters):
 
     filtered_recommendations = filter_songs(song_recommendations, filters)
     print(filtered_recommendations)
-    filtered_recommendations = sample(filtered_recommendations, 5)
+    if len(filtered_recommendations) > 5:
+        filtered_recommendations = sample(filtered_recommendations, 5)
     print(filtered_recommendations)
     for s in filtered_recommendations:
         song_list.append({
             "songName": s.name,
             "artist": s.artists.split("'")[1],
             "song_id": s.id,
-            "explicit": s.explicit,
+            "explicit": str(s.explicit),
             "popularity": s.popularity,
             "year": s.year,
             "danceability": str(s.danceability)[0:5],

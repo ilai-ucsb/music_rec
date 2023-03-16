@@ -3,8 +3,10 @@ import pandas as pd
 import pickle as pkl
 # import seaborn as sns
 import plotly.express as px
+import os
 # import matplotlib.pyplot as plt
 import sys
+import pathlib
 
 from collections import defaultdict
 from scipy.spatial.distance import cdist
@@ -18,7 +20,12 @@ from SpotifyAPICaller import find_song
 # import joblib
 
 sys.path.append('..')
-from database.song import Song
+# os.path.abspath('..')
+# sys.path.append('/'.join(os.path.abspath(__file__).split('/')[:-2]))
+# from database.song import Song
+from database import song
+Song = song.Song
+
 
 song_cluster_pipeline = None
 data = None
@@ -49,7 +56,7 @@ def k_means_cluster(n_clusters, data):
     data['cluster_label'] = song_cluster_labels
     
     # joblib.dump(song_cluster_pipeline, 'song.pkl', compress = 1)
-    with open('song.pkl', 'wb') as f:
+    with open('rekofy.pkl', 'wb') as f:
         pkl.dump(song_cluster_pipeline, f) # serialize the list
     
     return song_cluster_pipeline, data, X
@@ -106,7 +113,7 @@ def get_song_data(song, spotify_data):
         return song_data
     except IndexError:
         # find song data from spotify API
-        return findx_song(song['name'])   
+        return find_song(song['name'])   
 
 number_cols = ['valence', 'year', 'acousticness', 'danceability', 'duration_ms', 'energy', 'explicit',
  'instrumentalness', 'key', 'liveness', 'loudness', 'mode', 'popularity', 'speechiness', 'tempo']
@@ -143,7 +150,11 @@ def recommend_songs(song_list, spotify_data, n_songs=10):
     # spotify_data = pd.read_csv("../../data/raw_data.csv")
 
     print("loading file")
-    with open('song.pkl', 'rb') as f:
+    # print(pathlib.Path().absolute())
+    # print(os.path.dirname(__file__))
+    # sys.exit()
+    # backend/flask-api-serverless/rekofy.pkl
+    with open(os.path.dirname(__file__) + '/rekofy.pkl', 'rb') as f:
         song_cluster_pipeline = pkl.load(f)
         # pkl.dump(song, f) # serialize the list
     
@@ -201,6 +212,7 @@ def rekofy_get_recommendations(song_names, num_songs=5):
     
 
 if __name__ == "__main__":
+    print(os.path.abspath('..'))
     # cluster_songs()
     # songs = get_recommendations(['Shape of You', 'Despacito'], 50)
     songs = rekofy_get_recommendations(['Gangnam Style'], 100)
