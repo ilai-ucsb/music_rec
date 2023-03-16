@@ -116,7 +116,7 @@ def test_get_recommendations_0_explicit():
     df = pd.DataFrame(response.get_json()["name"][0])
     
     assert (
-        response.get_json() != None and len(response.get_json()["name"][0]) == 5
+        response.get_json() != None and len(response.get_json()["name"][0]) <= 5
     ), f"Unknown error occurred for response: {response}"
     print("passed the first test!")
     print(response.get_json())

@@ -132,7 +132,7 @@ def filter_songs(song_list, filters):
     good_songs = []
     for song in song_list:
         # here we will apply all the filters passed in, but only explicit filters are allowed
-        if filters.get("explicit", None) and int(filters["explicit"]) == int(
+        if filters.get("explicit", None) != None and int(filters["explicit"]) == int(
             song.explicit
         ):
             good_songs.append(song)
@@ -149,10 +149,10 @@ def get_recommendation(track, filters):
         print(s.to_dict())
 
     filtered_recommendations = filter_songs(song_recommendations, filters)
-    print(filtered_recommendations)
+    # print(filtered_recommendations)
     if len(filtered_recommendations) > 5:
         filtered_recommendations = sample(filtered_recommendations, 5)
-    print(filtered_recommendations)
+    # print(filtered_recommendations)
     for s in filtered_recommendations:
         song_list.append(
             {
