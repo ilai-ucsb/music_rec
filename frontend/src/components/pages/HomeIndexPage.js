@@ -25,7 +25,6 @@ export default function HomeIndexPage() {
     const handleChangeDanceability = (e) => {
       setDanceabilityFilter(e.target.value);
     }
-    danceability
   return (
       <div>
         <NavBarApp/>
