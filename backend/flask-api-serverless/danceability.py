@@ -25,7 +25,7 @@ def getDanceability(data, danceability_level, num_results):
     df = pd.DataFrame(data)
     df['distances'] = abs(df["danceability"] - energy_level)
     df.sort_values("distances", ascending=True,  inplace=True)
-    idx = df.columns.get_loc("danceability")
+    idx = df.columns.get_loc("distances")
     df.drop(df.columns[idx], axis=1, inplace=True)
     df = df.head(num_results)
     
