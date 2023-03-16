@@ -7,7 +7,7 @@ test 10 songs, energy = .5, num = 6
 expected return should 6 medium danceability songs in increasing order by distance from .5
 """
 
-def test():
+def test_danceability_medium():
     data = [mock_db.generateRandomRow(i) for i in range(10)]
     sorted_data = danceability.getDanceability(data, 0.5, 6)
 
