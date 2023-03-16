@@ -46,7 +46,7 @@ export default function HomeIndexPage() {
               <option value={0.50}>Medium</option>
               <option value={0.75}>Loud</option>
               <option value={1.00}>Blasting</option>
-            </select>
+            </select><br />
             energy:&nbsp;
             <select data-testid="energy-select" value = {energyFilter} onChange={handleChangeEnergy} style={{marginRight: "0.5rem"}}>
               <option value={"NULL"}>Any</option>
