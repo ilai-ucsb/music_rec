@@ -7,7 +7,7 @@ test 10 songs, energy = .5, num = 6
 expected return should 6 medium energy songs in increasing order by distance from .5
 """
 
-def test():
+def test_energy_medium():
     data = [mock_db.generateRandomRow(i) for i in range(10)]
     sorted_data = energy.getEnergy(data, 0.5, 6)
 
