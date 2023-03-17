@@ -16,6 +16,8 @@ export default function HomeIndexPage() {
   const [yearFilter, setYearFilter] = useState([1950, 2022]);
   const [loudFilter, setloudFilter] = useState("NULL");
   const [accessToken, setAccessToken] = useState("");
+  const [popularityFilter, setPopularityFilter] = useState("NULL");
+
 
   useEffect(() => {
     var authParameters = {
@@ -37,9 +39,14 @@ export default function HomeIndexPage() {
   const handleChangeExplicit = (e) => {
     setExplicitFilter(e.target.value);
   };
+
   const handleChangeLoud = (e) => {
     setloudFilter(e.target.value);
   };
+
+  const handleChangePopularity = (e) => {
+    setPopularityFilter(e.target.value);
+  }
 
   return (
     <div>
@@ -73,7 +80,16 @@ export default function HomeIndexPage() {
             <option value={0.5}>Medium</option>
             <option value={0.75}>Loud</option>
             <option value={1.0}>Blasting</option>
-          </select>
+          </select><br />
+            Popularity:&nbsp;
+            <select data-testid="popularity-select" value = {popularityFilter} onChange={handleChangePopularity} style={{marginRight: "0.5rem"}}>
+              <option value={"NULL"}>Any</option>
+              <option value={0.00}>Unknown</option>
+              <option value={0.25}>Hidden</option>
+              <option value={0.50}>Known</option>
+              <option value={0.75}>Popular</option>
+              <option value={1.00}>Famous</option>
+            </select>
           <div>
             Year:&nbsp;
             <Slider value={yearFilter} setValue={setYearFilter} />
@@ -86,6 +102,7 @@ export default function HomeIndexPage() {
           loudFilter={loudFilter}
           yearFilter={yearFilter}
           accessToken={accessToken}
+          popularityFilter={popularityFilter}
         />
 
         <article>

@@ -33,6 +33,9 @@ function SearchBar({ ...props }) {
 
   let handleSubmit = async (e) => {
     e.preventDefault();
+    if (searchInput === ""){
+      props.setSearchResult(undefined)
+    } else {
     try {
       // CORS is only required for server side api calling
       let songParameters = {
@@ -47,6 +50,7 @@ function SearchBar({ ...props }) {
           "filters": {
             "explicit": props.explicitFilter,
             "loud": props.loudFilter,
+            "popularity": props.popularityFilter,
           }
         })
       };
