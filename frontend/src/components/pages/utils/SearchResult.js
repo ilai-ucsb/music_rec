@@ -7,10 +7,10 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
-import { Spotify } from "react-bootstrap-icons";
 import { IconButton } from "@mui/material";
-import { PlayFill, PauseFill, InfoCircle } from "react-bootstrap-icons";
-import Sound from 'react-sound';
+import { PlayFill, Spotify, InfoCircle } from "react-bootstrap-icons";
+import ReactHowler from 'react-howler';
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <InfoCircle {...other} />;
@@ -22,22 +22,18 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const SearchResult = ({ songName, artist, song_id, preview_url }) => {
+const SearchResult = ({ songName, artist, song_id, popularity, year, danceability, acousticness, energy, album_cover, preview_url }) => {
   const [expanded, setExpanded] = React.useState(false);
-  const [playStatus, setPlayStatus] = React.useState(Sound.status.STOPPED);
 
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
   const handlePlayClick = () => {
-    setPlayStatus(Sound.status.PLAYING);
-    
-  };
+    <ReactHowler src={preview_url}
+    playing={true}/>
+    console.log(preview_url)
 
-  const handlePauseClick = () => {
-    setPlayStatus(Sound.status.PAUSED);
   };
   return (
     
@@ -46,8 +42,8 @@ const SearchResult = ({ songName, artist, song_id, preview_url }) => {
         <Card sx={{ display: "flex" }}>
         <CardMedia
             component="img"
-            sx={{ width: 165, height: 165 }}
-            image="https://i.scdn.co/image/ab67616d0000b2736cfc57e5358c5e39e79bccbd"
+            sx={{ width: 165}}
+            image={album_cover}
           />
           <Box
             sx={{ display: "flex", flexDirection: "column", width: "600px" }}
@@ -62,7 +58,14 @@ const SearchResult = ({ songName, artist, song_id, preview_url }) => {
                 color="text.secondary"
                 component="div"
               >
-                {artist}{" "}
+                {artist}{"\n"}
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                color="text.secondary"
+                component="div"
+              >
+                {year}{" "}
               </Typography>
             </CardContent>
 
@@ -77,10 +80,8 @@ const SearchResult = ({ songName, artist, song_id, preview_url }) => {
               }}
             >
                
-              <IconButton sx={{ width: "7%" }}       onClick={playStatus === Sound.status.PLAYING ? handlePauseClick : handlePlayClick}
-                aria-label={playStatus === Sound.status.PLAYING ? "Pause" : "Play"}
-              >
-                {playStatus === Sound.status.PLAYING ? <PauseFill /> : <PlayFill />}
+              <IconButton sx={{ width: "7%" }} onClick={handlePlayClick}>
+               <PlayFill />
               </IconButton>
              
               <IconButton
@@ -115,7 +116,7 @@ Change what's inside of Card content to change what's shown on expansion
                 <Typography paragraph>Stats:</Typography>
                 <Typography paragraph>danceability</Typography>
                 <Typography paragraph>energy</Typography>
-                <Typography paragraph>popularity </Typography>
+                <Typography paragraph>popularity: {popularity} </Typography>
               </CardContent>
             </Collapse>
 

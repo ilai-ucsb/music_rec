@@ -11,6 +11,13 @@ const ListPage = ({ searchResults }) => {
         songName={element.songName}
         artist={element.artist}
         song_id={element.song_id}
+        popularity={element.popularity}
+        year = {element.year}
+        danceability = {element.danceability}
+        acousticness = {element.acousticness}
+        energy = {element.energy}
+        album_cover = {element.album_cover}
+        preview_url = {element.preview_url}
       />
     ));
     return <main data-testid="songElements">{results}</main>;
