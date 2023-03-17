@@ -50,11 +50,9 @@ export default function HomeIndexPage() {
             energy:&nbsp;
             <select data-testid="energy-select" value = {energyFilter} onChange={handleChangeEnergy} style={{marginRight: "0.5rem"}}>
               <option value={"NULL"}>Any</option>
-              <option value={0.00}>Min</option>
-              <option value={0.25}>Low</option>
-              <option value={0.50}>Medium</option>
-              <option value={0.75}>High</option>
-              <option value={1.00}>Max</option>
+              <option value={0.0}>Dull</option>
+              <option value={0.5}>Energetic</option>
+              <option value={1.0}>Intense</option>
             </select>
             <div>
               Year:&nbsp; 
