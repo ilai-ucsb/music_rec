@@ -45,7 +45,9 @@ try:
     import mock_db
     import SimilaritySearch
     import SpotifyAPICaller
+    import recommendation
     import song
+    import constants
 
 except ModuleNotFoundError as mnfe:
     logger.error(
