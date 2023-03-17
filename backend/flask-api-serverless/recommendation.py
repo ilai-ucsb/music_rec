@@ -89,7 +89,6 @@ def get_song_data(song, spotify_data, artist):
     try:
         # find song data from dataset
         song_data = spotify_data[(spotify_data["name"] == song["name"])].iloc[0]
-        print("found song in dataset")
         return song_data
     except IndexError:
         # find song data from spotify API with artist name
@@ -159,7 +158,6 @@ def recommend_songs(song_list, spotify_data, artist, n_songs=10):
 
     rec_songs = spotify_data.iloc[index]
     rec_songs = rec_songs[~rec_songs["name"].isin(song_dict["name"])]
-
     return rec_songs.to_dict("records")
 
 
@@ -182,11 +180,11 @@ def rekofy_get_recommendations(song_names, num_songs=5, artist=""):
     input_dict_list.append({"name": song_names})
     output_dict = recommend_songs(input_dict_list, data, artist, n_songs=num_songs)
 
-    # print("INSIDE rekofy_get_recommendations")
-    # print(artist)
     for song in output_dict:
         _song = Song.from_dict(song)
         song_df = find_song(_song.name, "")
+        if song_df is None:
+            continue
         _song.album_cover = song_df["album_cover"][0]
         _song.preview_url = song_df["preview_url"][0]
         _song.explicit = song_df["explicit"][0]
