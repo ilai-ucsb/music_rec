@@ -119,11 +119,6 @@ def get_mean_vector(song_list, spotify_data):
     for song in song_list:
         song_data = get_song_data(song, spotify_data)
         if song_data is None:
-            print(
-                "Error: {} does not exist in Spotify or in database".format(
-                    song["name"]
-                )
-            )
             continue
         song_vector = song_data[number_cols].values
         song_vectors.append(song_vector)
