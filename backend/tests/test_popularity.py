@@ -1,11 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Feb 21 13:28:28 2023
-@author: Parsa Hafezi
-"""
-
-from backend_imports import mock_db
-from backend_imports import loud
+from backend_imports import popularity, mock_db
 
 """test get loud song with one song"""
 
@@ -35,7 +28,7 @@ def test_1():
             "year": 1983,
         }
     ]
-    sorted_data = loud.getLoud(data, 0, 1)
+    sorted_data = popularity.getPopularity(data, 0, 1)
 
     assert (
         sorted_data[0]["id"] == "song0_1676966597.8889136"
@@ -51,43 +44,43 @@ expected return should bottom 6 loudest songs in increasing order
 
 def test_2():
     data = [mock_db.generateRandomRow(i) for i in range(10)]
-    sorted_data = loud.getLoud(data, 0, 6)
+    sorted_data = popularity.getPopularity(data, 0, 6)
 
     for i in range(5):
         assert (
-            sorted_data[i]["loudness"] <= sorted_data[i + 1]["loudness"]
-        ), f"Loudness not sorted right {sorted_data[i]['loudness']} (current) not <= {sorted_data[i+1]['loudness']} (next)"
+            sorted_data[i]["popularity"] <= sorted_data[i + 1]["popularity"]
+        ), f"popularity not sorted right {sorted_data[i]['popularity']} (current) not <= {sorted_data[i+1]['popularity']} (next)"
 
 
 """
 Test 3 
 test 10 songs, loud = 1, num = 6
-expected return should top 6 loudest songs in decreasing order 
+expected return should top 6 popular songs in decreasing order 
 """
 
 
 def test_3():
     data = [mock_db.generateRandomRow(i) for i in range(10)]
-    sorted_data = loud.getLoud(data, 1, 6)
+    sorted_data = popularity.getPopularity(data, 1, 6)
 
     for i in range(5):
         assert (
-            sorted_data[i]["loudness"] >= sorted_data[i + 1]["loudness"]
-        ), f"Loudness not sorted right {sorted_data[i]['loudness']} (current) not >= {sorted_data[i+1]['loudness']} (next)"
+            sorted_data[i]["popularity"] >= sorted_data[i + 1]["popularity"]
+        ), f"popularity not sorted right {sorted_data[i]['popularity']} (current) not >= {sorted_data[i+1]['popularity']} (next)"
 
 
 """
 Test 4
 test 10 songs, loud = .5, num = 6
-expected return should 6 medium loudest songs in increasing order by distance from .5
+expected return should 6 medium popular songs in increasing order by distance from .5
 """
 
 
 def test_4():
     data = [mock_db.generateRandomRow(i) for i in range(10)]
-    sorted_data = loud.getLoud(data, 0.5, 6)
+    sorted_data = popularity.getPopularity(data, 0.5, 6)
 
     for i in range(5):
-        assert abs(sorted_data[i]["loudness"] - 0.5) <= abs(
-            sorted_data[i + 1]["loudness"] - 0.5
-        ), f"Distance from current ({sorted_data[i]['loudness']}) is further from next ({sorted_data[i+1]['loudness']})"
+        assert abs(sorted_data[i]["popularity"] - 0.5) <= abs(
+            sorted_data[i + 1]["popularity"] - 0.5
+        ), f"Distance from current ({sorted_data[i]['popularity']}) is further from next ({sorted_data[i+1]['popularity']})"
