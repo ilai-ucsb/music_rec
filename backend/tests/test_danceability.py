@@ -14,4 +14,4 @@ def test_danceability_medium():
     for i in range(5):
         assert abs(sorted_data[i]["danceability"] - 0.5) <= abs(
             sorted_data[i + 1]["danceability"] - 0.5
-        ), f"Distance from current ({sorted_data[i]['danceability']}) is further from next ({sorted_data[i+1]['edanceabilitynergy']})"
+        ), f"Distance from current ({sorted_data[i]['danceability']}) is further from next ({sorted_data[i+1]['danceability']})"
