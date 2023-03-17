@@ -6,22 +6,18 @@ from SpotifyAPICaller import get_recommendation
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/result', methods=["POST"], strict_slashes=False)
+
+@app.route("/result", methods=["POST"], strict_slashes=False)
 def getSongs():
     response = request.get_json()
     try:
-        result = get_recommendation(response['name'], response.get('filters', dict()))
+        result = get_recommendation(response["name"], response.get("filters", dict()))
     except LookupError as kerr:
-        return jsonify({
-            "ERROR": "the name field is invalid"
-        }), 404
+        return jsonify({"ERROR": "the name field is invalid"}), 404
     except Exception as exc:
-        return jsonify({
-            "ERROR": f"An unknown error occurred: {exc}"
-        }), 500
-    return jsonify({
-        "name": result
-    }), 200
+        return jsonify({"ERROR": f"An unknown error occurred: {exc}"}), 500
+    return jsonify({"name": result}), 200
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run()
