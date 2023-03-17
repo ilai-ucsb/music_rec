@@ -1,6 +1,6 @@
 import SearchBar from "../SearchBar";
-import { useState } from "react";
-import "./utils/Page.css";
+import {useState} from 'react'; 
+import "./utils/Page.css"
 import NavBarApp from "../NavBarApp";
 import ListPage from "./utils/ListPage";
 import FilterPopup from "../FilterPopup";
@@ -10,11 +10,11 @@ import Box from "@mui/material/Box";
 // HomeIndexPage.js essentially acts as our App.js since our App.js is now routing pages.
 
 export default function HomeIndexPage() {
-  const [searchResult, setSearchResult] = useState([]);
-  const [buttonPopup, setButtonPopup] = useState(false);
-  const [explicitFilter, setExplicitFilter] = useState("NULL");
-  const [yearFilter, setYearFilter] = useState([1950, 2022]);
-  const [loudFilter, setloudFilter] = useState("NULL");
+    const [searchResult, setSearchResult] = useState([]);
+    const [buttonPopup, setButtonPopup] = useState(false);
+    const [explicitFilter, setExplicitFilter] = useState("NULL");
+    const [yearFilter, setYearFilter] = useState([1950, 2022]);
+    const [loudFilter, setloudFilter] = useState("NULL");
 
   const handleChangeExplicit = (e) => {
     setExplicitFilter(e.target.value);
@@ -63,24 +63,12 @@ export default function HomeIndexPage() {
               Year:&nbsp; 
               <Slider value={yearFilter} setValue={setYearFilter}/>
             </div>
-        </FilterPopup>
-        <SearchBar
-          setSearchResult={setSearchResult}
-          explicitFilter={explicitFilter}
-          loudFilter={loudFilter}
-          yearFilter={yearFilter}
-        />
-        <article>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <ListPage searchResults={searchResult} />
 
-          </Box>
-        </article>
-      </header>
-    </div>
-  );
+            
+          </FilterPopup>
+          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} loudFilter={loudFilter} yearFilter={yearFilter}/>
+          <ListPage searchResults={searchResult}/>
+        </header>
+      </div>
+  )
 }
