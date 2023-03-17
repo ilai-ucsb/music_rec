@@ -6,15 +6,17 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { IconButton } from "@mui/material";
-import { PlayFill, Spotify, InfoCircle, PauseBtn } from "react-bootstrap-icons";
+import { PlayFill, Spotify, PauseBtn } from "react-bootstrap-icons";
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
-  return <InfoCircle {...other} />;
+  return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
+  justifyContent: "end",
   transition: theme.transitions.create("transform", {
     duration: theme.transitions.duration.shortest,
   }),
@@ -50,7 +52,7 @@ const SearchResult = ({ ...props }) => {
         <Card sx={{ display: "flex", width: "auto",}}>
         <CardMedia
             component="img"
-            sx={{ width: 165}}
+            sx={{ width: "30%"}}
             image={props.album_cover}
           />
           <Box
@@ -116,6 +118,7 @@ Change what's inside of Card content to change what's shown on expansion
               aria-expanded={expanded}
               aria-label="show more"
             >
+              <ExpandMoreIcon/>
             </ExpandMore>
             <Collapse
               in={expanded}
