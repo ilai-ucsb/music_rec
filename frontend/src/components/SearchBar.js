@@ -49,6 +49,8 @@ function SearchBar({ ...props }) {
           "filters": {
             "explicit": props.explicitFilter,
             "loud": props.loudFilter,
+            "minYear": props.yearFilter[0],
+            "maxYear": props.yearFilter[1],
             "popularity": props.popularityFilter,
             "energy": props.energyFilter,
             "danceability": props.danceabilityFilter,
@@ -61,7 +63,6 @@ function SearchBar({ ...props }) {
       // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
       // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
       // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
-      console.log(songParameters)
       let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
       let resJson = await response.json();
       // throw error if backend gives an error response
@@ -73,11 +74,9 @@ function SearchBar({ ...props }) {
     } catch (error) {
       // On error, setShowError is marked true
       setShowError(true);
-      console.log(error);
       setTimeout(() => {
         setShowError(false);
       }, 5000);
-      console.log("error")
     }
   }
 
