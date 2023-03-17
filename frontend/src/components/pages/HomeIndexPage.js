@@ -17,6 +17,7 @@ export default function HomeIndexPage() {
   const [loudFilter, setloudFilter] = useState("NULL");
   const [accessToken, setAccessToken] = useState("");
   const [popularityFilter, setPopularityFilter] = useState("NULL");
+  const [energyFilter, setEnergyFilter] = useState("NULL");
 
 
   useEffect(() => {
@@ -46,6 +47,10 @@ export default function HomeIndexPage() {
 
   const handleChangePopularity = (e) => {
     setPopularityFilter(e.target.value);
+  }
+  
+  const handleChangeEnergy = (e) => {
+    setEnergyFilter(e.target.value);
   }
 
   return (
@@ -89,6 +94,13 @@ export default function HomeIndexPage() {
               <option value={0.50}>Known</option>
               <option value={0.75}>Popular</option>
               <option value={1.00}>Famous</option>
+            </select><br />
+            energy:&nbsp;
+            <select data-testid="energy-select" value = {energyFilter} onChange={handleChangeEnergy} style={{marginRight: "0.5rem"}}>
+              <option value={"NULL"}>Any</option>
+              <option value={0.0}>Dull</option>
+              <option value={0.5}>Energetic</option>
+              <option value={1.0}>Intense</option>
             </select>
           <div>
             Year:&nbsp;
@@ -103,6 +115,7 @@ export default function HomeIndexPage() {
           yearFilter={yearFilter}
           accessToken={accessToken}
           popularityFilter={popularityFilter}
+          energyFilter={energyFilter}
         />
 
         <article>

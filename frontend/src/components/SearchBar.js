@@ -51,6 +51,7 @@ function SearchBar({ ...props }) {
             "explicit": props.explicitFilter,
             "loud": props.loudFilter,
             "popularity": props.popularityFilter,
+            "energy": props.energyFilter,
           }
         })
       };
