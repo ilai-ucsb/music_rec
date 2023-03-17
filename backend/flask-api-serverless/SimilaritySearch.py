@@ -129,7 +129,7 @@ def validateArgs(kwargs: dict):
     return True
 
 
-def similarSongs(n: int = 5, threshold: float = 0.05, **kwargs):
+def similarSongs(n: int = 5, threshold: float = 0.1, **kwargs):
     """
     Finds the Top `n` similar tracks given a set of feature suggestions.
 
