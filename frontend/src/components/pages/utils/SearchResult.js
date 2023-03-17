@@ -114,8 +114,8 @@ Change what's inside of Card content to change what's shown on expansion
             >
               <CardContent>
                 <Typography paragraph>Stats:</Typography>
-                <Typography paragraph>danceability</Typography>
-                <Typography paragraph>energy</Typography>
+                <Typography paragraph>danceability {danceability}</Typography>
+                <Typography paragraph>energy: {energy}</Typography>
                 <Typography paragraph>popularity: {popularity} </Typography>
               </CardContent>
             </Collapse>
