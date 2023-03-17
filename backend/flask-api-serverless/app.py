@@ -10,7 +10,8 @@ from SimilaritySearch import similarSongs
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/result', methods=["POST"], strict_slashes=False)
+
+@app.route("/result", methods=["POST"], strict_slashes=False)
 def getSongs():
     try:
         response = request.get_json()

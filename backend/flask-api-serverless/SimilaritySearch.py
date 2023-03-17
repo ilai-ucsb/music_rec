@@ -194,7 +194,7 @@ def similarSongs(n: int = 5, threshold: float = 0.05, **kwargs):
 
     # get the first five values and return them in a record format
     idxs = dbObj[:n]["idx"]
-    return original.iloc[idxs].to_dict(orient='records')
+    return (original.iloc[idxs])[["name", "id"]].to_dict(orient='records')
 
 
 if __name__ == "__main__":

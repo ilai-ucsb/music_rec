@@ -1,10 +1,5 @@
-// Each song will be displayed in this format
-
-// Centered the material ui boxes. used the colorthief package to update the background of the cards based on the image
-//   img.src = imageUrl [imageUrl]); image={imageUrl}
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import ColorThief from "colorthief";
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -12,13 +7,13 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
-import { Spotify } from "react-bootstrap-icons";
-import Button from "react-bootstrap/Button";
-import { PlayFill } from "react-bootstrap-icons";
+import { IconButton } from "@mui/material";
+import { PlayFill, Spotify, InfoCircle } from "react-bootstrap-icons";
+import ReactHowler from 'react-howler';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
-  return <PlayFill {...other} />;
+  return <InfoCircle {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
   marginLeft: "auto",
@@ -27,21 +22,9 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const SearchResult = ({ ...props }) => {
+const SearchResult = ({ songName, artist, song_id, popularity, year, danceability, acousticness, energy, album_cover, preview_url }) => {
   const [expanded, setExpanded] = React.useState(false);
-  const [bgColor, setBgColor] = React.useState("#ffffff");
 
-  React.useEffect(() => {
-    const colorThief = new ColorThief();
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.addEventListener("load", () => {
-      const color = colorThief.getColor(img);
-      setBgColor(`rgb(${color.join(", ")})`);
-    });
-    img.src =
-      "https://i.scdn.co/image/ab67616d0000b2736cfc57e5358c5e39e79bccbd";
-  }, ["https://i.scdn.co/image/ab67616d0000b2736cfc57e5358c5e39e79bccbd"]);
 
   const handleExpandClick = async (e) => {
     e.preventDefault();
@@ -72,15 +55,27 @@ const SearchResult = ({ ...props }) => {
     let response = await fetch('http://localhost:5000/similar', songParameters);
     setExpanded(!expanded);
   };
+  const handlePlayClick = () => {
+    <ReactHowler src={preview_url}
+    playing={true}/>
+    console.log(preview_url)
 
+  };
   return (
+    
     <article>
-      <Box sx={{ display: "inline-flex", alignSelf: "flex-end" }}>
-        <Card sx={{ display: "flex", backgroundColor: bgColor }}>
+      <Box sx={{ display: "inline-flex", alignSelf: "flex-end", padding: 2 }}>
+        <Card sx={{ display: "flex" }}>
+        <CardMedia
+            component="img"
+            sx={{ width: 165}}
+            image={album_cover}
+          />
           <Box
-            sx={{ display: "flex", flexDirection: "column", width: "400px" }}
+            sx={{ display: "flex", flexDirection: "column", width: "600px" }}
           >
             <CardContent sx={{ flex: "1 0 auto" }}>
+              
               <Typography component="div" variant="h6">
                 {props.songName}
               </Typography>
@@ -89,14 +84,20 @@ const SearchResult = ({ ...props }) => {
                 color="text.secondary"
                 component="div"
               >
-                {props.artist}{" "}
+                {artist}{"\n"}
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                color="text.secondary"
+                component="div"
+              >
+                {year}{" "}
               </Typography>
             </CardContent>
 
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
                 pl: 1,
@@ -104,41 +105,53 @@ const SearchResult = ({ ...props }) => {
                 width: "100%",
               }}
             >
-              <Button sx={{ width: "50%" }}>
-                <PlayFill></PlayFill>
-              </Button>
-
-              <Button
-                href={"https://open.spotify.com/track/" + props.song_id}
+               
+              <IconButton sx={{ width: "7%" }} onClick={handlePlayClick}>
+               <PlayFill />
+              </IconButton>
+             
+              <IconButton
+                href={"https://open.spotify.com/track/" + song_id}
                 ms="auto"
                 target="_blank"
-                sx={{ width: "50%" }}
-                style={{ backgroundColor: "#1DB954" }}
+                sx={{ width: "7%" }}
               >
                 <Spotify />
-              </Button>
+              </IconButton>
             </Box>
-          </Box>
-          <CardMedia
-            component="img"
-            sx={{ width: 125, height: 125 }}
-            image="https://i.scdn.co/image/ab67616d0000b2736cfc57e5358c5e39e79bccbd"
-          />
+{/* 
+what follows is the expanded function
+Change what's inside of Card content to change what's shown on expansion
+*/}
 
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <PlayFill></PlayFill>
-          </ExpandMore>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>Stats:</Typography>
-              <Typography paragraph>The stats go here</Typography>
-            </CardContent>
-          </Collapse>
+    
+            <ExpandMore
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+            </ExpandMore>
+            <Collapse
+              in={expanded}
+              timeout="auto"
+              unmountOnExit
+              orientation="vertical"
+            >
+              <CardContent>
+                <Typography paragraph>Stats:</Typography>
+                <Typography paragraph>danceability {danceability}</Typography>
+                <Typography paragraph>energy: {energy}</Typography>
+                <Typography paragraph>popularity: {popularity} </Typography>
+              </CardContent>
+            </Collapse>
+
+
+
+            
+          </Box>
+
+
         </Card>
       </Box>
     </article>
