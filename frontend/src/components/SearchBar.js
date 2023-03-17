@@ -33,53 +33,51 @@ function SearchBar({ ...props }) {
 
   let handleSubmit = async (e) => {
     e.preventDefault();
-    if (searchInput === "") {
-      props.setSearchResult(undefined)
-    } else {
-      try {
-        // CORS is only required for server side api calling
-        let songParameters = {
-          method: 'POST',
-          mode: 'cors',
-          headers: {
-            "Content-Type": 'application/json'
-          },
-          body: JSON.stringify({
-            "name": searchInput, 
-            "id": props.spotifyUser,
-            "artist": searchArtist,
-            "filters": {
-              "explicit": props.explicitFilter,
-              "loud": props.loudFilter,
-              "popularity": props.popularityFilter,
-              "energy": props.energyFilter,
-              "danceability": props.danceabilityFilter,
-              "liveness": props.liveness,
-            }
-          })
-        };
-        // The url here is for the flask api deployed on a server.
-        // If any changes to the flask api was made please change the url to a localhost url to test locally.
-        // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
-        // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
-        // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
-        let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
-        let resJson = await response.json();
-        // throw error if backend gives an error response
-        if (!response.ok) {
-          throw Error(resJson.message);
-        } else {
-          props.setSearchResult(resJson);
-        }
-      } catch (error) {
-        // On error, setShowError is marked true
-        setShowError(true);
-        console.log(error);
-        setTimeout(() => {
-          setShowError(false);
-        }, 5000);
-        console.log("error")
+    setSuggestions([]);
+    clearTimeout(timer);
+    try {
+      // CORS is only required for server side api calling
+      let songParameters = {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          "Content-Type": 'application/json'
+        },
+        body: JSON.stringify({
+          "name": searchInput,
+          "artist": searchArtist,
+          "filters": {
+            "explicit": props.explicitFilter,
+            "loud": props.loudFilter,
+            "popularity": props.popularityFilter,
+            "energy": props.energyFilter,
+            "danceability": props.danceabilityFilter,
+            "liveness": props.liveness,
+          }
+        })
+      };
+      // The url here is for the flask api deployed on a server.
+      // If any changes to the flask api was made please change the url to a localhost url to test locally.
+      // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
+      // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
+      // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
+      console.log(songParameters)
+      let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
+      let resJson = await response.json();
+      // throw error if backend gives an error response
+      if (!response.ok) {
+        throw Error(resJson.message);
+      } else {
+        props.setSearchResult(resJson);
       }
+    } catch (error) {
+      // On error, setShowError is marked true
+      setShowError(true);
+      console.log(error);
+      setTimeout(() => {
+        setShowError(false);
+      }, 5000);
+      console.log("error")
     }
   }
 
@@ -101,7 +99,7 @@ function SearchBar({ ...props }) {
 
   let handleClick = (suggestedInput, suggestedArtist) => {
     setSearchInput(suggestedInput);
-    setSearchArtist(suggestedArtist);
+    setSearchArtist(suggestedArtist)
     setSuggestions([]);
   }
 
