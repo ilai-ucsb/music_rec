@@ -38,7 +38,7 @@ function SliderComp({value, setValue}) {
           getAriaLabel={() => 'slider'}
           value={value}
           onChange={handleChange}
-          min={1950}
+          min={1920}
           max={2022}
           valueLabelDisplay="auto"
           getAriaValueText={valuetext}

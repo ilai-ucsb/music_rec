@@ -27,6 +27,6 @@ def getYear(data, minYear, maxYear, num):
     df = pd.DataFrame(data)
     df_actual = df[(df["year"] >= minYear) & (df["year"] <= maxYear)]
     if len(df_actual) > 0:
-        return df_actual.to_dict('records')
+        return df_actual[:num].to_dict('records')
     else:
         raise LookupError("No records found")

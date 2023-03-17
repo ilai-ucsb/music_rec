@@ -12,7 +12,7 @@ export default function HomeIndexPage() {
     const [searchResult, setSearchResult] = useState([]);
     const [buttonPopup, setButtonPopup] = useState(false);
     const [explicitFilter, setExplicitFilter] = useState("NULL");
-    const [yearFilter, setYearFilter] = useState([1950, 2022]);
+    const [yearFilter, setYearFilter] = useState([1920, 2022]);
     const [loudFilter, setloudFilter] = useState("NULL");
 
     const handleChangeExplicit = (e) => {
