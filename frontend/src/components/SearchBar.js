@@ -45,7 +45,8 @@ function SearchBar({ ...props }) {
             "Content-Type": 'application/json'
           },
           body: JSON.stringify({
-            "name": searchInput,
+            "name": searchInput, 
+            "id": props.spotifyUser,
             "artist": searchArtist,
             "filters": {
               "explicit": props.explicitFilter,
