@@ -42,6 +42,7 @@ try:
     import database
     import dbutils
     import loud
+    import danceability
     import energy
     import popularity
     import mock_db

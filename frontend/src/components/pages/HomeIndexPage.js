@@ -18,6 +18,7 @@ export default function HomeIndexPage() {
   const [accessToken, setAccessToken] = useState("");
   const [popularityFilter, setPopularityFilter] = useState("NULL");
   const [energyFilter, setEnergyFilter] = useState("NULL");
+  const [danceabilityFilter, setDanceabilityFilter] = useState("NULL");
 
 
   useEffect(() => {
@@ -52,7 +53,10 @@ export default function HomeIndexPage() {
   const handleChangeEnergy = (e) => {
     setEnergyFilter(e.target.value);
   }
-
+  
+  const handleChangeDanceability = (e) => {
+      setDanceabilityFilter(e.target.value);
+  }
   return (
     <div>
       <NavBarApp />
@@ -97,10 +101,18 @@ export default function HomeIndexPage() {
             </select><br />
             energy:&nbsp;
             <select data-testid="energy-select" value = {energyFilter} onChange={handleChangeEnergy} style={{marginRight: "0.5rem"}}>
-              <option value={"NULL"}>Any</option>
               <option value={0.0}>Dull</option>
               <option value={0.5}>Energetic</option>
               <option value={1.0}>Intense</option>
+            </select><br />
+            danceability:&nbsp;
+            <select data-testid="danceability-select" value = {danceabilityFilter} onChange={handleChangeDanceability} style={{marginRight: "0.5rem"}}>
+              <option value={"NULL"}>Any</option>
+              <option value={0.00}>Min</option>
+              <option value={0.25}>Low</option>
+              <option value={0.50}>Medium</option>
+              <option value={0.75}>High</option>
+              <option value={1.00}>Max</option>
             </select>
           <div>
             Year:&nbsp;
@@ -116,6 +128,7 @@ export default function HomeIndexPage() {
           accessToken={accessToken}
           popularityFilter={popularityFilter}
           energyFilter={energyFilter}
+          danceabilityFilter={danceabilityFilter}
         />
 
         <article>

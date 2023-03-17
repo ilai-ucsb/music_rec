@@ -35,7 +35,7 @@ function SearchBar({ ...props }) {
     e.preventDefault();
     if (searchInput === ""){
       props.setSearchResult(undefined)
-    } else {
+  } else {
     try {
       // CORS is only required for server side api calling
       let songParameters = {
@@ -52,6 +52,7 @@ function SearchBar({ ...props }) {
             "loud": props.loudFilter,
             "popularity": props.popularityFilter,
             "energy": props.energyFilter,
+            "danceability": props.danceabilityFilter,
           }
         })
       };
