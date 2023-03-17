@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { IconButton } from "@mui/material";
 import { PlayFill, Spotify, PauseBtn } from "react-bootstrap-icons";
+import Rating from "@mui/material/Rating";
 
 
 const ExpandMore = styled((props) => {
@@ -75,7 +76,8 @@ const SearchResult = ({ ...props }) => {
                 color="text.secondary"
                 component="div"
               >
-                {props.year}{" "}
+                {props.year}{" "}<br/>
+                <Rating name="popularity" value={props.popularity/20} precision={0.5} readOnly/>
               </Typography>
             </CardContent>
 
@@ -130,7 +132,6 @@ Change what's inside of Card content to change what's shown on expansion
                 <Typography paragraph>Stats:</Typography>
                 <Typography paragraph>danceability {props.danceability}</Typography>
                 <Typography paragraph>energy: {props.energy}</Typography>
-                <Typography paragraph>popularity: {props.popularity} </Typography>
               </CardContent>
             </Collapse>
 
