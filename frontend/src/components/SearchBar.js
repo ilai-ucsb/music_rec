@@ -74,11 +74,9 @@ function SearchBar({ ...props }) {
     } catch (error) {
       // On error, setShowError is marked true
       setShowError(true);
-      console.log(error);
       setTimeout(() => {
         setShowError(false);
       }, 5000);
-      console.log("error")
     }
   }
 

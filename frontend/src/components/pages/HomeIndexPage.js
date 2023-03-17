@@ -28,7 +28,6 @@ export default function HomeIndexPage() {
     const spotify = new SpotifyWebApi()
 
     useEffect(() => {
-      console.log("This is what we derived from the URL: ", getTokenFromUrl)
       // this is for spotify
       const _spotifyToken = getTokenFromUrl().access_token;
       window.location.hash = "";

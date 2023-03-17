@@ -25,12 +25,49 @@ const ExpandMore = styled((props) => {
 
 const SearchResult = ({ ...props }) => {
   const [expanded, setExpanded] = useState(false);
+  const [similarName1, setSimilarName1] = React.useState("");
+  const [similarUrl1, setSimilarUrl1] = React.useState("");
+  const [similarName2, setSimilarName2] = React.useState("");
+  const [similarUrl2, setSimilarUrl2] = React.useState("");
   const [play, setPlay] = useState(false);
   let src = props.preview_url;
   const audioRef = useRef(null);
 
+  const handleExpandClick = async (e) => {
+    e.preventDefault();
 
-  const handleExpandClick = () => {
+    if (!expanded) {
+      let songParameters = {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          "Content-Type": 'application/json'
+        },
+        body: JSON.stringify({
+          "popularity": parseInt(props.popularity),
+          "year": props.year,
+          "danceability": parseFloat(props.danceability),
+          "acousticness": parseFloat(props.acousticness),
+          "explicit": parseInt(props.explicit),
+          "energy": parseFloat(props.energy),
+          "instrumentalness": parseFloat(props.instrumentalness),
+          "liveness": parseFloat(props.liveness),
+          "loudness": parseFloat(props.loudness),
+          "speechiness": parseFloat(props.speechiness),
+          "tempo": parseFloat(props.tempo),
+        })
+      };
+
+      await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/similar', songParameters).then(resp => resp.json()
+      ).then(data => {
+        if (data["similar_songs"].length >= 2) {
+          setSimilarName1(data["similar_songs"][0]["name"]);
+          setSimilarUrl1("https://open.spotify.com/track/" + data["similar_songs"][0]["id"]);
+          setSimilarName2(data["similar_songs"][1]["name"]);
+          setSimilarUrl2("https://open.spotify.com/track/" + data["similar_songs"][1]["id"]);
+        }
+      });
+    }
     setExpanded(!expanded);
   };
 
@@ -129,18 +166,32 @@ Change what's inside of Card content to change what's shown on expansion
               orientation="vertical"
             >
               <CardContent>
-                <Typography paragraph>Stats:</Typography>
-                <Typography paragraph>danceability {props.danceability}</Typography>
-                <Typography paragraph>energy: {props.energy}</Typography>
+                <Typography variant="h5"><b>STATS</b></Typography>
+                <Typography><b>Danceability</b> {props.danceability}</Typography>
+                <Typography><b>Energy</b> {props.energy}</Typography>
+                {
+                  similarName1 !== "" &&
+                  <Typography><b>You may also like:</b> <ul><li>{similarName1}
+                  <IconButton
+                  href={similarUrl1}
+                  ms="auto"
+                  target="_blank"
+                  sx={{ width: "7%" }}
+                >
+                  <Spotify />
+                </IconButton></li><li>{similarName2}
+                  <IconButton
+                  href={similarUrl2}
+                  ms="auto"
+                  target="_blank"
+                  sx={{ width: "7%" }}
+                >
+                  <Spotify />
+                </IconButton></li></ul> </Typography>
+                }
               </CardContent>
             </Collapse>
-
-
-
-            
           </Box>
-
-
         </Card>
       </Box>
   );
