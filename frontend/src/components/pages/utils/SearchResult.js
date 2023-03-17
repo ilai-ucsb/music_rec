@@ -22,43 +22,61 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const SearchResult = ({ songName, artist, song_id, popularity, year, danceability, acousticness, energy, album_cover, preview_url }) => {
+const SearchResult = ({
+  ...props
+}) => {
   const [expanded, setExpanded] = React.useState(false);
-
+  const [similarName1, setSimilarName1] = React.useState("");
+  const [similarUrl1, setSimilarUrl1] = React.useState("");
+  const [similarName2, setSimilarName2] = React.useState("");
+  const [similarUrl2, setSimilarUrl2] = React.useState("");
 
   const handleExpandClick = async (e) => {
     e.preventDefault();
 
-    let songParameters = {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        "Content-Type": 'application/json'
-      },
-      body: JSON.stringify({
-        "acousticness": props.acousticness,
-        "danceability": props.danceability,
-        "duration_ms": props.duration_ms,
-        "energy": props.energy,
-        "explicit": props.explicit,
-        "instrumentalness": props.instrumentalness,
-        "liveness": props.liveness,
-        "loudness": props.loudness,
-        "popularity": props.popularity,
-        "speechiness": props.speechiness,
-        "tempo": props.tempo,
-        "valence": props.valence,
-        "year": props.year,
-      })
-    };
+    if (!expanded) {
+      let songParameters = {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          "Content-Type": 'application/json'
+        },
+        body: JSON.stringify({
+          "popularity": parseInt(props.popularity),
+          "year": props.year,
+          "danceability": parseFloat(props.danceability),
+          "acousticness": parseFloat(props.acousticness),
+          "explicit": parseInt(props.explicit),
+          "energy": parseFloat(props.energy),
+          "instrumentalness": parseFloat(props.instrumentalness),
+          "liveness": parseFloat(props.liveness),
+          "loudness": parseFloat(props.loudness),
+          "speechiness": parseFloat(props.speechiness),
+          "tempo": parseFloat(props.tempo),
+        })
+      };
 
-    let response = await fetch('http://localhost:5000/similar', songParameters);
+      await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/similar', songParameters).then(resp => resp.json()
+      ).then(data => {
+        if (data["similar_songs"].length >= 2) {
+          setSimilarName1(data["similar_songs"][0]["name"]);
+          setSimilarUrl1("https://open.spotify.com/track/" + data["similar_songs"][0]["id"]);
+          setSimilarName2(data["similar_songs"][1]["name"]);
+          setSimilarUrl2("https://open.spotify.com/track/" + data["similar_songs"][1]["id"]);
+        }
+      });
+      // let resJson = response.json().["similar_songs"];
+
+      // similar_name = resJson[0]["name"];
+      // similar_url = "https://open.spotify.com/track/" + resJson[0]["id"];
+
+    }
     setExpanded(!expanded);
   };
   const handlePlayClick = () => {
-    <ReactHowler src={preview_url}
+    <ReactHowler src={props.preview_url}
     playing={true}/>
-    console.log(preview_url)
+    console.log(props.preview_url)
 
   };
   return (
@@ -69,7 +87,7 @@ const SearchResult = ({ songName, artist, song_id, popularity, year, danceabilit
         <CardMedia
             component="img"
             sx={{ width: 165}}
-            image={album_cover}
+            image={props.album_cover}
           />
           <Box
             sx={{ display: "flex", flexDirection: "column", width: "600px" }}
@@ -84,14 +102,14 @@ const SearchResult = ({ songName, artist, song_id, popularity, year, danceabilit
                 color="text.secondary"
                 component="div"
               >
-                {artist}{"\n"}
+                {props.artist}{"\n"}
               </Typography>
               <Typography
                 variant="subtitle1"
                 color="text.secondary"
                 component="div"
               >
-                {year}{" "}
+                {props.year}{" "}
               </Typography>
             </CardContent>
 
@@ -111,7 +129,7 @@ const SearchResult = ({ songName, artist, song_id, popularity, year, danceabilit
               </IconButton>
              
               <IconButton
-                href={"https://open.spotify.com/track/" + song_id}
+                href={"https://open.spotify.com/track/" + props.song_id}
                 ms="auto"
                 target="_blank"
                 sx={{ width: "7%" }}
@@ -139,10 +157,14 @@ Change what's inside of Card content to change what's shown on expansion
               orientation="vertical"
             >
               <CardContent>
-                <Typography paragraph>Stats:</Typography>
-                <Typography paragraph>danceability {danceability}</Typography>
-                <Typography paragraph>energy: {energy}</Typography>
-                <Typography paragraph>popularity: {popularity} </Typography>
+                <Typography variant="h5"><b>STATS</b></Typography>
+                <Typography paragraph><b>Danceability</b> {props.danceability}</Typography>
+                <Typography paragraph><b>Energy</b> {props.energy}</Typography>
+                <Typography paragraph><b>Popularity</b> {props.popularity} </Typography>
+                {
+                  similarName1 !== "" &&
+                  <Typography paragraph><b>You may also like:</b> <a href={similarUrl1}>{similarName1}</a> and <a href={similarUrl2}>{similarName2}</a> </Typography>
+                }
               </CardContent>
             </Collapse>
 
