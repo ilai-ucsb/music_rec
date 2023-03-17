@@ -50,12 +50,13 @@ def base_model(
     return results
 
 
-def rekofy_model(name, limit):
+def rekofy_model(name, limit, artist):
     """
     Get a list of upto `limit` recommended song using the `Rekofy` model.
     Args:
         name (str) - song name
         limit (int) - The maximum number of recommendations. Default: 100
+        artist (str) - artist name (optional)
 
     Returns:
         List[Song] - A List of Song objects for recommended songs given the input information above
@@ -63,24 +64,30 @@ def rekofy_model(name, limit):
     # This import below is needed to avoid circular dependency import error
     from recommendation import rekofy_get_recommendations
 
-    songs = rekofy_get_recommendations(name, limit)
+    songs = rekofy_get_recommendations(name, limit, artist)
     return songs
 
 
-def find_song(name):
+def find_song(name, artist):
     """Find a song given the name using Spotify API
 
     Args:
         name (str): name of the song to find
+        artist (str): name of the artist of the song to find (optional)
 
     Returns:
         song_data (pd.DataFrame): DataFrame containing the song data or None if not found
     """
     song_data = defaultdict()
-
+    
+    # query by artist and track name
+    query = name
+    if artist != "":
+        query += f" artist:{artist}"
+    
     # use Spotify API '/search' endpoint to find by track name
     try:
-        results = sp.search(q=name, type="track", limit=1)
+        results = sp.search(q=query, type="track", limit=1)
     except spotipy.SpotifyException as e:
         logging.error(e)
         return None
@@ -140,9 +147,9 @@ def filter_songs(song_list, filters):
     return good_songs
 
 
-def get_recommendation(track, filters):
+def get_recommendation(track, filters, artist):
     song_list = []
-    song_recommendations = rekofy_model(name=track, limit=100)
+    song_recommendations = rekofy_model(name=track, limit=10, artist=artist)
     
     filtered_recommendations = filter_songs(song_recommendations, filters)
     
@@ -160,7 +167,7 @@ def get_recommendation(track, filters):
                 "year": s.year,
                 "danceability": str(s.danceability)[0:5],
                 "acousticness": str(s.acousticness)[0:5],
-                "energy": str(s.energy),
+                "energy": str(s.energy)[0:5],
                 "instrumentalness": str(s.instrumentalness)[0:5],
                 "liveness": str(s.liveness),
                 "loudness": str(s.loudness)[0:5],
