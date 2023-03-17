@@ -27,7 +27,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const SearchResult = ({ songName, artist, song_id }) => {
+const SearchResult = ({ ...props }) => {
   const [expanded, setExpanded] = React.useState(false);
   const [bgColor, setBgColor] = React.useState("#ffffff");
 
@@ -43,7 +43,33 @@ const SearchResult = ({ songName, artist, song_id }) => {
       "https://i.scdn.co/image/ab67616d0000b2736cfc57e5358c5e39e79bccbd";
   }, ["https://i.scdn.co/image/ab67616d0000b2736cfc57e5358c5e39e79bccbd"]);
 
-  const handleExpandClick = () => {
+  const handleExpandClick = async (e) => {
+    e.preventDefault();
+
+    let songParameters = {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify({
+        "acousticness": props.acousticness,
+        "danceability": props.danceability,
+        "duration_ms": props.duration_ms,
+        "energy": props.energy,
+        "explicit": props.explicit,
+        "instrumentalness": props.instrumentalness,
+        "liveness": props.liveness,
+        "loudness": props.loudness,
+        "popularity": props.popularity,
+        "speechiness": props.speechiness,
+        "tempo": props.tempo,
+        "valence": props.valence,
+        "year": props.year,
+      })
+    };
+
+    let response = await fetch('http://localhost:5000/similar', songParameters);
     setExpanded(!expanded);
   };
 
@@ -56,14 +82,14 @@ const SearchResult = ({ songName, artist, song_id }) => {
           >
             <CardContent sx={{ flex: "1 0 auto" }}>
               <Typography component="div" variant="h6">
-                {songName}
+                {props.songName}
               </Typography>
               <Typography
                 variant="subtitle1"
                 color="text.secondary"
                 component="div"
               >
-                {artist}{" "}
+                {props.artist}{" "}
               </Typography>
             </CardContent>
 
@@ -83,7 +109,7 @@ const SearchResult = ({ songName, artist, song_id }) => {
               </Button>
 
               <Button
-                href={"https://open.spotify.com/track/" + song_id}
+                href={"https://open.spotify.com/track/" + props.song_id}
                 ms="auto"
                 target="_blank"
                 sx={{ width: "50%" }}
