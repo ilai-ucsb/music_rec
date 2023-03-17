@@ -1,6 +1,5 @@
-import * as React from "react";
+import React, { useState, useRef } from "react";
 import { styled } from "@mui/material/styles";
-
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -8,8 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
 import { IconButton } from "@mui/material";
-import { PlayFill, Spotify, InfoCircle } from "react-bootstrap-icons";
-import ReactHowler from 'react-howler';
+import { PlayFill, Spotify, InfoCircle, PauseBtn } from "react-bootstrap-icons";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -22,19 +20,27 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const SearchResult = ({ songName, artist, song_id, popularity, year, danceability, acousticness, energy, album_cover, preview_url }) => {
-  const [expanded, setExpanded] = React.useState(false);
+const SearchResult = ({ ...props }) => {
+  const [expanded, setExpanded] = useState(false);
+  const [play, setPlay] = useState(false);
+  let src = props.preview_url;
+  const audioRef = useRef(null);
 
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const handlePlayClick = () => {
-    <ReactHowler src={preview_url}
-    playing={true}/>
-    console.log(preview_url)
 
-  };
+  const handlePlay = () => {
+    if (play) {
+      audioRef.current.pause();
+      setPlay(!play);
+    } else {
+      audioRef.current.play();
+      setPlay(!play);
+    }
+  }
+
   return (
     
     <article>
@@ -43,7 +49,7 @@ const SearchResult = ({ songName, artist, song_id, popularity, year, danceabilit
         <CardMedia
             component="img"
             sx={{ width: 165}}
-            image={album_cover}
+            image={props.album_cover}
           />
           <Box
             sx={{ display: "flex", flexDirection: "column", width: "600px" }}
@@ -51,21 +57,21 @@ const SearchResult = ({ songName, artist, song_id, popularity, year, danceabilit
             <CardContent sx={{ flex: "1 0 auto" }}>
               
               <Typography component="div" variant="h6">
-                {songName}
+                {props.songName}
               </Typography>
               <Typography
                 variant="subtitle1"
                 color="text.secondary"
                 component="div"
               >
-                {artist}{"\n"}
+                {props.artist}{"\n"}
               </Typography>
               <Typography
                 variant="subtitle1"
                 color="text.secondary"
                 component="div"
               >
-                {year}{" "}
+                {props.year}{" "}
               </Typography>
             </CardContent>
 
@@ -80,12 +86,15 @@ const SearchResult = ({ songName, artist, song_id, popularity, year, danceabilit
               }}
             >
                
-              <IconButton sx={{ width: "7%" }} onClick={handlePlayClick}>
-               <PlayFill />
+              <IconButton sx={{ width: "7%" }} onClick={handlePlay}>
+                <audio ref={audioRef}>
+                  <source src={src} type="audio/mpeg"/>
+                </audio>
+                {play ? <PauseBtn/> : <PlayFill/> }
               </IconButton>
              
               <IconButton
-                href={"https://open.spotify.com/track/" + song_id}
+                href={"https://open.spotify.com/track/" + props.song_id}
                 ms="auto"
                 target="_blank"
                 sx={{ width: "7%" }}
@@ -114,9 +123,9 @@ Change what's inside of Card content to change what's shown on expansion
             >
               <CardContent>
                 <Typography paragraph>Stats:</Typography>
-                <Typography paragraph>danceability {danceability}</Typography>
-                <Typography paragraph>energy: {energy}</Typography>
-                <Typography paragraph>popularity: {popularity} </Typography>
+                <Typography paragraph>danceability {props.danceability}</Typography>
+                <Typography paragraph>energy: {props.energy}</Typography>
+                <Typography paragraph>popularity: {props.popularity} </Typography>
               </CardContent>
             </Collapse>
 
