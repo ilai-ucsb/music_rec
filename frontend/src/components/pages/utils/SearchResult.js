@@ -65,11 +65,6 @@ const SearchResult = ({
           setSimilarUrl2("https://open.spotify.com/track/" + data["similar_songs"][1]["id"]);
         }
       });
-      // let resJson = response.json().["similar_songs"];
-
-      // similar_name = resJson[0]["name"];
-      // similar_url = "https://open.spotify.com/track/" + resJson[0]["id"];
-
     }
     setExpanded(!expanded);
   };
@@ -123,7 +118,6 @@ const SearchResult = ({
                 width: "100%",
               }}
             >
-               
               <IconButton sx={{ width: "7%" }} onClick={handlePlayClick}>
                <PlayFill />
               </IconButton>
@@ -163,17 +157,27 @@ Change what's inside of Card content to change what's shown on expansion
                 <Typography paragraph><b>Popularity</b> {props.popularity} </Typography>
                 {
                   similarName1 !== "" &&
-                  <Typography paragraph><b>You may also like:</b> <a href={similarUrl1}>{similarName1}</a> and <a href={similarUrl2}>{similarName2}</a> </Typography>
+                  <Typography><b>You may also like:</b> <ul><li>{similarName1}
+                  <IconButton
+                  href={similarUrl1}
+                  ms="auto"
+                  target="_blank"
+                  sx={{ width: "7%" }}
+                >
+                  <Spotify />
+                </IconButton></li><li>{similarName2}
+                  <IconButton
+                  href={similarUrl2}
+                  ms="auto"
+                  target="_blank"
+                  sx={{ width: "7%" }}
+                >
+                  <Spotify />
+                </IconButton></li></ul> </Typography>
                 }
               </CardContent>
             </Collapse>
-
-
-
-            
           </Box>
-
-
         </Card>
       </Box>
     </article>
