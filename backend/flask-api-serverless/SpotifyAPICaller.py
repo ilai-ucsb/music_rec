@@ -144,15 +144,12 @@ def filter_songs(song_list, filters):
 def get_recommendation(track, filters):
     song_list = []
     song_recommendations = rekofy_model(name=track, limit=100)
-
-    for s in song_recommendations:
-        print(s.to_dict())
-
+    
     filtered_recommendations = filter_songs(song_recommendations, filters)
-    # print(filtered_recommendations)
+    
     if len(filtered_recommendations) > 5:
         filtered_recommendations = sample(filtered_recommendations, 5)
-    # print(filtered_recommendations)
+        
     for s in filtered_recommendations:
         song_list.append(
             {

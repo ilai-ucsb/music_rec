@@ -167,12 +167,8 @@ def flatten_dict_list(dict_list):
 def recommend_songs(song_list, spotify_data, n_songs=10):
     global song_cluster_pipeline
 
-    print("loading file")
-
     with open(os.path.dirname(__file__) + "/rekofy.pkl", "rb") as f:
         song_cluster_pipeline = pkl.load(f)
-
-    print("done loading model")
 
     metadata_cols = ["name", "year", "artists"]
     song_dict = flatten_dict_list(song_list)
@@ -209,7 +205,6 @@ def rekofy_get_recommendations(song_names, num_songs=5):
         input_dict_list.append(dict_)
 
     output_dict = recommend_songs(input_dict_list, data, n_songs=num_songs)
-    print(len(output_dict))
 
     for song in output_dict:
         _song = Song.from_dict(song)
