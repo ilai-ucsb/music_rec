@@ -42,7 +42,11 @@ const SearchResult = ({ ...props }) => {
   }
 
   return (
-      <Box sx={{ display: "inline-flex", alignSelf: "flex-end", padding: 2, width: "100%", "& .MuiPaper-root": {width: "60%", position: "relative", left: "20%"}}}>
+      <Box sx={{ display: "inline-flex", alignSelf: "flex-end", 
+                 padding: 2, width: "100%", 
+                 "& .MuiPaper-root": {width: "60%", position: "relative", left: "20%"},
+                 "& .MuiBox-root": {width: "100%"}
+              }}>
         <Card sx={{ display: "flex", width: "auto",}}>
         <CardMedia
             component="img"
@@ -50,7 +54,7 @@ const SearchResult = ({ ...props }) => {
             image={props.album_cover}
           />
           <Box
-            sx={{ display: "flex", flexDirection: "column", width: "100%"}}
+            sx={{ display: "flex", flexDirection: "column"}}
           >
             <CardContent sx={{ flex: "1 0 auto" }}>
               
@@ -80,11 +84,12 @@ const SearchResult = ({ ...props }) => {
                 justifyContent: "center",
                 pl: 1,
                 pb: 1,
-                width: "100%",
+                width: "100px",
+                "& .MuiIconButton-root": {fontSize: "24px", justifyContent: "center"},
               }}
             >
                
-              <IconButton sx={{ width: "7%" }} onClick={handlePlay}>
+              <IconButton onClick={handlePlay}>
                 <audio ref={audioRef}>
                   <source src={src} type="audio/mpeg"/>
                 </audio>
@@ -95,7 +100,6 @@ const SearchResult = ({ ...props }) => {
                 href={"https://open.spotify.com/track/" + props.song_id}
                 ms="auto"
                 target="_blank"
-                sx={{ width: "7%" }}
               >
                 <Spotify />
               </IconButton>

@@ -13,8 +13,8 @@ function NavBarApp() {
             </Navbar.Brand>
         </Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-        <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className='justify-content-end'>
+        <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
+            <Nav>
                 <Nav.Link href='/'>Home</Nav.Link>
                 <Nav.Link href='/about'>About</Nav.Link>
             </Nav>
