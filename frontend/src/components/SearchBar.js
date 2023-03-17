@@ -20,10 +20,7 @@ function SearchBar({ ...props }) {
           method: 'POST',
           mode: 'cors',
           headers: {
-            "Content-Type": 'application/json; charset=UTF-8',
-            // "Accept": 'application/json',
-            "Access-Control-Allow-Origin": "http://localhost:8000",
-            "Access-Control-Allow-Credentials": 'true'
+            "Content-Type": 'application/json'
           },
           body: JSON.stringify({
             "name": searchInput, 
@@ -37,18 +34,14 @@ function SearchBar({ ...props }) {
         // server address: https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result
         // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
         // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
-        console.log(songParameters)
-        // let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
-        // let response = await fetch('http://localhost:5000/result', songParameters);
-        let response = await fetch('http://localhost:8000/result', songParameters);
+        let response = await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/result', songParameters);
         let resJson = await response.json();
-        console.log(resJson)
         // throw error if backend gives an error response
-        // if (!response.ok) {
-        //   throw Error(resJson.message);
-        // } else {
-        //   props.setSearchResult(resJson);
-        // }
+        if (!response.ok) {
+          throw Error(resJson.message);
+        } else {
+          props.setSearchResult(resJson);
+        }
       } catch(error) {
         // On error, setShowError is marked true
         setShowError(true);
