@@ -7,6 +7,13 @@ from random import sample
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
+import loud
+import danceability
+import liveness
+import energy
+import popularity
+
+
 logging.basicConfig(level=logging.ERROR)
 
 load_dotenv()
@@ -129,30 +136,59 @@ def filter_songs(song_list, filters):
     Returns:
         (list): filtered songs
     """
-    if (
-        type(filters) == dict and filters.get("explicit", "NULL") == "NULL"
-    ):  # remove NULL explicit filter
-        filters.pop("explicit", None)
-    if filters == None or len(filters) == 0:
-        return song_list
-    good_songs = []
-    for song in song_list:
-        # here we will apply all the filters passed in, but only explicit filters are allowed
-        if filters.get("explicit", None) != None and int(filters["explicit"]) == int(
-            song.explicit
-        ):
-            good_songs.append(song)
-        elif filters.get("explicit", None) == None:
-            good_songs.append(song)
-    return good_songs
+    if(type(filters) == dict  and len(filters) > 0):
+        good_songs = []
+        print("filtering")
+        if  "explicit" in filters :
+            if filters["explicit"] == "NULL":
+                good_songs = song_list
+            else :
+                for song in song_list:
+                    # here we will apply all the filters passed in, but only explicit filters are allowed
+                    if bool(filters["explicit"]) == song.explicit:
+                        good_songs.append(song)
+        else:
+            good_songs = song_list
+            
+        size = 10
+        for filter in filters:
+            if filters[filter] != "NULL": 
+                print(filter)
+                print(filters[filter])
+                print("good_song pre filter")
+                print(good_songs)
+                if filter == "loud":
+                    good_songs = loud.getLoud(good_songs, filters[filter], size)
+                elif filter == "popularity":
+                    good_songs = popularity.getPopularity(good_songs, filters[filter], size)
+                elif filter == "energy":
+                    good_songs = energy.getEnergy(good_songs, filters[filter], size)
+                elif filter == "liveness":
+                    good_songs = liveness.getLiveness(good_songs, filters[filter], size)
+                elif filter == "danceability":
+                    good_songs = danceability.getDanceability(good_songs, filters[filter], size)
+                # elif filter == "minYear":
+                #     good_songs = year.getYear(good_songs, filters["minYear"], filters["maxYear"], size)
+                print("good_song after filter")
+                print(good_songs)
 
+            size -= 1
+        if(len(good_songs) < 5):
+            return good_songs
+        else:
+            return good_songs[0:5]
+    else : 
+        return song_list
+    
 
 def get_recommendation(track, filters, artist):
     song_list = []
     song_recommendations = rekofy_model(name=track, limit=10, artist=artist)
-    
+    print("get rec")
     filtered_recommendations = filter_songs(song_recommendations, filters)
-    
+    #print(filtered_recommendations[0])
+    print(song_recommendations)
+    print("rec filtered")
     if len(filtered_recommendations) > 5:
         filtered_recommendations = sample(filtered_recommendations, 5)
         

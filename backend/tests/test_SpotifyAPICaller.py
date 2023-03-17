@@ -10,7 +10,8 @@ INVALID_SONG = "nbdjs183hdjhkzxiuoq2uqejhsjhks"
 
 
 def test_get_recommendations_no_filters():
-    response = app.test_client().post("/result", json={"name": GANGNAM_STYLE, "artist": "PSY"})
+    response = app.test_client().post("/result", json={"name": GANGNAM_STYLE, "filters": {}, "artist": "PSY"})
+    print(response)
     assert (
         response.get_json() != None and len(response.get_json()["name"][0]) == 5
     ), f"Unknown error occurred for response: {response}"
@@ -336,6 +337,63 @@ def test_find_song_despacito_with_artist():
         song_df["album_cover"][0], str
     ), f"Song album_cover is not a valid string: {song_df['album_cover'][0]}"
 
+def test_get_recommendations_1_loud():
+    response = app.test_client().post(
+        "/result", json={"name": GANGNAM_STYLE, "filters": {"loudness": 1}, "artist": "PSY"}
+    )
+    df = pd.DataFrame(response.get_json()["name"][0])
+    assert (
+        response.get_json() != None and len(response.get_json()["name"][0]) <= 5
+    ), f"Unknown error occurred for response: {response.get_json()}"
+
+    print(response.get_json())
+    for i in range(4):
+        assert (
+            df.iloc[i]["loudness"] >= df.iloc[i]["loudness"]
+        ), f"Loudness not sorted right { df.iloc[i]['loudness'] } (current) not >= {df.iloc[i+1]['loudness']} (next)"
+
+    song_response = response.get_json()["name"][0][0]
+
+    for song_response in response.get_json()["name"][0]:
+        assert (
+            song_response["songName"] != GANGNAM_STYLE
+        ), f"Song {GANGNAM_STYLE} was recommended"
+        assert isinstance(
+            song_response["songName"], str
+        ), f"The song name is not a string"
+        assert isinstance(
+            song_response["artist"], str
+        ), f"The artist name is not a string"
+        assert (
+            song_response["explicit"] == "0" or song_response["explicit"] == "1"
+        ), f"The explicit field is not a valid value"
+        assert (
+            song_response["popularity"] >= 0 and song_response["popularity"] <= 100
+        ), f"The popularity field is not a valid value"
+        assert (
+            isinstance(song_response["danceability"], str)
+            and len(song_response["danceability"]) <= 5
+        ), f"The danceability field was not formatted correctly"
+        assert (
+            isinstance(song_response["acousticness"], str)
+            and len(song_response["acousticness"]) <= 5
+        ), f"The acousticness field was not formatted correctly"
+        assert (
+            isinstance(song_response["instrumentalness"], str)
+            and len(song_response["instrumentalness"]) <= 5
+        ), f"The instrumentalness field was not formatted correctly"
+        assert (
+            isinstance(song_response["loudness"], str)
+            and len(song_response["loudness"]) <= 5
+        ), f"The loudness field was not formatted correctly"
+        assert isinstance(song_response["album_cover"], str) and song_response[
+            "album_cover"
+        ].startswith("https://"), f"The album cover field was not formatted correctly"
+        assert isinstance(song_response["preview_url"], str) and song_response[
+            "preview_url"
+        ].startswith("https://"), f"The preview url field was not formatted correctly"
+
+
 
 def test_find_song_invalid():
     song_df = caller.find_song(INVALID_SONG, "")
@@ -387,3 +445,4 @@ def test_similar_passing():
 
 if __name__ == "__main__":
     test_similar_bad_arg()
+

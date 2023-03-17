@@ -17,13 +17,14 @@ def getSongs():
         response = request.get_json()
         result = get_recommendation(response['name'], response.get('filters', dict()), response['artist'])
     except LookupError as kerr:
+        raise
         return jsonify({
             "ERROR": f"the name field is invalid: {kerr}",
             "INPUT": response
         }), 404
     except Exception as exc:  # return error message with copy of input response
         return jsonify({
-            "ERROR": f"An unknown error occurred: `{type(kerr).__name__}: {exc}`",
+            "ERROR": f"An unknown error occurred: `{type(exc).__name__}: {exc}`",
             "INPUT": response
         }), 500
     return jsonify({
