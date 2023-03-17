@@ -15,9 +15,15 @@ const ListPage = ({ searchResults }) => {
         year = {element.year}
         danceability = {element.danceability}
         acousticness = {element.acousticness}
+        explicit = {element.explicit}
         energy = {element.energy}
         album_cover = {element.album_cover}
         preview_url = {element.preview_url}
+        instrumentalness = {element.instrumentalness}
+        liveness = {element.liveness}
+        loudness = {element.loudness}
+        speechiness = {element.speechiness}
+        tempo = {element.tempo}
       />
     ));
     return <main data-testid="songElements">{results}</main>;
