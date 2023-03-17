@@ -42,17 +42,15 @@ const SearchResult = ({ ...props }) => {
   }
 
   return (
-    
-    <article>
-      <Box sx={{ display: "inline-flex", alignSelf: "flex-end", padding: 2 }}>
-        <Card sx={{ display: "flex" }}>
+      <Box sx={{ display: "inline-flex", alignSelf: "flex-end", padding: 2, width: "100%", "& .MuiPaper-root": {width: "60%", position: "relative", left: "20%"}}}>
+        <Card sx={{ display: "flex", width: "auto",}}>
         <CardMedia
             component="img"
             sx={{ width: 165}}
             image={props.album_cover}
           />
           <Box
-            sx={{ display: "flex", flexDirection: "column", width: "600px" }}
+            sx={{ display: "flex", flexDirection: "column", width: "100%"}}
           >
             <CardContent sx={{ flex: "1 0 auto" }}>
               
@@ -137,7 +135,6 @@ Change what's inside of Card content to change what's shown on expansion
 
         </Card>
       </Box>
-    </article>
   );
 };
 export default SearchResult;
