@@ -75,12 +75,13 @@ def cluster_songs():
     song_embedding = perform_pca(data, X)
 
 
-def get_song_data(song, spotify_data):
+def get_song_data(song, spotify_data, artist):
     """Gets the song data from the dataset or from the Spotify API.
 
     Args:
         song (str): song name string
         spotify_data (pd.DataFrame): DataFrame containing entire song dataset
+        artist (str): artist name string
 
     Returns:
         song_data (pd.DataFrame): DataFrame containing the song data
@@ -88,10 +89,11 @@ def get_song_data(song, spotify_data):
     try:
         # find song data from dataset
         song_data = spotify_data[(spotify_data["name"] == song["name"])].iloc[0]
+        print("found song in dataset")
         return song_data
     except IndexError:
-        # find song data from spotify API
-        return find_song(song["name"])
+        # find song data from spotify API with artist name
+        return find_song(song["name"], artist)
 
 
 number_cols = [
@@ -113,11 +115,11 @@ number_cols = [
 ]
 
 
-def get_mean_vector(song_list, spotify_data):
+def get_mean_vector(song_list, spotify_data, artist):
     song_vectors = []
 
     for song in song_list:
-        song_data = get_song_data(song, spotify_data)
+        song_data = get_song_data(song, spotify_data, artist)
         if song_data is None:
             continue
         song_vector = song_data[number_cols].values
@@ -139,7 +141,7 @@ def flatten_dict_list(dict_list):
     return flattened_dict
 
 
-def recommend_songs(song_list, spotify_data, n_songs=10):
+def recommend_songs(song_list, spotify_data, artist, n_songs=10):
     global song_cluster_pipeline
 
     with open(os.path.dirname(__file__) + "/rekofy.pkl", "rb") as f:
@@ -148,7 +150,7 @@ def recommend_songs(song_list, spotify_data, n_songs=10):
     metadata_cols = ["name", "year", "artists"]
     song_dict = flatten_dict_list(song_list)
 
-    song_center = get_mean_vector(song_list, spotify_data)
+    song_center = get_mean_vector(song_list, spotify_data, artist)
     scalar = song_cluster_pipeline.steps[0][1]
     scaled_data = scalar.transform(spotify_data[number_cols])
     scaled_song_center = scalar.transform(song_center.reshape(1, -1))
@@ -161,11 +163,13 @@ def recommend_songs(song_list, spotify_data, n_songs=10):
     return rec_songs.to_dict("records")
 
 
-def rekofy_get_recommendations(song_names, num_songs=5):
+def rekofy_get_recommendations(song_names, num_songs=5, artist=""):
     """Gets a recommendation for a song based on the song's cluster.
 
     Args:
         song_names (list): List of song names to get a recommendation for.
+        num_songs (int): Number of songs to recommend.
+        artist (str): Artist name of the song. (optional)
 
     Returns:
         recommendations (list): List of 5 song that are recommended.
@@ -175,15 +179,14 @@ def rekofy_get_recommendations(song_names, num_songs=5):
     recommendations = []
     data = pd.read_csv("../../data/raw_data.csv")
 
-    for song in song_names:
-        dict_ = {"name": song}
-        input_dict_list.append(dict_)
+    input_dict_list.append({"name": song_names})
+    output_dict = recommend_songs(input_dict_list, data, artist, n_songs=num_songs)
 
-    output_dict = recommend_songs(input_dict_list, data, n_songs=num_songs)
-
+    # print("INSIDE rekofy_get_recommendations")
+    # print(artist)
     for song in output_dict:
         _song = Song.from_dict(song)
-        song_df = find_song(_song.name)
+        song_df = find_song(_song.name, "")
         _song.album_cover = song_df["album_cover"][0]
         _song.preview_url = song_df["preview_url"][0]
         _song.explicit = song_df["explicit"][0]

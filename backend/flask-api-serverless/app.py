@@ -15,7 +15,8 @@ CORS(app)
 def getSongs():
     try:
         response = request.get_json()
-        result = get_recommendation(response['name'], response.get('filters', dict()))
+        print(response['artist'])
+        result = get_recommendation(response['name'], response.get('filters', dict()), response['artist'])
     except LookupError as kerr:
         return jsonify({
             "ERROR": f"the name field is invalid: {kerr}",

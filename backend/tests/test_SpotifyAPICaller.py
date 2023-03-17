@@ -10,7 +10,7 @@ INVALID_SONG = "nbdjs183hdjhkzxiuoq2uqejhsjhks"
 
 
 def test_get_recommendations_no_filters():
-    response = app.test_client().post("/result", json={"name": GANGNAM_STYLE})
+    response = app.test_client().post("/result", json={"name": GANGNAM_STYLE, "artist": "PSY"})
     assert (
         response.get_json() != None and len(response.get_json()["name"][0]) == 5
     ), f"Unknown error occurred for response: {response}"
@@ -57,7 +57,7 @@ def test_get_recommendations_no_filters():
 
 def test_get_recommendations_null_explicit():
     response = app.test_client().post(
-        "/result", json={"name": "gangnam style", "filters": {"explicit": "NULL"}}
+        "/result", json={"name": "gangnam style", "filters": {"explicit": "NULL"}, "artist": "PSY"}
     )
 
     assert (
@@ -106,7 +106,7 @@ def test_get_recommendations_null_explicit():
 
 def test_get_recommendations_0_explicit():
     response = app.test_client().post(
-        "/result", json={"name": GANGNAM_STYLE, "filters": {"explicit": 0}}
+        "/result", json={"name": GANGNAM_STYLE, "filters": {"explicit": 0}, "artist": "PSY"}
     )
     df = pd.DataFrame(response.get_json()["name"][0])
 
@@ -162,7 +162,7 @@ def test_get_recommendations_0_explicit():
 
 def test_get_recommendations_1_explicit():
     response = app.test_client().post(
-        "/result", json={"name": GANGNAM_STYLE, "filters": {"explicit": 1}}
+        "/result", json={"name": GANGNAM_STYLE, "filters": {"explicit": 1}, "artist": "PSY"}
     )
     df = pd.DataFrame(response.get_json()["name"][0])
     assert (
@@ -216,7 +216,7 @@ def test_get_recommendations_1_explicit():
 
 
 def test_find_song_gangnam_style():
-    song_df = caller.find_song(GANGNAM_STYLE)
+    song_df = caller.find_song(GANGNAM_STYLE, "")
     assert (
         not song_df.empty and not song_df.columns.empty
     ), f"Could not find song: {GANGNAM_STYLE}"
@@ -247,7 +247,7 @@ def test_find_song_gangnam_style():
 
 
 def test_find_song_despacito():
-    song_df = caller.find_song(DESPACITO)
+    song_df = caller.find_song(DESPACITO, "")
     assert (
         not song_df.empty and not song_df.columns.empty
     ), f"Could not find song: {DESPACITO}"
@@ -278,12 +278,12 @@ def test_find_song_despacito():
 
 
 def test_find_song_invalid():
-    song_df = caller.find_song(INVALID_SONG)
+    song_df = caller.find_song(INVALID_SONG, "")
     assert song_df == None, f"Unknown error occurred for song: {INVALID_SONG}"
 
 
 def test_find_song_null():
-    song_df = caller.find_song(None)
+    song_df = caller.find_song(None, "")
     assert song_df == None, f"Unknown error occurred for song: {song_df}"
 
 def test_similar_failing():
