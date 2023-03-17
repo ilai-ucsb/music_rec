@@ -19,6 +19,7 @@ export default function HomeIndexPage() {
   const [popularityFilter, setPopularityFilter] = useState("NULL");
   const [energyFilter, setEnergyFilter] = useState("NULL");
   const [danceabilityFilter, setDanceabilityFilter] = useState("NULL");
+  const [livenessFilter, setLivenessFilter] = useState("NULL");
 
 
   useEffect(() => {
@@ -56,6 +57,10 @@ export default function HomeIndexPage() {
   
   const handleChangeDanceability = (e) => {
       setDanceabilityFilter(e.target.value);
+  }
+  
+  const handleChangeLiveness = (e) => {
+      setLivenessFilter(e.target.value);
   }
   return (
     <div>
@@ -113,6 +118,12 @@ export default function HomeIndexPage() {
               <option value={0.50}>Medium</option>
               <option value={0.75}>High</option>
               <option value={1.00}>Max</option>
+            </select><br />
+             liveness:&nbsp;
+            <select data-testid="liveness-select" value = {livenessFilter} onChange={handleChangeLiveness} style={{marginRight: "0.5rem"}}>
+              <option value={"NULL"}>Both</option>
+              <option value={0}>No</option>
+              <option value={1}>Yes</option>
             </select>
           <div>
             Year:&nbsp;
@@ -129,6 +140,7 @@ export default function HomeIndexPage() {
           popularityFilter={popularityFilter}
           energyFilter={energyFilter}
           danceabilityFilter={danceabilityFilter}
+          livenessFilter={livenessFilter}
         />
 
         <article>
