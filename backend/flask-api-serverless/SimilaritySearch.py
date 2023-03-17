@@ -11,7 +11,7 @@ from limits import VALIDATION_TABLE
 
 logger = logging.getLogger(__name__)  # get the logger from the callee
 
-PRODUCTION = os.environ.get("PRODUCTION", False)
+PRODUCTION = os.environ.get("PRODUCTION", "0")
 
 PROJECT_NAME = "project-t09-musicrecommendation"
 
@@ -37,7 +37,7 @@ else:  # if we are in production mode, then use the firebase database
         csvReader = csv.DictReader(f)
         data = [row for row in csvReader]
 
-VERBOSE = os.environ.get("VERBOSE", False)
+VERBOSE = bool(int(os.environ.get("VERBOSE", "0")))
 
 
 # the columns to preprocess to between 0 and 1, inclusive on both ends
@@ -49,6 +49,22 @@ NUMERIC_PREPROCESSING_COLUMNS = [
     "popularity",
     "tempo",
 ]
+
+
+def processTypes(data: pd.DataFrame):
+    """
+    Casts type of each column using the Validation Table
+
+    Args:
+        data (pd.DataFrame): the raw data in form of pandas dataframe
+
+    Returns:
+        (pd.DataFrame): a pandas dataframe with the correct types for each column
+    """
+    for column in VALIDATION_TABLE.keys():
+        if column in data.columns:
+            data[column] = data[column].astype(VALIDATION_TABLE[column]["expected_type"])
+    return data
 
 
 def preprocessNumeric(column_name: str, column_data: pd.Series):
@@ -83,42 +99,13 @@ def validateNumeric(value, minimum, maximum, expected_type):
     Returns:
         (bool): True if valid else False
     """
-    if type(value) != expected_type:
+    if expected_type == int and type(value) != expected_type:
+        return False
+    elif expected_type == float and type(value) not in (float, int):
         return False
     if value < minimum:
         return False
     if value > maximum:
-        return False
-    return True
-
-
-def validateDate(value: str, _format: str = "%Y-%m-%d", year: int = None, expected_type: type = str):
-    """
-    Helper function to validate the string input `value` representing the date and ensure
-    that it is in the correct format while having the correct year.
-
-    Args:
-        value (str): The date string in format `_format`
-        _format (str): The format to expect the value to be in. Default "%Y-%m-%d" (eg, "2023-08-15" for August 15th, 2023)
-        year (int): The expected year for the date
-
-    Returns:
-        (bool): True if valid else False
-    """
-    if type(value) != str:
-        return False
-    try:
-        date = time.strptime(value, _format)
-    except ValueError as ve:
-        logger.debug(f"An error occurred trying to parse the date field with format \"{fmt}\". This implies that the field is not valid.")
-        logger.debug(ve)
-        return False
-    except Exception as exc:
-        logger.error("An unexpected error occurred trying to parse \"{value}\" with format \"{fmt}\". See below for more details.")
-        logger.error(exc)
-        return False
-
-    if year and date.tm_year != year:
         return False
     return True
 
@@ -135,9 +122,6 @@ def validateArgs(kwargs: dict):
         (bool): True if all arguments are valid else False
     """
     for column_name, column_value in kwargs.items():
-        if VALIDATION_TABLE[column_name]["expected_type"] == str and "date" in column_name:
-            if not validateDate(value=column_value, _format=VALIDATION_TABLE[column_name]["_format"], year=kwargs.get(VALIDATION_TABLE[column_name]["year_col"], None)):
-                return False
         if VALIDATION_TABLE[column_name]["expected_type"] in (int, float):
             if not validateNumeric(value=column_value, **VALIDATION_TABLE[column_name]):
                 return False
@@ -175,6 +159,10 @@ def similarSongs(n: int = 5, threshold: float = 0.05, **kwargs):
     """
     logger.debug(f"similar_songs: Received Input n=`{n}` and kwargs=`{kwargs}`.")
     logger.debug("Checking Validity of parameters...")
+    # check if there are any bad keys
+    bad_keys = kwargs.keys() - VALIDATION_TABLE.keys()
+    if len(bad_keys) > 0:
+        raise ValueError(f"Incorrect key(s) {bad_keys}")
     if not (n >= 1 and type(n) == int):
         raise ValueError("Incorrect input value for `n` (Count of results to return)")  # raise ValueError on ill-formed args
     if len(kwargs) == 0:
@@ -183,9 +171,9 @@ def similarSongs(n: int = 5, threshold: float = 0.05, **kwargs):
         raise ValueError("Incorrect format for one of the keyword arguments.")  # raise ValueError on ill-formed args
 
     logger.debug("Parameters have passed validity checks")
-    original = pd.DataFrame(data)
+    original = processTypes(pd.DataFrame(data))
 
-    dbObj = pd.DataFrame(data)[kwargs.keys()]
+    dbObj = processTypes(pd.DataFrame(data)[kwargs.keys()])
 
     for column_name in kwargs.keys():
         if column_name in NUMERIC_PREPROCESSING_COLUMNS:
@@ -206,7 +194,7 @@ def similarSongs(n: int = 5, threshold: float = 0.05, **kwargs):
 
     # get the first five values and return them in a record format
     idxs = dbObj[:n]["idx"]
-    return original.iloc[idxs].to_dict(orient='records')
+    return (original.iloc[idxs])[["name", "id"]].to_dict(orient='records')
 
 
 if __name__ == "__main__":

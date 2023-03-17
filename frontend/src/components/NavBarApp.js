@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 function NavBarApp() {
   return (
-    <Navbar variant="dark" bg="dark" expand="lg">
+    <Navbar variant="dark" bg="black" expand="lg">
         <Container>
             <Navbar.Brand href='/'>
               <img src="./rekofyLogoLight.png" alt="Rekofy" height={30} />
