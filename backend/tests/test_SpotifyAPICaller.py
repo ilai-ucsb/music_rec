@@ -244,10 +244,70 @@ def test_find_song_gangnam_style():
     assert isinstance(
         song_df["album_cover"][0], str
     ), f"Song album_cover is not a valid string: {song_df['album_cover'][0]}"
+    
+def test_find_song_gangnam_style_with_artist():
+    song_df = caller.find_song(GANGNAM_STYLE, "PSY")
+    assert (
+        not song_df.empty and not song_df.columns.empty
+    ), f"Could not find song: {GANGNAM_STYLE}"
+    assert set(song.Song.SPOTIFY_API_GOLDEN_COLUMNS).issubset(
+        set(song_df.columns)
+    ), f"Could not find song: {GANGNAM_STYLE}"
+    assert (
+        isinstance(song_df["name"][0], str) and GANGNAM_STYLE in song_df["name"][0]
+    ), f"Song name is not a valid string: {song_df['name'][0]}" 
+    assert isinstance(
+        song_df["id"][0], str
+    ), f"Song id is not a valid string: {song_df['id'][0]}"
+    assert isinstance(
+        song_df["year"][0], np.integer
+    ), f"Song year is not a valid int: {song_df['year'][0]}"
+    assert isinstance(
+        song_df["explicit"][0], np.integer
+    ), f"Song explicit is not a valid int: {song_df['explicit'][0]}"
+    assert isinstance(
+        song_df["duration_ms"][0], np.integer
+    ), f"Song duration_ms is not a valid int: {song_df['duration_ms'][0]}"
+    assert isinstance(
+        song_df["popularity"][0], np.integer
+    ), f"Song popularity is not a valid int: {song_df['popularity'][0]}"
+    assert isinstance(
+        song_df["album_cover"][0], str
+    ), f"Song album_cover is not a valid string: {song_df['album_cover'][0]}"
 
 
 def test_find_song_despacito():
     song_df = caller.find_song(DESPACITO, "")
+    assert (
+        not song_df.empty and not song_df.columns.empty
+    ), f"Could not find song: {DESPACITO}"
+    assert set(song.Song.SPOTIFY_API_GOLDEN_COLUMNS).issubset(
+        set(song_df.columns)
+    ), f"Could not find song: {DESPACITO}"
+    assert (
+        isinstance(song_df["name"][0], str) and DESPACITO in song_df["name"][0]
+    ), f"Song name is not a valid string: {song_df['name'][0]}"
+    assert isinstance(
+        song_df["id"][0], str
+    ), f"Song id is not a valid string: {song_df['id'][0]}"
+    assert isinstance(
+        song_df["year"][0], np.integer
+    ), f"Song year is not a valid int: {song_df['year'][0]}"
+    assert isinstance(
+        song_df["explicit"][0], np.integer
+    ), f"Song explicit is not a valid int: {song_df['explicit'][0]}"
+    assert isinstance(
+        song_df["duration_ms"][0], np.integer
+    ), f"Song duration_ms is not a valid int: {song_df['duration_ms'][0]}"
+    assert isinstance(
+        song_df["popularity"][0], np.integer
+    ), f"Song popularity is not a valid int: {song_df['popularity'][0]}"
+    assert isinstance(
+        song_df["album_cover"][0], str
+    ), f"Song album_cover is not a valid string: {song_df['album_cover'][0]}"
+    
+def test_find_song_despacito_with_artist():
+    song_df = caller.find_song(DESPACITO, "Luis Fonsi")
     assert (
         not song_df.empty and not song_df.columns.empty
     ), f"Could not find song: {DESPACITO}"

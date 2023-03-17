@@ -15,7 +15,6 @@ CORS(app)
 def getSongs():
     try:
         response = request.get_json()
-        print(response['artist'])
         result = get_recommendation(response['name'], response.get('filters', dict()), response['artist'])
     except LookupError as kerr:
         return jsonify({
