@@ -14,99 +14,94 @@ def test_get_recommendations_no_filters():
     assert (
         response.get_json() != None and len(response.get_json()["name"][0]) == 5
     ), f"Unknown error occurred for response: {response}"
-    
+
     for song_response in response.get_json()["name"][0]:
-        assert(
+        assert (
             song_response["songName"] != GANGNAM_STYLE
         ), f"Song {GANGNAM_STYLE} was recommended"
-        assert(
-            isinstance(song_response["songName"], str)
+        assert isinstance(
+            song_response["songName"], str
         ), f"The song name is not a string"
-        assert(
-            isinstance(song_response["artist"], str)
+        assert isinstance(
+            song_response["artist"], str
         ), f"The artist name is not a string"
-        assert(
+        assert (
             song_response["explicit"] == "0" or song_response["explicit"] == "1"
         ), f"The explicit field is not a valid value"
-        assert(
+        assert (
             song_response["popularity"] >= 0 and song_response["popularity"] <= 100
         ), f"The popularity field is not a valid value"
-        assert(
-            isinstance(song_response["danceability"], str) and
-            len(song_response["danceability"]) <= 5
+        assert (
+            isinstance(song_response["danceability"], str)
+            and len(song_response["danceability"]) <= 5
         ), f"The danceability field was not formatted correctly"
-        assert(
-            isinstance(song_response["acousticness"], str) and
-            len(song_response["acousticness"]) <= 5
+        assert (
+            isinstance(song_response["acousticness"], str)
+            and len(song_response["acousticness"]) <= 5
         ), f"The acousticness field was not formatted correctly"
-        assert(
-            isinstance(song_response["instrumentalness"], str) and
-            len(song_response["instrumentalness"]) <= 5
+        assert (
+            isinstance(song_response["instrumentalness"], str)
+            and len(song_response["instrumentalness"]) <= 5
         ), f"The instrumentalness field was not formatted correctly"
-        assert(
-            isinstance(song_response["loudness"], str) and
-            len(song_response["loudness"]) <= 5
+        assert (
+            isinstance(song_response["loudness"], str)
+            and len(song_response["loudness"]) <= 5
         ), f"The loudness field was not formatted correctly"
-        assert(
-            isinstance(song_response["album_cover"], str) and
-            song_response["album_cover"].startswith("https://")
-        ), f"The album cover field was not formatted correctly"
-        assert(
-            isinstance(song_response["preview_url"], str) and
-            song_response["preview_url"].startswith("https://")
-        ), f"The preview url field was not formatted correctly"
-        
+        assert isinstance(song_response["album_cover"], str) and song_response[
+            "album_cover"
+        ].startswith("https://"), f"The album cover field was not formatted correctly"
+        assert isinstance(song_response["preview_url"], str) and song_response[
+            "preview_url"
+        ].startswith("https://"), f"The preview url field was not formatted correctly"
 
 
 def test_get_recommendations_null_explicit():
     response = app.test_client().post(
         "/result", json={"name": "gangnam style", "filters": {"explicit": "NULL"}}
     )
-    
+
     assert (
         response.get_json() != None and len(response.get_json()["name"][0]) == 5
     ), f"Unknown error occurred for response: {response}"
-    
+
     for song_response in response.get_json()["name"][0]:
-        assert(
+        assert (
             song_response["songName"] != GANGNAM_STYLE
         ), f"Song {GANGNAM_STYLE} was recommended"
-        assert(
-            isinstance(song_response["songName"], str)
+        assert isinstance(
+            song_response["songName"], str
         ), f"The song name is not a string"
-        assert(
-            isinstance(song_response["artist"], str)
+        assert isinstance(
+            song_response["artist"], str
         ), f"The artist name is not a string"
-        assert(
+        assert (
             song_response["explicit"] == "0" or song_response["explicit"] == "1"
         ), f"The explicit field is not a valid value"
-        assert(
+        assert (
             song_response["popularity"] >= 0 and song_response["popularity"] <= 100
         ), f"The popularity field is not a valid value"
-        assert(
-            isinstance(song_response["danceability"], str) and
-            len(song_response["danceability"]) <= 5
+        assert (
+            isinstance(song_response["danceability"], str)
+            and len(song_response["danceability"]) <= 5
         ), f"The danceability field was not formatted correctly"
-        assert(
-            isinstance(song_response["acousticness"], str) and
-            len(song_response["acousticness"]) <= 5
+        assert (
+            isinstance(song_response["acousticness"], str)
+            and len(song_response["acousticness"]) <= 5
         ), f"The acousticness field was not formatted correctly"
-        assert(
-            isinstance(song_response["instrumentalness"], str) and
-            len(song_response["instrumentalness"]) <= 5
+        assert (
+            isinstance(song_response["instrumentalness"], str)
+            and len(song_response["instrumentalness"]) <= 5
         ), f"The instrumentalness field was not formatted correctly"
-        assert(
-            isinstance(song_response["loudness"], str) and
-            len(song_response["loudness"]) <= 5
+        assert (
+            isinstance(song_response["loudness"], str)
+            and len(song_response["loudness"]) <= 5
         ), f"The loudness field was not formatted correctly"
-        assert(
-            isinstance(song_response["album_cover"], str) and
-            song_response["album_cover"].startswith("https://")
-        ), f"The album cover field was not formatted correctly"
-        assert(
-            isinstance(song_response["preview_url"], str) and
-            song_response["preview_url"].startswith("https://")
-        ), f"The preview url field was not formatted correctly"
+        assert isinstance(song_response["album_cover"], str) and song_response[
+            "album_cover"
+        ].startswith("https://"), f"The album cover field was not formatted correctly"
+        assert isinstance(song_response["preview_url"], str) and song_response[
+            "preview_url"
+        ].startswith("https://"), f"The preview url field was not formatted correctly"
 
 
 def test_get_recommendations_0_explicit():
@@ -114,57 +109,53 @@ def test_get_recommendations_0_explicit():
         "/result", json={"name": GANGNAM_STYLE, "filters": {"explicit": 0}}
     )
     df = pd.DataFrame(response.get_json()["name"][0])
-    
+
     assert (
         response.get_json() != None and len(response.get_json()["name"][0]) <= 5
     ), f"Unknown error occurred for response: {response}"
-    print("passed the first test!")
-    print(response.get_json())
 
     assert (df["explicit"] == "0").sum() == len(
         df
     ), f"explicit filter did not work! {response.get_json()}"
-    
+
     for song_response in response.get_json()["name"][0]:
-        assert(
+        assert (
             song_response["songName"] != GANGNAM_STYLE
         ), f"Song {GANGNAM_STYLE} was recommended"
-        assert(
-            isinstance(song_response["songName"], str)
+        assert isinstance(
+            song_response["songName"], str
         ), f"The song name is not a string"
-        assert(
-            isinstance(song_response["artist"], str)
+        assert isinstance(
+            song_response["artist"], str
         ), f"The artist name is not a string"
-        assert(
+        assert (
             song_response["explicit"] == "0" or song_response["explicit"] == "1"
         ), f"The explicit field is not a valid value"
-        assert(
+        assert (
             song_response["popularity"] >= 0 and song_response["popularity"] <= 100
         ), f"The popularity field is not a valid value"
-        assert(
-            isinstance(song_response["danceability"], str) and
-            len(song_response["danceability"]) <= 5
+        assert (
+            isinstance(song_response["danceability"], str)
+            and len(song_response["danceability"]) <= 5
         ), f"The danceability field was not formatted correctly"
-        assert(
-            isinstance(song_response["acousticness"], str) and
-            len(song_response["acousticness"]) <= 5
+        assert (
+            isinstance(song_response["acousticness"], str)
+            and len(song_response["acousticness"]) <= 5
         ), f"The acousticness field was not formatted correctly"
-        assert(
-            isinstance(song_response["instrumentalness"], str) and
-            len(song_response["instrumentalness"]) <= 5
+        assert (
+            isinstance(song_response["instrumentalness"], str)
+            and len(song_response["instrumentalness"]) <= 5
         ), f"The instrumentalness field was not formatted correctly"
-        assert(
-            isinstance(song_response["loudness"], str) and
-            len(song_response["loudness"]) <= 5
+        assert (
+            isinstance(song_response["loudness"], str)
+            and len(song_response["loudness"]) <= 5
         ), f"The loudness field was not formatted correctly"
-        assert(
-            isinstance(song_response["album_cover"], str) and
-            song_response["album_cover"].startswith("https://")
-        ), f"The album cover field was not formatted correctly"
-        assert(
-            isinstance(song_response["preview_url"], str) and
-            song_response["preview_url"].startswith("https://")
-        ), f"The preview url field was not formatted correctly"
+        assert isinstance(song_response["album_cover"], str) and song_response[
+            "album_cover"
+        ].startswith("https://"), f"The album cover field was not formatted correctly"
+        assert isinstance(song_response["preview_url"], str) and song_response[
+            "preview_url"
+        ].startswith("https://"), f"The preview url field was not formatted correctly"
 
 
 def test_get_recommendations_1_explicit():
@@ -175,58 +166,51 @@ def test_get_recommendations_1_explicit():
     assert (
         response.get_json() != None and len(response.get_json()["name"][0]) <= 5
     ), f"Unknown error occurred for response: {response.get_json()}"
-    
-    print("RUNNING TEST: test_get_recommendations_1_explicit")
-    print(response.get_json())
-    print("PRINTING RESPONSE")
-    print(response.get_json()["name"][0][0])
+
     song_response = response.get_json()["name"][0][0]
-    print(song_response["songName"])
 
     assert (df["explicit"] == "1").sum() == len(
         df
     ), f"explicit filter did not work! {response.get_json()}"
-    
+
     for song_response in response.get_json()["name"][0]:
-        assert(
+        assert (
             song_response["songName"] != GANGNAM_STYLE
         ), f"Song {GANGNAM_STYLE} was recommended"
-        assert(
-            isinstance(song_response["songName"], str)
+        assert isinstance(
+            song_response["songName"], str
         ), f"The song name is not a string"
-        assert(
-            isinstance(song_response["artist"], str)
+        assert isinstance(
+            song_response["artist"], str
         ), f"The artist name is not a string"
-        assert(
+        assert (
             song_response["explicit"] == "0" or song_response["explicit"] == "1"
         ), f"The explicit field is not a valid value"
-        assert(
+        assert (
             song_response["popularity"] >= 0 and song_response["popularity"] <= 100
         ), f"The popularity field is not a valid value"
-        assert(
-            isinstance(song_response["danceability"], str) and
-            len(song_response["danceability"]) <= 5
+        assert (
+            isinstance(song_response["danceability"], str)
+            and len(song_response["danceability"]) <= 5
         ), f"The danceability field was not formatted correctly"
-        assert(
-            isinstance(song_response["acousticness"], str) and
-            len(song_response["acousticness"]) <= 5
+        assert (
+            isinstance(song_response["acousticness"], str)
+            and len(song_response["acousticness"]) <= 5
         ), f"The acousticness field was not formatted correctly"
-        assert(
-            isinstance(song_response["instrumentalness"], str) and
-            len(song_response["instrumentalness"]) <= 5
+        assert (
+            isinstance(song_response["instrumentalness"], str)
+            and len(song_response["instrumentalness"]) <= 5
         ), f"The instrumentalness field was not formatted correctly"
-        assert(
-            isinstance(song_response["loudness"], str) and
-            len(song_response["loudness"]) <= 5
+        assert (
+            isinstance(song_response["loudness"], str)
+            and len(song_response["loudness"]) <= 5
         ), f"The loudness field was not formatted correctly"
-        assert(
-            isinstance(song_response["album_cover"], str) and
-            song_response["album_cover"].startswith("https://")
-        ), f"The album cover field was not formatted correctly"
-        assert(
-            isinstance(song_response["preview_url"], str) and
-            song_response["preview_url"].startswith("https://")
-        ), f"The preview url field was not formatted correctly"
+        assert isinstance(song_response["album_cover"], str) and song_response[
+            "album_cover"
+        ].startswith("https://"), f"The album cover field was not formatted correctly"
+        assert isinstance(song_response["preview_url"], str) and song_response[
+            "preview_url"
+        ].startswith("https://"), f"The preview url field was not formatted correctly"
 
 
 def test_find_song_gangnam_style():
@@ -238,8 +222,7 @@ def test_find_song_gangnam_style():
         set(song_df.columns)
     ), f"Could not find song: {GANGNAM_STYLE}"
     assert (
-        isinstance(song_df["name"][0], str)
-        and GANGNAM_STYLE in song_df["name"][0]
+        isinstance(song_df["name"][0], str) and GANGNAM_STYLE in song_df["name"][0]
     ), f"Song name is not a valid string: {song_df['name'][0]}"
     assert isinstance(
         song_df["id"][0], str
@@ -270,8 +253,7 @@ def test_find_song_despacito():
         set(song_df.columns)
     ), f"Could not find song: {DESPACITO}"
     assert (
-        isinstance(song_df["name"][0], str)
-        and DESPACITO in song_df["name"][0]
+        isinstance(song_df["name"][0], str) and DESPACITO in song_df["name"][0]
     ), f"Song name is not a valid string: {song_df['name'][0]}"
     assert isinstance(
         song_df["id"][0], str
