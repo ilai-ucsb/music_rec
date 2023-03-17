@@ -52,8 +52,7 @@ def base_model(
 
 def rekofy_model(name, limit):
     """
-    Get a list of upto 5 recommended song using the `Rekofy` model.
-
+    Get a list of upto `limit` recommended song using the `Rekofy` model.
     Args:
         name (str) - song name
         limit (int) - The maximum number of recommendations. Default: 100

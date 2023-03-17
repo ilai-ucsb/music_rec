@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import pickle as pkl
-import plotly.express as px
 import os
 import sys
 
@@ -52,24 +51,6 @@ def k_means_cluster(n_clusters, data):
 
     return song_cluster_pipeline, data, X
 
-
-def visualize_cluster(data, song_embedding):
-    """Visualizes the clusters of the song data.
-
-    Args:
-        data (dataframe): Pandas dataframe containing song data.
-        song_embedding (array): Array containing the PCA embedding of the song data.
-    """
-    projection = pd.DataFrame(columns=["x", "y"], data=song_embedding)
-    projection["title"] = data["name"]
-    projection["cluster"] = data["cluster_label"]
-
-    fig = px.scatter(
-        projection, x="x", y="y", color="cluster", hover_data=["x", "y", "title"]
-    )
-    fig.write_image("../../data/cluster.pdf")
-
-
 def perform_pca(data, X):
     """Performs PCA on the song data. This reduces the dimensionality of the data.
 
@@ -84,7 +65,6 @@ def perform_pca(data, X):
         [("scaler", StandardScaler()), ("PCA", PCA(n_components=2))]
     )
     song_embedding = pca_pipeline.fit_transform(X)
-    visualize_cluster(data, song_embedding)
     return song_embedding
 
 

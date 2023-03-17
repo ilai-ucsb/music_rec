@@ -30,7 +30,7 @@ class Song(object):
         - year (integer: track release year)
         - artists (string: track artist name)
         - danceability (double: between 0 and 1)
-        - acouticness (double: between 0 and 1)
+        - acousticness (double: between 0 and 1)
         - energy (double: between 0 and 1)
         - explicit (boolean: either 0 or 1)
         - instrumentalness (double: between 0 and 1)

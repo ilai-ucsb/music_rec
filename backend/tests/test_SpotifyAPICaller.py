@@ -113,8 +113,6 @@ def test_get_recommendations_0_explicit():
     assert (
         response.get_json() != None and len(response.get_json()["name"][0]) <= 5
     ), f"Unknown error occurred for response: {response}"
-    print("passed the first test!")
-    print(response.get_json())
 
     assert (df["explicit"] == "0").sum() == len(
         df
@@ -169,12 +167,7 @@ def test_get_recommendations_1_explicit():
         response.get_json() != None and len(response.get_json()["name"][0]) <= 5
     ), f"Unknown error occurred for response: {response.get_json()}"
 
-    print("RUNNING TEST: test_get_recommendations_1_explicit")
-    print(response.get_json())
-    print("PRINTING RESPONSE")
-    print(response.get_json()["name"][0][0])
     song_response = response.get_json()["name"][0][0]
-    print(song_response["songName"])
 
     assert (df["explicit"] == "1").sum() == len(
         df
