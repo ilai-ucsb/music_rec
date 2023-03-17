@@ -1,6 +1,6 @@
 import SearchBar from "../SearchBar";
-import {useState} from 'react'; 
-import "./utils/Page.css"
+import { useState, useEffect } from "react";
+import "./utils/Page.css";
 import NavBarApp from "../NavBarApp";
 import ListPage from "./utils/ListPage";
 import FilterPopup from "../FilterPopup";
@@ -10,11 +10,29 @@ import Box from "@mui/material/Box";
 // HomeIndexPage.js essentially acts as our App.js since our App.js is now routing pages.
 
 export default function HomeIndexPage() {
-    const [searchResult, setSearchResult] = useState([]);
-    const [buttonPopup, setButtonPopup] = useState(false);
-    const [explicitFilter, setExplicitFilter] = useState("NULL");
-    const [yearFilter, setYearFilter] = useState([1950, 2022]);
-    const [loudFilter, setloudFilter] = useState("NULL");
+  const [searchResult, setSearchResult] = useState(undefined);
+  const [buttonPopup, setButtonPopup] = useState(false);
+  const [explicitFilter, setExplicitFilter] = useState("NULL");
+  const [yearFilter, setYearFilter] = useState([1950, 2022]);
+  const [loudFilter, setloudFilter] = useState("NULL");
+  const [accessToken, setAccessToken] = useState("");
+
+  useEffect(() => {
+    var authParameters = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body:
+        "grant_type=client_credentials&client_id=" +
+        process.env.REACT_APP_CLIENT_ID +
+        "&client_secret=" +
+        process.env.REACT_APP_CLIENT_SECRET,
+    };
+    fetch("https://accounts.spotify.com/api/token", authParameters)
+      .then((result) => result.json())
+      .then((data) => setAccessToken(data.access_token));
+  }, []);
 
   const handleChangeExplicit = (e) => {
     setExplicitFilter(e.target.value);
@@ -23,9 +41,6 @@ export default function HomeIndexPage() {
     setloudFilter(e.target.value);
   };
 
-
-
-  
   return (
     <div>
       <NavBarApp />
@@ -60,15 +75,25 @@ export default function HomeIndexPage() {
             <option value={1.0}>Blasting</option>
           </select>
           <div>
-              Year:&nbsp; 
-              <Slider value={yearFilter} setValue={setYearFilter}/>
-            </div>
+            Year:&nbsp;
+            <Slider value={yearFilter} setValue={setYearFilter} />
+          </div>
+        </FilterPopup>
 
-            
-          </FilterPopup>
-          <SearchBar setSearchResult={setSearchResult} explicitFilter={explicitFilter} loudFilter={loudFilter} yearFilter={yearFilter}/>
-          <ListPage searchResults={searchResult}/>
-        </header>
-      </div>
-  )
+        <SearchBar
+          setSearchResult={setSearchResult}
+          explicitFilter={explicitFilter}
+          loudFilter={loudFilter}
+          yearFilter={yearFilter}
+          accessToken={accessToken}
+        />
+
+        <article>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <ListPage searchResults={searchResult} />
+          </Box>
+        </article>
+      </header>
+    </div>
+  );
 }
