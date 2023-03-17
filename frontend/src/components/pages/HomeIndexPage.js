@@ -77,16 +77,6 @@ export default function HomeIndexPage() {
             justifyContent="center"
             alignItems="center"
           >
-            <Typography component="div" variant="h4">
-              Our Recommendations:
-            </Typography>
-
-          </Box>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
             <ListPage searchResults={searchResult} />
 
           </Box>
