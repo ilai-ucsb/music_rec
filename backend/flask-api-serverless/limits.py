@@ -9,7 +9,7 @@ VALIDATION_TABLE = {
         "expected_type": float
     },
     "year": {
-        "minimum": 1950,
+        "minimum": 1920,
         "maximum": 2023,
         "expected_type": int
     },
@@ -68,9 +68,14 @@ VALIDATION_TABLE = {
         "maximum": 100,
         "expected_type": int
     },
+    "speechiness": {
+        "minimum": 0,
+        "maximum": 1,
+        "expected_type": float
+    },
     "tempo": {
         "minimum": 0,
         "maximum": 1015,
-        "expected_type": int
+        "expected_type": float
     },
 }

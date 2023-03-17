@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import './SearchBar.css'
+import { Box, IconButton } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear'
 
 // setSearchResult is a prop that is passed through to SearchBar. It does what it says 
 // and sets searchResult from HomeIndexPage.js to a value that you give it here. 
@@ -8,13 +10,33 @@ import './SearchBar.css'
 function SearchBar({ ...props }) {
   const [showError, setShowError] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [timer, setTimer] = useState(null);
+  const [searchArtist, setSearchArtist] = useState("");
+
+  let fetchSuggestions = async (input) => {
+    let songParameters = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + props.accessToken
+      }
+    }
+    if (input !== undefined && input !== "") {
+      await fetch('https://api.spotify.com/v1/search?q=' + input + '&type=track&limit=5', songParameters)
+        .then(response => response.json())
+        .then(data => setSuggestions(data.tracks.items))
+    } else {
+      setSuggestions([]);
+    }
+  }
 
   let handleSubmit = async (e) => {
     e.preventDefault();
-    if (searchInput === ""){
+    if (searchInput === "") {
       props.setSearchResult(undefined)
     } else {
-      try{
+      try {
         // CORS is only required for server side api calling
         let songParameters = {
           method: 'POST',
@@ -23,12 +45,17 @@ function SearchBar({ ...props }) {
             "Content-Type": 'application/json'
           },
           body: JSON.stringify({
-            "name": searchInput, 
+            "name": searchInput,
+            "artist": searchArtist,
             "filters": {
               "explicit": props.explicitFilter,
               "loud": props.loudFilter,
               "minYear": props.yearFilter[0],
               "maxYear": props.yearFilter[1],
+              "popularity": props.popularityFilter,
+              "energy": props.energyFilter,
+              "danceability": props.danceabilityFilter,
+              "liveness": props.liveness,
             }
           })
         };
@@ -45,7 +72,7 @@ function SearchBar({ ...props }) {
         } else {
           props.setSearchResult(resJson);
         }
-      } catch(error) {
+      } catch (error) {
         // On error, setShowError is marked true
         setShowError(true);
         console.log(error);
@@ -55,31 +82,67 @@ function SearchBar({ ...props }) {
         console.log("error")
       }
     }
-  };
+  }
+
 
   const handleChange = (e) => {
     e.preventDefault();
     setSearchInput(e.target.value)
+
+    clearTimeout(timer);
+
+    const newTimer = setTimeout(() => {
+      fetchSuggestions(e.target.value);
+    }, 700)
+
+    setSuggestions([]);
+
+    setTimer(newTimer);
   }
 
-  return <div style={{"display": "block", "textAlign": "center"}}>
-    <form data-testid = "searchBar" onSubmit={handleSubmit}>
-        <TextField
-          id="filled-basic"
-          className='TextField'
-          type="search"
-          variant="filled"
-          label="Enter a song"
-          value={searchInput}
-          onChange={handleChange}
-          inputProps={{ "data-testid": "searchInput" }}
-          />
+  let handleClick = (suggestedInput, suggestedArtist) => {
+    setSearchInput(suggestedInput);
+    setSearchArtist(suggestedArtist);
+    setSuggestions([]);
+  }
+
+  return <div style={{ "display": "block", "textAlign": "center" }}>
+    <form data-testid="searchBar" onSubmit={handleSubmit}>
+      <TextField
+        id="filled-basic"
+        className='TextField'
+        variant="filled"
+        label="Enter a song"
+        type="search"
+        value={searchInput}
+        onChange={handleChange}
+        inputProps={{ "data-testid": "searchInput" }}
+        InputProps={{
+          endAdornment: (<IconButton onClick={() => { setSearchInput("") }} sx={{ visibility: searchInput ? "visible" : "hidden" }}><ClearIcon /></IconButton>)
+        }}
+        sx={{ '& .Mui-focused .MuiIconButton-root': { color: "primary.main" } }}
+      />
+      <div className='dropdown' data-testid='suggestions'>
+        {suggestions.filter(() => {
+          return searchInput !== "" && searchInput !== null
+        })
+          .map((item, key) => (
+            <div key={key} onClick={() => handleClick(item.name, item.artists[0].name)} className='dropdown-row'>
+              <div className='options'>
+                <Box sx={{ display: 'inline-block', maxHeight: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <img src={item.album.images[0].url} alt="logo" style={{ height: "50px", margin: "4px", marginTop: "5px" }} />
+                  {`${item.name} by ${item.artists[0].name}`}
+                </Box>
+              </div>
+
+            </div>))}
+      </div>
     </form>
     {showError && (
-        <div className="error-popup">
-          <p>Sorry, we could not find that song</p>
-        </div>
-      )}
+      <div className="error-popup">
+        <p>Sorry, we could not find that song</p>
+      </div>
+    )}
   </div>
 
 };
