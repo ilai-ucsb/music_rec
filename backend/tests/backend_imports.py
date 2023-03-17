@@ -47,6 +47,7 @@ try:
     import SpotifyAPICaller
     import recommendation
     import song
+    import limits
     import constants
 
 except ModuleNotFoundError as mnfe:
