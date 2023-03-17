@@ -46,6 +46,7 @@
       width: 60%;
       outline: none;
       box-sizing: border-box;
+      z-index: 1;
     }
     
     .dropdown:empty {
