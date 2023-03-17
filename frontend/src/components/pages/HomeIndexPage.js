@@ -4,24 +4,46 @@ import "./utils/Page.css";
 import NavBarApp from "../NavBarApp";
 import ListPage from "./utils/ListPage";
 import FilterPopup from "../FilterPopup";
+import { getTokenFromUrl } from "./utils/spotifyUtils";
+import SpotifyWebApi from 'spotify-web-api-js';
 import Slider from "../Slider";
 import Box from "@mui/material/Box";
 
 // HomeIndexPage.js essentially acts as our App.js since our App.js is now routing pages.
 
 export default function HomeIndexPage() {
-  const [searchResult, setSearchResult] = useState(undefined);
-  const [buttonPopup, setButtonPopup] = useState(false);
-  const [explicitFilter, setExplicitFilter] = useState("NULL");
-  const [yearFilter, setYearFilter] = useState([1950, 2022]);
-  const [loudFilter, setloudFilter] = useState("NULL");
-  const [accessToken, setAccessToken] = useState("");
-  const [popularityFilter, setPopularityFilter] = useState("NULL");
-  const [energyFilter, setEnergyFilter] = useState("NULL");
-  const [danceabilityFilter, setDanceabilityFilter] = useState("NULL");
-  const [livenessFilter, setLivenessFilter] = useState("NULL");
+    const [searchResult, setSearchResult] = useState([]);
+    const [buttonPopup, setButtonPopup] = useState(false);
+    const [explicitFilter, setExplicitFilter] = useState("NULL");
+    const [spotifyToken, setSpotifyToken ] = useState("");
+    const [spotifyUser, setSpotifyUser] = useState("");
+    const [yearFilter, setYearFilter] = useState([1950, 2022]);
+    const [loudFilter, setloudFilter] = useState("NULL");
+    const [accessToken, setAccessToken] = useState("");
+    const [popularityFilter, setPopularityFilter] = useState("NULL");
+    const [energyFilter, setEnergyFilter] = useState("NULL");
+    const [danceabilityFilter, setDanceabilityFilter] = useState("NULL");
+    const [livenessFilter, setLivenessFilter] = useState("NULL");
 
+    const spotify = new SpotifyWebApi()
 
+    useEffect(() => {
+      console.log("This is what we derived from the URL: ", getTokenFromUrl)
+      // this is for spotify
+      const _spotifyToken = getTokenFromUrl().access_token;
+      window.location.hash = "";
+
+      if(_spotifyToken) {
+        setSpotifyToken(_spotifyToken)
+
+        spotify.setAccessToken(_spotifyToken)
+
+        spotify.getMe().then((user) => {
+          setSpotifyUser(user.display_name)
+        })
+      }
+    })
+    
   useEffect(() => {
     var authParameters = {
       method: "POST",
