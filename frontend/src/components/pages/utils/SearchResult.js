@@ -58,7 +58,7 @@ const SearchResult = ({ ...props }) => {
         })
       };
 
-      await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/similar', songParameters).then(resp => resp.json()
+      await fetch('http://csil-06.cs.ucsb.edu:5000/similar', songParameters).then(resp => resp.json()
       ).then(data => {
         if (data["similar_songs"].length >= 2) {
           setSimilarName1(data["similar_songs"][0]["name"]);
@@ -167,11 +167,11 @@ Change what's inside of Card content to change what's shown on expansion
             >
               <CardContent>
                 <Typography variant="h5"><b>STATS</b></Typography>
-                <Typography><b>Danceability</b> {props.danceability}</Typography>
-                <Typography><b>Energy</b> {props.energy}</Typography>
+                <Typography variant="h6"><b>Danceability</b> {props.danceability}</Typography>
+                <Typography variant="h6"><b>Energy</b> {props.energy}</Typography>
                 {
                   similarName1 !== "" &&
-                  <Typography><b>You may also like:</b> <ul><li>{similarName1}
+                  <Typography variant="h6"><b>You may also like:</b> <ul><li>{similarName1}
                   <IconButton
                   href={similarUrl1}
                   ms="auto"
