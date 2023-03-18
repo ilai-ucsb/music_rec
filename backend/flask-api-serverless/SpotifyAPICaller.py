@@ -12,6 +12,7 @@ import danceability
 import liveness
 import energy
 import popularity
+import year
 
 
 logging.basicConfig(level=logging.ERROR)
@@ -54,7 +55,7 @@ def base_model(
         **kwargs
     )
 
-    return results
+    return results["tracks"]
 
 
 def rekofy_model(name, limit, artist):
@@ -136,27 +137,23 @@ def filter_songs(song_list, filters):
     Returns:
         (list): filtered songs
     """
+
     if(type(filters) == dict  and len(filters) > 0):
         good_songs = []
-        print("filtering")
         if  "explicit" in filters :
             if filters["explicit"] == "NULL":
                 good_songs = song_list
             else :
                 for song in song_list:
                     # here we will apply all the filters passed in, but only explicit filters are allowed
-                    if bool(filters["explicit"]) == song.explicit:
+                    if str(filters["explicit"]) == song["explicit"]:
                         good_songs.append(song)
         else:
             good_songs = song_list
             
-        size = 10
+        size = 100
         for filter in filters:
             if filters[filter] != "NULL": 
-                print(filter)
-                print(filters[filter])
-                print("good_song pre filter")
-                print(good_songs)
                 if filter == "loud":
                     good_songs = loud.getLoud(good_songs, filters[filter], size)
                 elif filter == "popularity":
@@ -169,10 +166,10 @@ def filter_songs(song_list, filters):
                     good_songs = danceability.getDanceability(good_songs, filters[filter], size)
                 # elif filter == "minYear":
                 #     good_songs = year.getYear(good_songs, filters["minYear"], filters["maxYear"], size)
-                print("good_song after filter")
-                print(good_songs)
 
-            size -= 1
+            size -= 10
+        
+        
         if(len(good_songs) < 5):
             return good_songs
         else:
@@ -183,34 +180,90 @@ def filter_songs(song_list, filters):
 
 def get_recommendation(track, filters, artist):
     song_list = []
-    song_recommendations = rekofy_model(name=track, limit=10, artist=artist)
-    print("get rec")
-    filtered_recommendations = filter_songs(song_recommendations, filters)
-    #print(filtered_recommendations[0])
-    print(song_recommendations)
-    print("rec filtered")
-    if len(filtered_recommendations) > 5:
-        filtered_recommendations = sample(filtered_recommendations, 5)
+
+    no_filter = True
+
+    for key, val in filters.items():
+        if("year" not in key.lower()):
+            if(val != "NULL"):
+                no_filter = False
+        else:
+            if(key == "minYear" and val != 1920):
+                no_filter = False
+            elif(key == "maxYear" and val != 2022):
+                no_filter = False
+
         
-    for s in filtered_recommendations:
-        song_list.append(
-            {
-                "songName": s.name,
-                "artist": s.artists.split("'")[1],
-                "song_id": s.id,
-                "explicit": str(s.explicit),
-                "popularity": s.popularity,
-                "year": s.year,
-                "danceability": str(s.danceability)[0:5],
-                "acousticness": str(s.acousticness)[0:5],
-                "energy": str(s.energy)[0:5],
-                "instrumentalness": str(s.instrumentalness)[0:5],
-                "liveness": str(s.liveness),
-                "loudness": str(s.loudness)[0:5],
-                "speechiness": str(s.speechiness),
-                "tempo": str(s.tempo),
-                "album_cover": s.album_cover,
-                "preview_url": s.preview_url,
-            }
-        )
-    return [song_list]
+
+    if(type(filters) == dict and no_filter == True):
+        filtered_recommendations = rekofy_model(name=track, limit=10, artist=artist)
+        if(len(filtered_recommendations) > 5):
+            filtered_recommendations = sample(filtered_recommendations, 5)
+        for s in filtered_recommendations:
+            song_list.append(
+                {
+                    "songName": s.name,
+                    "artist": s.artists.split("'")[1],
+                    "song_id": s.id,
+                    "explicit": str(s.explicit),
+                    "popularity": s.popularity,
+                    "year": s.year,
+                    "danceability": str(s.danceability)[0:5],
+                    "acousticness": str(s.acousticness)[0:5],
+                    "energy": str(s.energy)[0:5],
+                    "instrumentalness": str(s.instrumentalness)[0:5],
+                    "liveness": str(s.liveness),
+                    "loudness": str(s.loudness)[0:5],
+                    "speechiness": str(s.speechiness),
+                    "tempo": str(s.tempo),
+                    "album_cover": s.album_cover,
+                    "preview_url": s.preview_url,
+                }
+            )
+    elif (type(filters) == dict and len(filters) > 0 and type(track) == str) :
+        raw_data = sp.search(q = track, type = 'track', limit = 1)
+        
+        try: 
+            track_id = raw_data['tracks']['items'][0]['id']
+        except LookupError as lerr:  # covers index error and key error
+            logging.error("Could not retrieve the track id for the song passed in.")
+            raise  # bad input track
+
+        
+        song_recommendations = base_model(track_ids=[track_id], limit=100)
+        audio_features = sp.audio_features(tracks=[song["id"] for song in song_recommendations])
+        
+
+        for idx, song in enumerate(song_recommendations):
+            song_list.append(
+                {
+                    "songName": song['name'],
+                    "artist": song['artists'][0]['name'],
+                    "song_id": song['id'],
+                    "explicit": "1" if song["explicit"] == True else "0",
+                    "popularity": song["popularity"],
+                    "year": song["album"]["release_date"][0:4],
+                    "danceability": str(audio_features[idx]['danceability'])[0:5],
+                    "acousticness": str(audio_features[idx]['acousticness'])[0:5],
+                    "energy": str(audio_features[idx]['energy'])[0:5],
+                    "instrumentalness": str(audio_features[idx]['instrumentalness'])[0:5],
+                    "liveness": str(audio_features[idx]['liveness']),
+                    "loudness": str(audio_features[idx]['loudness'])[0:5],
+                    "speechiness": str(audio_features[idx]['speechiness']),
+                    "tempo": str(audio_features[idx]['tempo']),
+                    "album_cover": None,
+                    "preview_url": None,
+                }
+            )
+
+        filtered_recommendations = filter_songs(song_list, filters)
+        for song in filtered_recommendations:
+            curr_song =  find_song(song["songName"], "")#song['artists'][0]['name'])
+            album_cover, url = curr_song[["album_cover", "preview_url"]].iloc[0]
+            song["album_cover"] = album_cover
+            song["preview_url"] = url
+
+        return [filtered_recommendations]
+
+
+    return [song_list[0:5]]
