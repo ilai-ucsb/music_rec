@@ -58,7 +58,7 @@ const SearchResult = ({ ...props }) => {
         })
       };
 
-      await fetch('http://csil-06.cs.ucsb.edu:5000/similar', songParameters).then(resp => resp.json()
+      await fetch('https://csil-06.cs.ucsb.edu:5000/similar', songParameters).then(resp => resp.json()
       ).then(data => {
         if (data["similar_songs"].length >= 2) {
           setSimilarName1(data["similar_songs"][0]["name"]);
