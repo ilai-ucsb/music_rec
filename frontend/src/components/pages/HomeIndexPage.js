@@ -17,7 +17,7 @@ export default function HomeIndexPage() {
     const [explicitFilter, setExplicitFilter] = useState("NULL");
     const [spotifyToken, setSpotifyToken ] = useState("");
     const [spotifyUser, setSpotifyUser] = useState("");
-    const [yearFilter, setYearFilter] = useState([1950, 2022]);
+    const [yearFilter, setYearFilter] = useState([1920, 2022]);
     const [loudFilter, setloudFilter] = useState("NULL");
     const [accessToken, setAccessToken] = useState("");
     const [popularityFilter, setPopularityFilter] = useState("NULL");
@@ -127,6 +127,7 @@ export default function HomeIndexPage() {
             </select><br />
             energy:&nbsp;
             <select data-testid="energy-select" value = {energyFilter} onChange={handleChangeEnergy} style={{marginRight: "0.5rem"}}>
+              <option value={"NULL"}>Any</option>
               <option value={0.0}>Dull</option>
               <option value={0.5}>Energetic</option>
               <option value={1.0}>Intense</option>
