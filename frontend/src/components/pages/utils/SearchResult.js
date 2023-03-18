@@ -58,7 +58,7 @@ const SearchResult = ({ ...props }) => {
         })
       };
 
-      await fetch('https://i2w798wse2.execute-api.us-east-1.amazonaws.com/similar', songParameters).then(resp => resp.json()
+      await fetch('http://csil-06.cs.ucsb.edu:5000/similar', songParameters).then(resp => resp.json()
       ).then(data => {
         if (data["similar_songs"].length >= 2) {
           setSimilarName1(data["similar_songs"][0]["name"]);
@@ -167,16 +167,16 @@ Change what's inside of Card content to change what's shown on expansion
             >
               <CardContent>
                 <Typography variant="h5"><b>STATS</b></Typography>
-                <Typography><b>Danceability</b> {props.danceability}</Typography>
-                <Typography><b>Energy</b> {props.energy}</Typography>
+                <Typography paragraph><b>Danceability</b> {props.danceability}</Typography>
+                <Typography paragraph><b>Energy</b> {props.energy}</Typography>
                 {
                   similarName1 !== "" &&
-                  <Typography><b>You may also like:</b> <ul><li>{similarName1}
+                  <span style={{ fontSize: '15px' }}><b>You may also like:</b> <ul><li>{similarName1}
                   <IconButton
                   href={similarUrl1}
                   ms="auto"
                   target="_blank"
-                  sx={{ width: "7%" }}
+                  sx={{ height: "40%" }}
                 >
                   <Spotify />
                 </IconButton></li><li>{similarName2}
@@ -184,10 +184,10 @@ Change what's inside of Card content to change what's shown on expansion
                   href={similarUrl2}
                   ms="auto"
                   target="_blank"
-                  sx={{ width: "7%" }}
+                  sx={{ height: "40%" }}
                 >
                   <Spotify />
-                </IconButton></li></ul> </Typography>
+                </IconButton></li></ul></span>
                 }
               </CardContent>
             </Collapse>
