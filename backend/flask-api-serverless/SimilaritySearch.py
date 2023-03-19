@@ -13,20 +13,6 @@ logger = logging.getLogger(__name__)  # get the logger from the callee
 
 PRODUCTION = os.environ.get("PRODUCTION", "0")
 
-# PROJECT_NAME = "project-t09-musicrecommendation"
-
-# try:
-#     split_path = __file__.split("/")
-#     data_path = "/".join(split_path[:len(split_path) - split_path[::-1].index(PROJECT_NAME)]) + "/data"
-# except ValueError as ve:
-#     logger.error(f"There was an issue deriving the data path for the mock database. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
-#     logger.error(ve)
-#     raise  # re-raise the error to stop execution
-# except Exception as exc:
-#     logger.error("An unexpected error occurred.")
-#     logger.error(exc)
-#     raise  # re-raise the error to stop execution
-
 rootDir = os.path.dirname(__file__)
 raw_data = os.path.join(rootDir, 'raw_data.csv')
 

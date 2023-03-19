@@ -20,6 +20,7 @@ Song = song.Song
 song_cluster_pipeline = None
 data = None
 
+# Setting up the paths to read from the aws lambda environment
 rootDir = os.path.dirname(__file__)
 pklFile = os.path.join(rootDir, 'rekofy.pkl')
 raw_data = os.path.join(rootDir, 'raw_data.csv')

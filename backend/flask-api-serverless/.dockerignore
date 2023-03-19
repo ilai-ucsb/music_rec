@@ -6,8 +6,8 @@ __pycache__/
 serverless.yml
 node_modules
 .vscode/
-.requirements.zip
 .cache
+.requirements.zip
 constants.py
 current.txt
 package-lock.json

@@ -23,7 +23,7 @@ def getDanceability(data, danceability_level, num_results):
 
     
     df = pd.DataFrame(data)
-    df['distances'] = abs(df["danceability"] - danceability_level)
+    df['distances'] = abs(df["danceability"].astype(float) - float(danceability_level))
     df.sort_values("distances", ascending=True,  inplace=True)
     idx = df.columns.get_loc("distances")
     df.drop(df.columns[idx], axis=1, inplace=True)

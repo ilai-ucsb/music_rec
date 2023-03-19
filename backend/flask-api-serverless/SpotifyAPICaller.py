@@ -6,6 +6,7 @@ import pandas as pd
 from random import sample
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from spotipy.cache_handler import CacheFileHandler
 
 import loud
 import danceability
@@ -19,10 +20,13 @@ logging.basicConfig(level=logging.ERROR)
 
 load_dotenv()
 
+# /tmp/ is the only writable location for aws lambda functions
 client_credentials_manager = SpotifyClientCredentials(
     client_id=os.getenv("SPOTIPY_CLIENT_ID"),
     client_secret=os.getenv("SPOTIPY_CLIENT_SECRET"),
+    cache_handler=CacheFileHandler(cache_path='/tmp/.cache')
 )
+
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 # code copied from model.py in order to not call spotify oauth multiple times
