@@ -12,14 +12,17 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from SpotifyAPICaller import find_song
 
-sys.path.append("..")
-from database import song
+import song
 
 Song = song.Song
 
 
 song_cluster_pipeline = None
 data = None
+
+rootDir = os.path.dirname(__file__)
+pklFile = os.path.join(rootDir, 'rekofy.pkl')
+raw_data = os.path.join(rootDir, 'raw_data.csv')
 
 
 def k_means_cluster(n_clusters, data):
@@ -143,7 +146,7 @@ def flatten_dict_list(dict_list):
 def recommend_songs(song_list, spotify_data, artist, n_songs=10):
     global song_cluster_pipeline
 
-    with open(os.path.dirname(__file__) + "/rekofy.pkl", "rb") as f:
+    with open(pklFile, "rb") as f:
         song_cluster_pipeline = pkl.load(f)
 
     metadata_cols = ["name", "year", "artists"]
@@ -175,7 +178,7 @@ def rekofy_get_recommendations(song_names, num_songs=5, artist=""):
     global data
     input_dict_list = []
     recommendations = []
-    data = pd.read_csv("../../data/raw_data.csv")
+    data = pd.read_csv(raw_data)
 
     input_dict_list.append({"name": song_names})
     output_dict = recommend_songs(input_dict_list, data, artist, n_songs=num_songs)

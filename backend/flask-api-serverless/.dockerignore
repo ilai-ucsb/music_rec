@@ -1,0 +1,17 @@
+__pycache__/
+.git/
+.serverless/
+.gitignore
+.dockerignore
+serverless.yml
+node_modules
+.vscode/
+.requirements.zip
+.cache
+constants.py
+current.txt
+package-lock.json
+package.json
+READEME.md
+visualize.py
+tests/

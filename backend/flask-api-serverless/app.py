@@ -1,3 +1,4 @@
+import serverless_wsgi
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
@@ -43,6 +44,9 @@ def getSimilar():
     return jsonify({
         "similar_songs": songs
     }), 200
+
+def handler(event, context):
+    return serverless_wsgi.handle_request(app, event, context)
 
 if __name__ == '__main__':
     app.run()

@@ -13,27 +13,28 @@ logger = logging.getLogger(__name__)  # get the logger from the callee
 
 PRODUCTION = os.environ.get("PRODUCTION", "0")
 
-PROJECT_NAME = "project-t09-musicrecommendation"
+# PROJECT_NAME = "project-t09-musicrecommendation"
 
-try:
-    split_path = __file__.split("/")
-    data_path = "/".join(split_path[:len(split_path) - split_path[::-1].index(PROJECT_NAME)]) + "/data"
-except ValueError as ve:
-    logger.error(f"There was an issue deriving the data path for the mock database. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
-    logger.error(ve)
-    raise  # re-raise the error to stop execution
-except Exception as exc:
-    logger.error("An unexpected error occurred.")
-    logger.error(exc)
-    raise  # re-raise the error to stop execution
+# try:
+#     split_path = __file__.split("/")
+#     data_path = "/".join(split_path[:len(split_path) - split_path[::-1].index(PROJECT_NAME)]) + "/data"
+# except ValueError as ve:
+#     logger.error(f"There was an issue deriving the data path for the mock database. Ensure the folder {PROJECT_NAME} is a substring of your current path in the filesystem.")
+#     logger.error(ve)
+#     raise  # re-raise the error to stop execution
+# except Exception as exc:
+#     logger.error("An unexpected error occurred.")
+#     logger.error(exc)
+#     raise  # re-raise the error to stop execution
 
-sys.path.append(data_path)
+rootDir = os.path.dirname(__file__)
+raw_data = os.path.join(rootDir, 'raw_data.csv')
 
 if int(PRODUCTION) == 0:  # if we are not in production, then use the mock database
     from mock_db import get_data
     data = get_data(seed=0)
 else:  # if we are in production mode, then use the firebase database
-    with open(data_path + "/raw_data.csv", encoding="utf-8") as f:
+    with open(raw_data, encoding="utf-8") as f:
         csvReader = csv.DictReader(f)
         data = [row for row in csvReader]
 
