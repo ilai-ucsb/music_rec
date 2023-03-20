@@ -168,8 +168,8 @@ def filter_songs(song_list, filters):
                     good_songs = liveness.getLiveness(good_songs, filters[filter], size)
                 elif filter == "danceability":
                     good_songs = danceability.getDanceability(good_songs, filters[filter], size)
-                # elif filter == "minYear":
-                #     good_songs = year.getYear(good_songs, filters["minYear"], filters["maxYear"], size)
+                elif filter == "minYear":
+                    good_songs = year.getYear(good_songs, filters["minYear"], filters["maxYear"], size)
 
             size -= 10
         

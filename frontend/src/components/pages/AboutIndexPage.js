@@ -1,5 +1,4 @@
 import React from "react";
-import { Text, Linking } from 'react-native';
 import NavBarApp from "../NavBarApp";
 import "./utils/Page.css"
 
@@ -16,16 +15,19 @@ export default function AboutIndexPage() {
                     for the class CS148 at UCSB.
                 </div>
                 <div className="general" aria-label="about-body-link">
-                    Visit our <Text classname="general" style={{ color: "red", fontSize: "18px" }} onPress={() => { Linking.openURL('https://github.com/ucsb-cs148-w23/project-t09-musicrecommendation'); }}> github </Text>
+                    Visit our
+                    <a href="https://github.com/ucsb-cs148-w23/project-t09-musicrecommendation" style={{margin: "0px 0.5em"}}>github</a>
                     for more information
                 </div>
-                <h1 className="about-title" aria-label="disclaimer-header"><u>Disclaimer</u></h1>
+                <h1 className="about-title" aria-label="disclaimer-header" style={{marginTop: "10px"}}><u>Disclaimer</u></h1>
                 <div className="general" aria-label="disclaimer-body">
-                    By connecting your spotify account you agree to allow the site to gain access to information such as your playlist or your history.
+                    By connecting your spotify account you agree to allow the site to gain access to information such as your playlist or your history. <br/> <br/>
+                    Also note that you would need to contact one of the developers in order to sign in with spotify. Sorry for the inconvenience and we hope to fix it in the future :)
+                    <br/> <br/>
                     More information can be found here:
                 </div>
                 <div className="general" aria-label="disclaimer-body-link">
-                    <Text classname="general" style={{ color: "red", fontSize: "18px" }} onPress={() => { Linking.openURL('https://developer.spotify.com/documentation/web-api/'); }}> spotifyAPI </Text>
+                    <a href="https://developer.spotify.com/documentation/web-api/">spotifyAPI</a>
                 </div>
             </div>
         </div>
