@@ -91,7 +91,7 @@ export default function HomeIndexPage() {
           filters
         </button>
         <FilterPopup trigger={buttonPopup} setTrigger={setButtonPopup}>
-          explicit:&nbsp;
+          Explicit:&nbsp;
           <select
             data-testid="explicit-select"
             value={explicitFilter}
@@ -102,7 +102,7 @@ export default function HomeIndexPage() {
             <option value={0}>No</option>
             <option value={1}>Yes</option>
           </select><br/>
-          loud:&nbsp;
+          Loud:&nbsp;
           <select
             data-testid="loud-select"
             value={loudFilter}
@@ -116,7 +116,7 @@ export default function HomeIndexPage() {
             <option value={0.75}>Loud</option>
             <option value={1.0}>Blasting</option>
           </select><br />
-            Popularity:&nbsp;
+          Popularity:&nbsp;
             <select data-testid="popularity-select" 
                     value = {popularityFilter} 
                     onChange={handleChangePopularity} 
@@ -129,7 +129,7 @@ export default function HomeIndexPage() {
               <option value={0.75}>Popular</option>
               <option value={1.00}>Famous</option>
             </select><br />
-            energy:&nbsp;
+          Energy:&nbsp;
             <select data-testid="energy-select" 
                     value = {energyFilter} 
                     onChange={handleChangeEnergy} 
@@ -140,7 +140,7 @@ export default function HomeIndexPage() {
               <option value={0.5}>Energetic</option>
               <option value={1.0}>Intense</option>
             </select><br />
-            danceability:&nbsp;
+          Danceability:&nbsp;
             <select data-testid="danceability-select" 
                     value = {danceabilityFilter} 
                     onChange={handleChangeDanceability} 
@@ -153,7 +153,7 @@ export default function HomeIndexPage() {
               <option value={0.75}>High</option>
               <option value={1.00}>Max</option>
             </select><br />
-             liveness:&nbsp;
+          Liveness:&nbsp;
             <select data-testid="liveness-select" 
                     value = {livenessFilter} 
                     onChange={handleChangeLiveness} 
@@ -164,7 +164,7 @@ export default function HomeIndexPage() {
               <option value={1}>Yes</option>
             </select>
           <div>
-            Year: <div style={{display: "inline", fontSize: "12px"}}> (disclaimer: may cause overfiltering and return no songs or an error stating no songs found)</div>&nbsp;
+          Year: <div style={{display: "inline", fontSize: "12px"}}> (disclaimer: may cause overfiltering and return no songs or an error stating no songs found)</div>&nbsp;
             <Slider value={yearFilter} setValue={setYearFilter} />
           </div>
         </FilterPopup>
