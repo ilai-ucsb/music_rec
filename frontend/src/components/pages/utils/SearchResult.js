@@ -76,6 +76,7 @@ const SearchResult = ({ ...props }) => {
       audioRef.current.pause();
       setPlay(!play);
     } else {
+      audioRef.current.load();
       audioRef.current.play();
       setPlay(!play);
     }
