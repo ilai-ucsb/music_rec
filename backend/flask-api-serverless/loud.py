@@ -29,7 +29,7 @@ def getLoud(data, loud, num):
 
     
     df = pd.DataFrame(data)
-    df['distances'] = abs(df["loudness"] - loud)
+    df['distances'] = abs(df["loudness"].astype(float) - float(loud))
     df.sort_values("distances", ascending=True,  inplace=True)
     idx = df.columns.get_loc("distances")
     df.drop(df.columns[idx], axis=1, inplace=True)

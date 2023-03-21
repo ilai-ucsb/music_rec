@@ -58,7 +58,7 @@ const SearchResult = ({ ...props }) => {
         })
       };
 
-      await fetch('https://csil-06.cs.ucsb.edu:5000/similar', songParameters).then(resp => resp.json()
+      await fetch('https://nc5fwwvfbc.execute-api.us-east-1.amazonaws.com/dev/similar', songParameters).then(resp => resp.json()
       ).then(data => {
         if (data["similar_songs"].length >= 2) {
           setSimilarName1(data["similar_songs"][0]["name"]);
@@ -76,6 +76,7 @@ const SearchResult = ({ ...props }) => {
       audioRef.current.pause();
       setPlay(!play);
     } else {
+      audioRef.current.load();
       audioRef.current.play();
       setPlay(!play);
     }
@@ -167,8 +168,8 @@ Change what's inside of Card content to change what's shown on expansion
             >
               <CardContent>
                 <Typography variant="h5"><b>STATS</b></Typography>
-                <Typography paragraph><b>Danceability</b> {props.danceability}</Typography>
-                <Typography paragraph><b>Energy</b> {props.energy}</Typography>
+                <Typography paragraph><b>Danceability</b> {parseFloat(props.danceability).toFixed(3)}</Typography>
+                <Typography paragraph><b>Energy</b> {parseFloat(props.energy).toFixed(3)}</Typography>
                 {
                   similarName1 !== "" &&
                   <span style={{ fontSize: '15px' }}><b>You may also like:</b> <ul><li>{similarName1}

@@ -6,6 +6,7 @@ import pandas as pd
 from random import sample
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from spotipy.cache_handler import CacheFileHandler
 
 import loud
 import danceability
@@ -19,10 +20,13 @@ logging.basicConfig(level=logging.ERROR)
 
 load_dotenv()
 
+# /tmp/ is the only writable location for aws lambda functions
 client_credentials_manager = SpotifyClientCredentials(
     client_id=os.getenv("SPOTIPY_CLIENT_ID"),
     client_secret=os.getenv("SPOTIPY_CLIENT_SECRET"),
+    cache_handler=CacheFileHandler(cache_path='/tmp/.cache')
 )
+
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 # code copied from model.py in order to not call spotify oauth multiple times
@@ -164,8 +168,8 @@ def filter_songs(song_list, filters):
                     good_songs = liveness.getLiveness(good_songs, filters[filter], size)
                 elif filter == "danceability":
                     good_songs = danceability.getDanceability(good_songs, filters[filter], size)
-                # elif filter == "minYear":
-                #     good_songs = year.getYear(good_songs, filters["minYear"], filters["maxYear"], size)
+                elif filter == "minYear":
+                    good_songs = year.getYear(good_songs, filters["minYear"], filters["maxYear"], size)
 
             size -= 10
         
@@ -208,12 +212,12 @@ def get_recommendation(track, filters, artist):
                     "explicit": str(s.explicit),
                     "popularity": s.popularity,
                     "year": s.year,
-                    "danceability": str(s.danceability)[0:5],
-                    "acousticness": str(s.acousticness)[0:5],
-                    "energy": str(s.energy)[0:5],
-                    "instrumentalness": str(s.instrumentalness)[0:5],
+                    "danceability": str(s.danceability),
+                    "acousticness": str(s.acousticness),
+                    "energy": str(s.energy),
+                    "instrumentalness": str(s.instrumentalness),
                     "liveness": str(s.liveness),
-                    "loudness": str(s.loudness)[0:5],
+                    "loudness": str(s.loudness),
                     "speechiness": str(s.speechiness),
                     "tempo": str(s.tempo),
                     "album_cover": s.album_cover,
@@ -243,12 +247,12 @@ def get_recommendation(track, filters, artist):
                     "explicit": "1" if song["explicit"] == True else "0",
                     "popularity": song["popularity"],
                     "year": song["album"]["release_date"][0:4],
-                    "danceability": str(audio_features[idx]['danceability'])[0:5],
-                    "acousticness": str(audio_features[idx]['acousticness'])[0:5],
+                    "danceability": str(audio_features[idx]['danceability']),
+                    "acousticness": str(audio_features[idx]['acousticness']),
                     "energy": str(audio_features[idx]['energy'])[0:5],
-                    "instrumentalness": str(audio_features[idx]['instrumentalness'])[0:5],
+                    "instrumentalness": str(audio_features[idx]['instrumentalness']),
                     "liveness": str(audio_features[idx]['liveness']),
-                    "loudness": str(audio_features[idx]['loudness'])[0:5],
+                    "loudness": str(audio_features[idx]['loudness']),
                     "speechiness": str(audio_features[idx]['speechiness']),
                     "tempo": str(audio_features[idx]['tempo']),
                     "album_cover": None,

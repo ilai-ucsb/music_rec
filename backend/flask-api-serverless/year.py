@@ -25,7 +25,7 @@ def getYear(data, minYear, maxYear, num):
     """
 
     df = pd.DataFrame(data)
-    df_actual = df[(df["year"] >= minYear) & (df["year"] <= maxYear)]
+    df_actual = df[(df["year"].astype(int) >= int(minYear)) & (df["year"].astype(int) <= int(maxYear))]
     if len(df_actual) > 0:
         return df_actual[:num].to_dict('records')
     else:

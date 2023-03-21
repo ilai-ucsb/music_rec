@@ -91,23 +91,23 @@ export default function HomeIndexPage() {
           filters
         </button>
         <FilterPopup trigger={buttonPopup} setTrigger={setButtonPopup}>
-          explicit:&nbsp;
+          Explicit:&nbsp;
           <select
             data-testid="explicit-select"
             value={explicitFilter}
             onChange={handleChangeExplicit}
-            style={{ marginRight: "0.5rem" }}
+            style={{fontSize: "15px", padding: "2px"}}
           >
             <option value={"NULL"}>Both</option>
             <option value={0}>No</option>
             <option value={1}>Yes</option>
-          </select>
-          loud:&nbsp;
+          </select><br/>
+          Loud:&nbsp;
           <select
             data-testid="loud-select"
             value={loudFilter}
             onChange={handleChangeLoud}
-            style={{ marginRight: "0.5rem" }}
+            style={{fontSize: "15px", padding: "2px"}}
           >
             <option value={"NULL"}>Any</option>
             <option value={0.0}>Faint</option>
@@ -116,8 +116,12 @@ export default function HomeIndexPage() {
             <option value={0.75}>Loud</option>
             <option value={1.0}>Blasting</option>
           </select><br />
-            Popularity:&nbsp;
-            <select data-testid="popularity-select" value = {popularityFilter} onChange={handleChangePopularity} style={{marginRight: "0.5rem"}}>
+          Popularity:&nbsp;
+            <select data-testid="popularity-select" 
+                    value = {popularityFilter} 
+                    onChange={handleChangePopularity} 
+                    style={{fontSize: "15px", padding: "2px"}}
+            >
               <option value={"NULL"}>Any</option>
               <option value={0.00}>Unknown</option>
               <option value={0.25}>Hidden</option>
@@ -125,15 +129,23 @@ export default function HomeIndexPage() {
               <option value={0.75}>Popular</option>
               <option value={1.00}>Famous</option>
             </select><br />
-            energy:&nbsp;
-            <select data-testid="energy-select" value = {energyFilter} onChange={handleChangeEnergy} style={{marginRight: "0.5rem"}}>
+          Energy:&nbsp;
+            <select data-testid="energy-select" 
+                    value = {energyFilter} 
+                    onChange={handleChangeEnergy} 
+                    style={{fontSize: "15px", padding: "2px"}}
+            >
               <option value={"NULL"}>Any</option>
               <option value={0.0}>Dull</option>
               <option value={0.5}>Energetic</option>
               <option value={1.0}>Intense</option>
             </select><br />
-            danceability:&nbsp;
-            <select data-testid="danceability-select" value = {danceabilityFilter} onChange={handleChangeDanceability} style={{marginRight: "0.5rem"}}>
+          Danceability:&nbsp;
+            <select data-testid="danceability-select" 
+                    value = {danceabilityFilter} 
+                    onChange={handleChangeDanceability} 
+                    style={{fontSize: "15px", padding: "2px"}}
+            >
               <option value={"NULL"}>Any</option>
               <option value={0.00}>Min</option>
               <option value={0.25}>Low</option>
@@ -141,14 +153,18 @@ export default function HomeIndexPage() {
               <option value={0.75}>High</option>
               <option value={1.00}>Max</option>
             </select><br />
-             liveness:&nbsp;
-            <select data-testid="liveness-select" value = {livenessFilter} onChange={handleChangeLiveness} style={{marginRight: "0.5rem"}}>
+          Liveness:&nbsp;
+            <select data-testid="liveness-select" 
+                    value = {livenessFilter} 
+                    onChange={handleChangeLiveness} 
+                    style={{fontSize: "15px", padding: "2px"}}
+            >
               <option value={"NULL"}>Both</option>
               <option value={0}>No</option>
               <option value={1}>Yes</option>
             </select>
           <div>
-            Year:&nbsp;
+          Year: <div style={{display: "inline", fontSize: "12px"}}> (disclaimer: may cause overfiltering and return no songs or an error stating no songs found)</div>&nbsp;
             <Slider value={yearFilter} setValue={setYearFilter} />
           </div>
         </FilterPopup>
