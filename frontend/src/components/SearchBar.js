@@ -64,6 +64,7 @@ function SearchBar({ ...props }) {
       // add "proxy": "http://localhost:5000" to package.json if testing locally for a new flask api function
       // If testing locally make sure to input the api route inside fetch ie. fetch('/result').
       let response = await fetch('https://nc5fwwvfbc.execute-api.us-east-1.amazonaws.com/dev/result', songParameters);
+      // let response = await fetch('http://localhost:5000/result', songParameters);
       let resJson = await response.json();
       // throw error if backend gives an error response
       if (!response.ok) {
@@ -109,7 +110,7 @@ function SearchBar({ ...props }) {
         className='TextField'
         variant="filled"
         label="Enter a song"
-        type="search"
+        type="input"
         value={searchInput}
         onChange={handleChange}
         inputProps={{ "data-testid": "searchInput" }}
