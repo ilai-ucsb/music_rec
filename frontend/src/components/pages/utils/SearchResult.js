@@ -168,8 +168,8 @@ Change what's inside of Card content to change what's shown on expansion
             >
               <CardContent>
                 <Typography variant="h5"><b>STATS</b></Typography>
-                <Typography paragraph><b>Danceability</b> {props.danceability}</Typography>
-                <Typography paragraph><b>Energy</b> {props.energy}</Typography>
+                <Typography paragraph><b>Danceability</b> {parseFloat(props.danceability).toFixed(3)}</Typography>
+                <Typography paragraph><b>Energy</b> {parseFloat(props.energy).toFixed(3)}</Typography>
                 {
                   similarName1 !== "" &&
                   <span style={{ fontSize: '15px' }}><b>You may also like:</b> <ul><li>{similarName1}

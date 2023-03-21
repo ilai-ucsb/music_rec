@@ -111,6 +111,8 @@ def validateArgs(kwargs: dict):
     for column_name, column_value in kwargs.items():
         if VALIDATION_TABLE[column_name]["expected_type"] in (int, float):
             if not validateNumeric(value=column_value, **VALIDATION_TABLE[column_name]):
+                print(validateNumeric(value=column_value, **VALIDATION_TABLE[column_name]))
+                print(column_name)
                 return False
 
     return True
@@ -147,6 +149,7 @@ def similarSongs(n: int = 5, threshold: float = 0.1, **kwargs):
     logger.debug(f"similar_songs: Received Input n=`{n}` and kwargs=`{kwargs}`.")
     logger.debug("Checking Validity of parameters...")
     # check if there are any bad keys
+    kwargs = {key: val[0] for key, val in processTypes(pd.DataFrame({key: [val] for key, val in kwargs.items()})).to_dict().items()}
     bad_keys = kwargs.keys() - VALIDATION_TABLE.keys()
     if len(bad_keys) > 0:
         raise ValueError(f"Incorrect key(s) {bad_keys}")
@@ -156,6 +159,7 @@ def similarSongs(n: int = 5, threshold: float = 0.1, **kwargs):
         raise RuntimeError("Did not find any arguments. Did you specify any arguments when attempting to find similarSongs?")  # raise RuntimeError when no kwargs are passed
     if not validateArgs(kwargs):
         raise ValueError("Incorrect format for one of the keyword arguments.")  # raise ValueError on ill-formed args
+    print("hello")
 
     logger.debug("Parameters have passed validity checks")
     original = processTypes(pd.DataFrame(data))
@@ -181,6 +185,7 @@ def similarSongs(n: int = 5, threshold: float = 0.1, **kwargs):
 
     # get the first five values and return them in a record format
     idxs = dbObj[:n]["idx"]
+    print((original.iloc[idxs])[["name", "id"]].to_dict(orient='records'))
     return (original.iloc[idxs])[["name", "id"]].to_dict(orient='records')
 
 
